@@ -7,9 +7,9 @@ import ProductsSection from '@/components/ProductsSection';
 import AboutSection from '@/components/AboutSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import DualFeatureSection from '@/components/DualFeatureSection';
-import TestimonialsAndProjectsSection from '@/components/TestimonialsAndProjectsSection';
+import ProjectsShowcaseSection from '@/components/ProjectsShowcaseSection';
 import ContactCtaBar from '@/components/ContactCtaBar';
-import { initialProducts, initialTestimonials, initialProjects } from '@/lib/data';
+import { initialProducts, initialProjects } from '@/lib/data';
 
 export default function HomePage() {
   return (
@@ -38,9 +38,8 @@ function HeroContent({ onOpenEnquiry, onOpenVideo, onOpenLightbox }: any) {
       {/* Section 7 & 8: Infrastructure & Sustainability Dual Cards */}
       <DualFeatureSection />
 
-      {/* Section 9 & 10: Testimonials & Projects Grid */}
-      <TestimonialsAndProjectsSection
-        testimonials={initialTestimonials}
+      {/* Section 9: Landmark Projects Showcase */}
+      <ProjectsShowcaseSection
         projects={initialProjects}
         onOpenProjectPreview={(proj) => {
           if (onOpenLightbox) {

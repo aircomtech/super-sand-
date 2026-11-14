@@ -4,9 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
-import { initialSiteInfo } from '@/lib/data';
+import { initialSiteInfo, initialTestimonials } from '@/lib/data';
 import AnimatedCounter from '@/components/AnimatedCounter';
-import { Award, ShieldCheck, Target, Eye, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
+import { Award, ShieldCheck, Target, Eye, Calendar, MapPin, CheckCircle2, Star, Quote } from 'lucide-react';
 
 export default function AboutPage() {
   return (
@@ -126,7 +126,7 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
           </div>
 
           {/* Core Values 8 Items */}
-          <div className="rounded-[36px] bg-[#004B2D] text-white p-6 sm:p-10 shadow-2xl mb-12">
+          <div id="values" className="rounded-[36px] bg-[#004B2D] text-white p-6 sm:p-10 shadow-2xl mb-16">
             <div className="text-center max-w-xl mx-auto mb-8">
               <span className="text-[#F4C928] font-bold text-xs uppercase tracking-widest block mb-1">
                 FOUNDATIONAL PILLARS
@@ -152,6 +152,59 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
               ))}
             </div>
           </div>
+
+          {/* Client Testimonials Section within About Us */}
+          <section id="testimonials" className="mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="text-[#087A35] font-extrabold text-xs uppercase tracking-[0.25em] block mb-2">
+                CLIENT ENDORSEMENTS & TRUST
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#17231D]">
+                What Builders & Concrete Technologists Say
+              </h2>
+              <p className="text-sm text-gray-700 mt-2">
+                Trusted by top infrastructure builders, RMC manufacturers, and developers for nearly two decades.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {initialTestimonials.map((item) => (
+                <div
+                  key={item.id}
+                  className="glass-card rounded-3xl p-6 sm:p-7 shadow-card flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]"
+                >
+                  <div>
+                    {/* Rating Stars */}
+                    <div className="flex items-center gap-1 text-[#F4C928] mb-3">
+                      {[...Array(item.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-[#F4C928]" />
+                      ))}
+                    </div>
+
+                    <div className="text-[#087A35] opacity-70 mb-2">
+                      <Quote className="w-6 h-6 rotate-180" />
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-gray-800 font-medium leading-relaxed italic mb-4">
+                      "{item.quote}"
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-100 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 border-2 border-[#087A35] flex-shrink-0">
+                      <img src={item.avatar} alt={item.name} className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-[#17231D]">{item.name}</h4>
+                      <p className="text-[11px] text-[#087A35] font-semibold">
+                        {item.designation} <span className="text-gray-400 font-normal">| {item.company}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
         </div>
       </section>

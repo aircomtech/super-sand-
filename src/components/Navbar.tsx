@@ -30,7 +30,16 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'About Us', href: '/about' },
+    {
+      name: 'About Us',
+      href: '/about',
+      hasDropdown: true,
+      subItems: [
+        { name: 'Corporate Profile & Legacy', href: '/about', desc: 'Established 2006, commercial operations 2008' },
+        { name: 'Client Testimonials & Trust', href: '/about#testimonials', desc: 'Endorsements from top builders and technologist partners' },
+        { name: 'Vision, Mission & Core Values', href: '/about#values', desc: 'Foundational pillars of excellence & sustainability' }
+      ]
+    },
     {
       name: 'Products',
       href: '/products',
@@ -100,7 +109,6 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
         { name: 'Precast Casting Yards', href: '/projects/precast-yards', desc: 'Zero-silt VSI M-sand and 10mm chips' }
       ]
     },
-    { name: 'Testimonials', href: '/testimonials' },
     { name: 'Contact Us', href: '/contact' },
   ];
 
