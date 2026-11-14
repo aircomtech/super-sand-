@@ -35,8 +35,8 @@ export const initialProducts: Product[] = [
     tagline: "Super 6mm, 10mm, 20mm, 40mm and 60mm.",
     shortDesc: "Super 6mm, 10mm, 20mm, 40mm and 60mm.",
     fullDesc: "High-quality coarse aggregates available in different sizes, including Super 6mm, 10mm, 20mm, 40mm, and 60mm. Manufactured from premium virgin granite quarry rock through multi-stage robotic crushing to ensure optimal cubical shape, maximum interlocking strength, and low flakiness index. Suitable for high-grade concrete production, infrastructure foundations, highway paving, and heavy structural applications.",
-    image: "/images/products/coarse-aggregates.jpg",
-    heroImage: "/images/gallery/aggregate-stockpile-conveyor.png",
+    image: "/images/products/coarse-aggregates-hd.png",
+    heroImage: "/images/products/coarse-aggregates-hd.png",
     sizesOrTypes: [
       "Super 6mm (Chips / Micro Aggregate)",
       "Super 10mm (Graded Structural Concrete)",
@@ -74,8 +74,8 @@ export const initialProducts: Product[] = [
     tagline: "Plastering Sand, Mortar Sand, and Brick Sand.",
     shortDesc: "Plastering Sand, Mortar Sand, and Brick Sand.",
     fullDesc: "Premium-quality fine aggregates, including Plastering Sand (P-Sand), Mortar Sand, and Brick Sand. Carefully processed through vertical shaft impactors (VSI) and air classifiers to ensure consistent particle size distribution, zero silt content, and superior hydration bonding. Designed as the ultimate eco-friendly and cost-effective replacement for diminishing natural river sand.",
-    image: "/images/products/fine-aggregates.jpg",
-    heroImage: "/images/gallery/sand-conveyor-discharge.png",
+    image: "/images/products/fine-aggregates-hd.png",
+    heroImage: "/images/products/fine-aggregates-hd.png",
     sizesOrTypes: [
       "Plastering Sand (P-Sand 0 - 2.36mm)",
       "Concrete M-Sand (Zone II 0 - 4.75mm)",
@@ -110,8 +110,8 @@ export const initialProducts: Product[] = [
     tagline: "W.M.M and G.S.B for strong and durable construction.",
     shortDesc: "W.M.M & G.S.B for strong and durable construction.",
     fullDesc: "High-quality engineered construction mixes, including W.M.M (Wet Mix Macadam) and G.S.B (Granular Sub-Base). Formulated with precision proportioning of coarse and fine aggregates to provide maximum density, structural stability, and long-lasting durability for highway roadways, industrial pavements, airport runways, and heavy transport corridors.",
-    image: "/images/products/coarse-aggregate-mix.jpg",
-    heroImage: "/images/gallery/dump-truck-haul-road.png",
+    image: "/images/products/coarse-aggregate-mix-hd.png",
+    heroImage: "/images/products/coarse-aggregate-mix-hd.png",
     sizesOrTypes: [
       "Wet Mix Macadam (W.M.M Mix 0.075mm to 53mm)",
       "Granular Sub-Base (G.S.B Grading I, II, III)",
@@ -146,8 +146,8 @@ export const initialProducts: Product[] = [
     tagline: "A perfect blend for stronger construction.",
     shortDesc: "A perfect blend for stronger construction.",
     fullDesc: "A specially formulated proprietary combination of coarse aggregates, fine aggregates, and coarse aggregate mix. Designed to simplify on-site construction batching while delivering consistent particle packing, reduced void ratio, exceptional strength, and enhanced durability. Perfect for builders seeking hassle-free material procurement without batching errors.",
-    image: "/images/products/insta-super-mix.jpg",
-    heroImage: "/images/gallery/wheel-loader-loading-truck.png",
+    image: "/images/products/insta-super-mix-hd.png",
+    heroImage: "/images/products/insta-super-mix-hd.png",
     sizesOrTypes: [
       "Insta Super Mix - Grade Standard",
       "Insta Super Mix - High Strength Premix",
