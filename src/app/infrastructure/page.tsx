@@ -18,6 +18,7 @@ export default function InfrastructurePage() {
 function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
   const infraAssets = [
     {
+      slug: "crushing-complex",
       title: "German-Engineered 3-Stage Crushing Plant",
       specs: "350+ Tons Per Hour Capacity",
       desc: "Equipped with primary heavy jaw crushers, secondary cone crushers, and tertiary Vertical Shaft Impactors (VSI) with high-efficiency air classification.",
@@ -25,6 +26,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Crushing Complex"
     },
     {
+      slug: "excavator-fleet",
       title: "Heavy Earthmoving & Crawler Fleet",
       specs: "Tata Hitachi 1200, Hyundai 210, CAT & XCMG",
       desc: "Massive captive mining excavator fleet operating continuously to feed high-grade raw granite rock to primary feeding hoppers.",
@@ -32,6 +34,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Heavy Fleet"
     },
     {
+      slug: "weighbridge-station",
       title: "Automated 100-Ton Weighbridge & Logistics Cabin",
       specs: "Electronic Weighing & Tamper-Proof Slip Generation",
       desc: "State-of-the-art dual weighbridges ensuring prompt gross and tare checks, sub-5 minute turnaround, and real-time dispatch tracking.",
@@ -39,6 +42,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Dispatch Automation"
     },
     {
+      slug: "spares-workshop",
       title: "In-House Mechanical & Hydraulic Workshop Shed",
       specs: "24/7 Plant Engineering & Spares Inventory",
       desc: "Dedicated engineering shed with certified hydraulic specialists, pneumatic torque bays, conveyor spares, and preventative maintenance schedules.",
@@ -46,6 +50,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Maintenance"
     },
     {
+      slug: "plant-capacity",
       title: "High-Capacity Radial Stacking Conveyor Network",
       specs: "Automated Weather-Protected Stockpiling",
       desc: "High-discharge radial conveyors segregating finished aggregate fractions into expansive stockpiles to buffer project surges.",
@@ -117,7 +122,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
           {infraAssets.map((asset, idx) => (
             <div
               key={idx}
-              className="bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-card border border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
+              className="glass-card rounded-3xl p-5 sm:p-7 shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
             >
               <div className="lg:col-span-6">
                 <div
@@ -148,16 +153,22 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
                 <h3 className="text-xl sm:text-2xl font-black text-[#17231D]">
                   {asset.title}
                 </h3>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
                   {asset.desc}
                 </p>
-                <div className="pt-2">
+                <div className="pt-2 flex flex-wrap gap-2.5">
+                  <Link
+                    href={`/infrastructure/${asset.slug}`}
+                    className="inline-flex items-center gap-1.5 bg-[#087A35] hover:bg-[#06632B] text-white px-5 py-2 rounded-full font-bold text-xs shadow transition-all hover:scale-105"
+                  >
+                    <span>View Dedicated Dossier</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                   <button
                     onClick={() => onOpenEnquiry && onOpenEnquiry()}
-                    className="inline-flex items-center gap-1.5 bg-[#087A35] text-white px-5 py-2 rounded-full font-bold text-xs shadow hover:bg-[#06632B]"
+                    className="inline-flex items-center gap-1.5 bg-white/90 hover:bg-white text-gray-800 border border-gray-200 px-4 py-2 rounded-full font-semibold text-xs shadow-sm"
                   >
-                    <span>Enquire Supply Capacity</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Enquire Capacity</span>
                   </button>
                 </div>
               </div>

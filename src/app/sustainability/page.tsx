@@ -47,10 +47,10 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
   ];
 
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Hero Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
             RESPONSIBLE MINING & MANUFACTURING
@@ -58,14 +58,14 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
           <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
             Our Commitment to Sustainability
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
             Building a greener future with responsible, eco-friendly practices that protect river ecosystems, eliminate fugitive dust, and preserve natural resources.
           </p>
         </div>
       </section>
 
       {/* Main Feature Banner */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-[36px] bg-gradient-to-br from-[#004B2D] to-[#003822] text-white p-8 sm:p-12 lg:p-16 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
@@ -131,7 +131,7 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-gray-100 flex flex-col justify-between group"
+                  className="glass-card rounded-3xl p-6 sm:p-8 shadow-card flex flex-col justify-between group"
                 >
                   <div>
                     <div

@@ -100,7 +100,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
 
   return (
     <section
-      className="relative overflow-hidden w-full min-h-[580px] sm:min-h-[640px] lg:min-h-[720px] flex items-center bg-white"
+      className="relative overflow-hidden w-full min-h-[580px] sm:min-h-[640px] lg:min-h-[720px] flex items-center bg-transparent"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -108,7 +108,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
       onTouchEnd={handleTouchEnd}
       aria-label="Hero Showcase"
     >
-      {/* FULL-BLEED SLIDER BACKGROUND (Desktop & Mobile) */}
+      {/* FULL-BLEED SLIDER BACKGROUND (Desktop & Brightened Mobile) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {slides.map((s, index) => {
           const isActive = index === currentSlide;
@@ -119,27 +119,27 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
                 isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
               } transition-transform duration-1000`}
             >
-              {/* Responsive picture element: vertical mobile image on phones, wide desktop image on laptops */}
+              {/* Responsive picture element: crystal clear & brightened on mobile */}
               <picture>
                 <source media="(max-width: 767px)" srcSet={s.mobileImage} />
                 <img
                   src={s.desktopImage}
                   alt={s.titleLine2}
-                  className="w-full h-full object-cover object-right lg:object-center"
+                  className="w-full h-full object-cover object-right lg:object-center brightness-[1.10] contrast-[1.06] saturate-[1.08]"
                 />
               </picture>
 
-              {/* Seamless Vignette & Readability Gradient Overlay matching image.png & image copy.png */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent lg:w-3/5 w-full pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent md:hidden pointer-events-none" />
+              {/* Gentle Translucent Gradient on Left for Text Contrast, maintaining full brightness on Right & Mobile */}
+              <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-white/95 via-white/75 to-transparent w-3/5 pointer-events-none" />
+              <div className="absolute inset-0 md:hidden bg-gradient-to-b from-white/80 via-transparent to-white/60 pointer-events-none" />
             </div>
           );
         })}
       </div>
 
       {/* Hero Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 w-full relative z-10">
-        <div className="max-w-2xl lg:max-w-xl text-left space-y-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 w-full relative z-10">
+        <div className="max-w-2xl lg:max-w-xl text-left space-y-5">
           
           {/* Green Category / Brand Tag */}
           <div className="inline-flex items-center gap-2">
@@ -148,7 +148,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
             </span>
           </div>
 
-          {/* Main Headline Matching image.png */}
+          {/* Main Headline */}
           <div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#17231D] tracking-tight leading-[1.12]">
               {current.titleLine1}{' '}
@@ -159,15 +159,15 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
           </div>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed max-w-lg">
+          <p className="text-base sm:text-lg text-gray-800 font-medium leading-relaxed max-w-lg">
             {current.subtitle}
           </p>
 
           {/* Call to Actions */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-4 pt-1">
             <Link
               href={current.ctaLink}
-              className="inline-flex items-center gap-2.5 bg-[#087A35] hover:bg-[#06632B] text-white px-7 py-3.5 rounded-full font-bold text-sm sm:text-base tracking-wide shadow-brand transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2.5 bg-[#087A35] hover:bg-[#06632B] text-white px-7 py-3 rounded-full font-bold text-sm sm:text-base tracking-wide shadow-brand transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-0.5"
             >
               <span>{current.ctaText}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
@@ -175,7 +175,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
 
             <button
               onClick={onOpenVideo}
-              className="inline-flex items-center gap-2.5 bg-white/90 backdrop-blur-md hover:bg-white text-[#17231D] border border-gray-200 px-6 py-3.5 rounded-full font-semibold text-sm sm:text-base shadow-sm transition-all duration-300 transform hover:-translate-y-0.5 group"
+              className="inline-flex items-center gap-2.5 bg-white/95 backdrop-blur-md hover:bg-white text-[#17231D] border border-gray-200 px-6 py-3 rounded-full font-semibold text-sm sm:text-base shadow-sm transition-all duration-300 transform hover:-translate-y-0.5 group"
             >
               <span className="w-7 h-7 rounded-full bg-[#E8F5E9] text-[#087A35] flex items-center justify-center transition-transform group-hover:scale-110">
                 <Play className="w-3.5 h-3.5 fill-[#087A35] ml-0.5" />
@@ -184,9 +184,9 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
             </button>
           </div>
 
-          {/* 4 Trust Indicators Matching Reference Screenshot */}
-          <div className="pt-6 sm:pt-8 border-t border-gray-200/90">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {/* 4 Trust Indicators */}
+          <div className="pt-5 border-t border-gray-200/80">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
               
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -227,32 +227,32 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
             </div>
           </div>
 
-          {/* Elegant Carousel Controls & Dots */}
-          <div className="flex items-center gap-4 pt-4">
+          {/* Carousel Controls */}
+          <div className="flex items-center gap-3.5 pt-3">
             <div className="flex items-center gap-2">
               <button
                 onClick={prevSlide}
-                className="w-8 h-8 rounded-full bg-white/90 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white/95 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
                 aria-label="Previous Hero Slide"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={nextSlide}
-                className="w-8 h-8 rounded-full bg-white/90 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-white/95 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
                 aria-label="Next Hero Slide"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               {slides.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    i === currentSlide ? 'w-7 bg-[#087A35]' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    i === currentSlide ? 'w-6 bg-[#087A35]' : 'w-2 bg-gray-300 hover:bg-gray-400'
                   }`}
                   aria-label={`Slide ${i + 1}`}
                 />
@@ -267,17 +267,10 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
         </div>
       </div>
 
-      {/* Curved Bottom Decorative Wave & Scroll Down Target matching image.png */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10">
-        <svg viewBox="0 0 1440 64" fill="none" className="w-full h-full preserve-3d" preserveAspectRatio="none">
-          <path d="M0,64 C480,20 960,64 1440,24 L1440,64 L0,64 Z" fill="#FAFCFA" />
-        </svg>
-      </div>
-
       {/* Floating Scroll Down Button */}
       <button
         onClick={scrollToProducts}
-        className="hidden lg:flex absolute bottom-4 right-12 z-20 w-11 h-11 rounded-full bg-[#087A35] hover:bg-[#06632B] text-white shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 animate-bounce"
+        className="hidden lg:flex absolute bottom-4 right-10 z-20 w-11 h-11 rounded-full bg-[#087A35] hover:bg-[#06632B] text-white shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 animate-bounce"
         title="Scroll down to Products"
       >
         <ChevronDown className="w-6 h-6 stroke-[2.5]" />

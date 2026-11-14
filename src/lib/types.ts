@@ -27,8 +27,35 @@ export interface Service {
   capacityOrSpecs: string;
 }
 
+export interface InfrastructureItem {
+  id: string;
+  slug: string;
+  title: string;
+  tag: string;
+  specs: string;
+  desc: string;
+  heroImage: string;
+  galleryImages: string[];
+  technicalFeatures: string[];
+  parameters: { [key: string]: string };
+}
+
+export interface SustainabilityItem {
+  id: string;
+  slug: string;
+  title: string;
+  tag: string;
+  metric: string;
+  desc: string;
+  heroImage: string;
+  galleryImages: string[];
+  ecologicalImpact: string[];
+  certifications: string[];
+}
+
 export interface Project {
   id: string;
+  slug?: string;
   title: string;
   category: string;
   location: string;
@@ -36,6 +63,9 @@ export interface Project {
   description: string;
   materialsSupplied: string[];
   clientOrSector: string;
+  volumeSupplied?: string;
+  duration?: string;
+  galleryImages?: string[];
 }
 
 export interface Testimonial {

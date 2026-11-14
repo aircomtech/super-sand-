@@ -60,10 +60,10 @@ export default function ContactPage() {
 
   return (
     <MainLayout>
-      <div className="bg-[#FAFCFA]">
+      <div className="bg-transparent">
         
         {/* Header */}
-        <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+        <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
             <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
               DIRECT DESK & MATERIAL DISPATCH
@@ -71,7 +71,7 @@ export default function ContactPage() {
             <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
               Get in Touch with Us
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
               Contact our sales engineering team for aggregate supply orders, customized mixes, laboratory test reports, and dispatch schedules.
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function ContactPage() {
               {/* Left Column: Direct Contact Info */}
               <div className="lg:col-span-5 space-y-6">
                 
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-gray-100 space-y-6">
+                <div className="glass-card rounded-3xl p-6 sm:p-8 shadow-card space-y-6">
                   <h3 className="text-xl font-black text-[#17231D]">
                     Head Office & Communications
                   </h3>
@@ -180,7 +180,7 @@ export default function ContactPage() {
 
               {/* Right Column: Interactive Real Enquiry Form */}
               <div className="lg:col-span-7">
-                <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-card border border-gray-100">
+                <div className="glass-card rounded-3xl p-6 sm:p-10 shadow-card">
                   <div className="mb-6">
                     <span className="text-[#087A35] font-extrabold text-xs uppercase tracking-wider block mb-1">
                       REAL-TIME DISPATCH REQUEST

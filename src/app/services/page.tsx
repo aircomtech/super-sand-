@@ -25,10 +25,10 @@ function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
     : initialGallery.filter((item) => item.category === selectedCategory);
 
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Hero Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
             COMPREHENSIVE OPERATIONS & CAPABILITIES
@@ -36,7 +36,7 @@ function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
           <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
             Our Services & Operations
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
             From mechanized granite extraction in our captive mines to 3-stage precision crushing, computerized dispatch fleets, and environmental dust control.
           </p>
         </div>
@@ -53,7 +53,7 @@ function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
               <div
                 key={service.id}
                 id={service.slug}
-                className="bg-white rounded-[36px] p-6 sm:p-10 shadow-card hover:shadow-card-hover border border-gray-100 transition-all duration-300"
+                className="glass-card rounded-[36px] p-6 sm:p-10 shadow-card hover:shadow-card-hover transition-all duration-300"
               >
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                   
@@ -167,7 +167,7 @@ function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
       </section>
 
       {/* Comprehensive Grand Gallery Section */}
-      <section id="gallery" className="py-16 sm:py-24 bg-white border-t border-gray-100">
+      <section id="gallery" className="py-16 sm:py-24 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-12">

@@ -47,10 +47,10 @@ function ProductDetailContent({ product, onOpenEnquiry, onOpenLightbox }: Produc
   const whatsappUrl = `https://wa.me/919533895920?text=${encodeURIComponent(whatsappMsg)}`;
 
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Breadcrumb Navigation */}
-      <div className="bg-white border-b border-gray-100 py-3.5 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white/80 backdrop-blur-md border-b border-gray-100 py-3.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-xs font-semibold text-gray-500">
           <Link href="/" className="hover:text-[#087A35]">Home</Link>
           <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
@@ -176,9 +176,10 @@ function ProductDetailContent({ product, onOpenEnquiry, onOpenLightbox }: Produc
         </div>
       </section>
 
-      {/* Technical Specifications & Applications Tabs */}
-      <section className="py-12 bg-white border-t border-gray-100">
+      {/* Technical Specifications & Applications Tabs Glass Card */}
+      <section className="py-12 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="glass-card rounded-3xl p-6 sm:p-10">
           
           {/* Tabs Navigation */}
           <div className="flex items-center gap-4 border-b border-gray-200 pb-4 mb-8">
@@ -272,6 +273,7 @@ function ProductDetailContent({ product, onOpenEnquiry, onOpenLightbox }: Produc
           </div>
 
         </div>
+      </div>
       </section>
 
       {/* Bottom CTA */}

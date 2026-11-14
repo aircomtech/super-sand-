@@ -51,14 +51,14 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
       href: '/services',
       hasDropdown: true,
       subItems: [
-        { name: 'Granite Quarrying & Mining', href: '/services#quarrying-mining', desc: 'Deep pit mechanized extraction' },
-        { name: 'Multi-Stage Crushing & VSI', href: '/services#advanced-crushing', desc: '3-stage cubical aggregate shaping' },
-        { name: 'Laboratory Testing & QA', href: '/services#quality-assurance', desc: 'NABL-aligned IS 383:2016 sieve analysis' },
-        { name: 'Heavy Fleet Logistics & Dispatch', href: '/services#fleet-logistics', desc: '100-ton computerized weighbridges' },
-        { name: 'Plant Engineering Workshop', href: '/services#plant-maintenance', desc: 'In-house hydraulic & mechanical repair' },
-        { name: 'Environmental Dust Control', href: '/services#environmental-sustainability', desc: 'Dedicated water tanker mist fleet' },
-        { name: 'Custom Batch Blending', href: '/services#custom-batch-blending', desc: 'Tailored continuous grading curves' },
-        { name: 'Full Photo Archive (22 Photos)', href: '/services#gallery', desc: 'Interactive operational visual gallery' }
+        { name: 'Granite Quarrying & Mining', href: '/services/quarrying-mining', desc: 'Deep pit mechanized extraction' },
+        { name: 'Multi-Stage Crushing & VSI', href: '/services/advanced-crushing', desc: '3-stage cubical aggregate shaping' },
+        { name: 'Laboratory Testing & QA', href: '/services/quality-assurance', desc: 'NABL-aligned IS 383:2016 sieve analysis' },
+        { name: 'Heavy Fleet Logistics & Dispatch', href: '/services/fleet-logistics', desc: '100-ton computerized weighbridges' },
+        { name: 'Plant Engineering Workshop', href: '/services/plant-maintenance', desc: 'In-house hydraulic & mechanical repair' },
+        { name: 'Environmental Dust Control', href: '/services/environmental-sustainability', desc: 'Dedicated water tanker mist fleet' },
+        { name: 'Custom Batch Blending', href: '/services/custom-batch-blending', desc: 'Tailored continuous grading curves' },
+        { name: 'Full Photo Archive (22 Photos)', href: '/services', desc: 'Interactive operational visual gallery' }
       ]
     },
     {
@@ -66,11 +66,11 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
       href: '/infrastructure',
       hasDropdown: true,
       subItems: [
-        { name: '3-Stage Crushing Complex', href: '/infrastructure', desc: '350+ Tons per hour capacity' },
-        { name: 'Heavy Excavator Fleet', href: '/infrastructure', desc: 'Tata Hitachi 1200, Hyundai, CAT, XCMG' },
-        { name: 'Electronic Weighbridge Station', href: '/infrastructure', desc: 'Instant gross, tare & net weight slips' },
-        { name: 'Mechanical & Spares Workshop', href: '/infrastructure', desc: 'Zero downtime maintenance facility' },
-        { name: 'Plant Capacity & Statistics', href: '/infrastructure', desc: '150,000+ tons monthly volume' }
+        { name: '3-Stage Crushing Complex', href: '/infrastructure/crushing-complex', desc: '350+ Tons per hour capacity' },
+        { name: 'Heavy Excavator Fleet', href: '/infrastructure/excavator-fleet', desc: 'Tata Hitachi 1200, Hyundai, CAT, XCMG' },
+        { name: 'Electronic Weighbridge Station', href: '/infrastructure/weighbridge-station', desc: 'Instant gross, tare & net weight slips' },
+        { name: 'Mechanical & Spares Workshop', href: '/infrastructure/spares-workshop', desc: 'Zero downtime maintenance facility' },
+        { name: 'Plant Capacity & Statistics', href: '/infrastructure/plant-capacity', desc: '150,000+ tons monthly volume' }
       ]
     },
     {
@@ -78,11 +78,11 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
       href: '/sustainability',
       hasDropdown: true,
       subItems: [
-        { name: 'Riverbed Conservation', href: '/sustainability', desc: '100% sustainable alternative to river sand' },
-        { name: 'Haul Road Water Mist Tankers', href: '/sustainability', desc: 'Active airborne dust elimination' },
-        { name: 'Green Tree Plantation Belts', href: '/sustainability', desc: 'Extensive acoustic & carbon buffer' },
-        { name: 'Rainwater Harvesting Basins', href: '/sustainability', desc: 'Closed-loop sediment filtration' },
-        { name: 'Pollution Board Compliance', href: '/sustainability', desc: 'Zero discharge ecological norms' }
+        { name: 'Riverbed Conservation', href: '/sustainability/riverbed-conservation', desc: '100% sustainable alternative to river sand' },
+        { name: 'Haul Road Water Mist Tankers', href: '/sustainability/water-mist-tankers', desc: 'Active airborne dust elimination' },
+        { name: 'Green Tree Plantation Belts', href: '/sustainability/green-plantation-belts', desc: 'Extensive acoustic & carbon buffer' },
+        { name: 'Rainwater Harvesting Basins', href: '/sustainability/rainwater-harvesting', desc: 'Closed-loop sediment filtration' },
+        { name: 'Pollution Board Compliance', href: '/sustainability/pollution-board-compliance', desc: 'Zero discharge ecological norms' }
       ]
     },
     {
@@ -90,14 +90,14 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
       href: '/projects',
       hasDropdown: true,
       subItems: [
-        { name: 'Highways & Flyover Corridors', href: '/projects', desc: 'Heavy pier and deck slab supply' },
-        { name: 'Commercial IT High-Rises', href: '/projects', desc: 'HITEC City & Financial District towers' },
-        { name: 'Metro Transit Viaducts', href: '/projects', desc: 'High-performance casting yard supply' },
-        { name: 'River Bridges & Expressways', href: '/projects', desc: 'High impact resistance concrete mixes' },
-        { name: 'Outer Ring Road (ORR) Works', href: '/projects', desc: 'W.M.M & G.S.B road sub-base' },
-        { name: 'Logistics Parks & Warehouses', href: '/projects', desc: 'Laser-screed industrial floor aggregates' },
-        { name: 'Airport Runway Overlays', href: '/projects', desc: 'High-friction aircraft landing pavements' },
-        { name: 'Precast Casting Yards', href: '/projects', desc: 'Zero-silt VSI M-sand and 10mm chips' }
+        { name: 'Highways & Flyover Corridors', href: '/projects/highways-flyovers', desc: 'Heavy pier and deck slab supply' },
+        { name: 'Commercial IT High-Rises', href: '/projects/commercial-highrises', desc: 'HITEC City & Financial District towers' },
+        { name: 'Metro Transit Viaducts', href: '/projects/metro-viaducts', desc: 'High-performance casting yard supply' },
+        { name: 'River Bridges & Expressways', href: '/projects/bridges-expressways', desc: 'High impact resistance concrete mixes' },
+        { name: 'Outer Ring Road (ORR) Works', href: '/projects/outer-ring-road', desc: 'W.M.M & G.S.B road sub-base' },
+        { name: 'Logistics Parks & Warehouses', href: '/projects/logistics-warehouses', desc: 'Laser-screed industrial floor aggregates' },
+        { name: 'Airport Runway Overlays', href: '/projects/airport-runways', desc: 'High-friction aircraft landing pavements' },
+        { name: 'Precast Casting Yards', href: '/projects/precast-yards', desc: 'Zero-silt VSI M-sand and 10mm chips' }
       ]
     },
     { name: 'Testimonials', href: '/testimonials' },

@@ -33,15 +33,15 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
   const currentTestimonial = testimonials[currentTestimonialIndex] || testimonials[0];
 
   return (
-    <section className="py-14 sm:py-20 bg-white">
+    <section className="py-12 sm:py-16 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
-          {/* Left Column: Testimonial Slider */}
-          <div className="lg:col-span-6 flex flex-col justify-between bg-[#F8FAF8] rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm relative min-h-[380px]">
+          {/* Left Column: Testimonial Slider Glass Card */}
+          <div className="lg:col-span-6 flex flex-col justify-between glass-card rounded-3xl p-6 sm:p-7 relative min-h-[360px]">
             <div>
               {/* Header */}
-              <div className="mb-4">
+              <div className="mb-3.5">
                 <span className="text-[#087A35] font-extrabold text-[12px] sm:text-[13px] tracking-[0.2em] uppercase block mb-1">
                   WHAT OUR CLIENTS SAY
                 </span>
@@ -51,7 +51,7 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
               </div>
 
               {/* Stars */}
-              <div className="flex items-center gap-1 text-[#F4C928] mb-3">
+              <div className="flex items-center gap-1 text-[#F4C928] mb-2.5">
                 {[...Array(currentTestimonial.rating || 5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-[#F4C928]" />
                 ))}
@@ -60,21 +60,21 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
               {/* Quote Icon & Content */}
               <div className="relative">
                 <div className="text-[#087A35] opacity-80 mb-2">
-                  <Quote className="w-7 h-7 rotate-180" />
+                  <Quote className="w-6 h-6 rotate-180" />
                 </div>
                 
-                <p className="text-[14px] sm:text-[15px] text-gray-700 font-medium leading-relaxed italic min-h-[65px]">
+                <p className="text-[13px] sm:text-[14px] text-gray-800 font-medium leading-relaxed italic min-h-[60px]">
                   "{currentTestimonial.quote}"
                 </p>
               </div>
             </div>
 
             {/* Bottom Row: Client info & controls */}
-            <div className="mt-6 pt-4 border-t border-gray-200/80 flex items-center justify-between">
+            <div className="mt-5 pt-3.5 border-t border-gray-200/70 flex items-center justify-between">
               
               {/* Client Info */}
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full overflow-hidden bg-gray-200 border-2 border-[#087A35] flex-shrink-0">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200 border-2 border-[#087A35] flex-shrink-0 shadow-sm">
                   <img
                     src={currentTestimonial.avatar}
                     alt={currentTestimonial.name}
@@ -82,10 +82,10 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
                   />
                 </div>
                 <div>
-                  <h4 className="text-[14px] font-bold text-[#17231D] leading-tight">
+                  <h4 className="text-[13px] font-bold text-[#17231D] leading-tight">
                     {currentTestimonial.name}
                   </h4>
-                  <p className="text-[12px] text-[#087A35] font-semibold mt-0.5">
+                  <p className="text-[11px] text-[#087A35] font-semibold mt-0.5">
                     {currentTestimonial.designation} <span className="text-gray-400 font-normal">| {currentTestimonial.company}</span>
                   </p>
                 </div>
@@ -95,24 +95,24 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
               <div className="flex items-center gap-2">
                 <button
                   onClick={prevTestimonial}
-                  className="w-8 h-8 rounded-full bg-white hover:bg-[#087A35] hover:text-white text-gray-700 shadow-sm border border-gray-200 flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-full bg-white hover:bg-[#087A35] hover:text-white text-gray-700 shadow-sm border border-gray-200 flex items-center justify-center transition-colors"
                   aria-label="Previous Testimonial"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={nextTestimonial}
-                  className="w-8 h-8 rounded-full bg-white hover:bg-[#087A35] hover:text-white text-gray-700 shadow-sm border border-gray-200 flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-full bg-white hover:bg-[#087A35] hover:text-white text-gray-700 shadow-sm border border-gray-200 flex items-center justify-center transition-colors"
                   aria-label="Next Testimonial"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
 
             </div>
 
             {/* Pagination Dots */}
-            <div className="flex items-center justify-center gap-1.5 mt-3">
+            <div className="flex items-center justify-center gap-1.5 mt-2.5">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
@@ -127,11 +127,10 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
 
           </div>
 
-          {/* Right Column: Projects Showcase Gallery (Expanded 8 Projects in 2x4 Grid) */}
-          <div className="lg:col-span-6 flex flex-col justify-between bg-[#F8FAF8] rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-sm min-h-[380px]">
+          {/* Right Column: Projects Showcase Gallery Glass Card */}
+          <div className="lg:col-span-6 flex flex-col justify-between glass-card rounded-3xl p-6 sm:p-7 min-h-[360px]">
             <div>
-              {/* Header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3.5">
                 <div>
                   <span className="text-[#087A35] font-extrabold text-[12px] sm:text-[13px] tracking-[0.2em] uppercase block mb-1">
                     OUR PROJECTS & DEPLOYMENTS
@@ -143,7 +142,7 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
               </div>
 
               {/* 8 Project Thumbnails Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-2.5">
                 {projects.slice(0, 8).map((project, idx) => (
                   <div
                     key={project.id || idx}
@@ -169,16 +168,16 @@ export default function TestimonialsAndProjectsSection({ testimonials, projects,
             </div>
 
             {/* Bottom Button */}
-            <div className="mt-5 pt-4 border-t border-gray-200/80 flex items-center justify-between">
-              <span className="text-[12px] text-gray-500 font-medium">
+            <div className="mt-4 pt-3.5 border-t border-gray-200/70 flex items-center justify-between">
+              <span className="text-[11px] text-gray-600 font-medium">
                 Supplying 8+ landmark infrastructure corridors
               </span>
               <Link
                 href="/projects"
-                className="inline-flex items-center gap-2 bg-[#004B2D] hover:bg-[#003822] text-white px-5 py-2.5 rounded-full font-bold text-[12px] tracking-wide transition-all shadow-md hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-1.5 bg-[#004B2D] hover:bg-[#003822] text-white px-4 py-2 rounded-full font-bold text-[11px] tracking-wide transition-all shadow-md hover:scale-105 active:scale-95"
               >
                 <span>View All Projects</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
 

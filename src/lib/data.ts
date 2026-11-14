@@ -1,4 +1,4 @@
-import { Product, Service, Project, Testimonial, GalleryItem, Enquiry, SiteInfo } from './types';
+import { Product, Service, Project, Testimonial, GalleryItem, Enquiry, SiteInfo, InfrastructureItem, SustainabilityItem } from './types';
 
 export const initialSiteInfo: SiteInfo = {
   businessName: "Super Sand",
@@ -544,83 +544,418 @@ export const initialGallery: GalleryItem[] = [
 export const initialProjects: Project[] = [
   {
     id: "proj-1",
+    slug: "highways-flyovers",
     title: "Strategic Highway Flyovers & Elevated Corridors",
     category: "Highways & Flyovers",
     location: "Hyderabad Metropolitan Area, Telangana",
     image: "/images/projects/project-bridge-1.jpg",
     description: "Supply of high-strength Super 20mm aggregates and M-Sand for RCC piers, deck slabs, and pre-stressed concrete girders.",
     materialsSupplied: ["Super 20mm Aggregates", "Plastering Sand", "Concrete M-Sand"],
-    clientOrSector: "State Infrastructure & Road Development"
+    clientOrSector: "State Infrastructure & Road Development",
+    volumeSupplied: "125,000+ Metric Tons",
+    duration: "24 Months On-Demand Supply",
+    galleryImages: [
+      "/images/projects/project-bridge-1.jpg",
+      "/images/gallery/dump-truck-haul-road.png",
+      "/images/gallery/excavator-mining-face.png"
+    ]
   },
   {
     id: "proj-2",
+    slug: "commercial-highrises",
     title: "Commercial High-Rise IT Towers & Tech Parks",
     category: "Commercial Towers",
     location: "HITEC City & Financial District",
     image: "/images/projects/project-highrise.jpg",
     description: "Continuous concrete aggregate supply for M50 & M60 grade high-performance pumpable concrete in 40+ floor towers.",
     materialsSupplied: ["Super 10mm & 20mm Aggregates", "P-Sand", "VSI M-Sand"],
-    clientOrSector: "Top Tier Commercial Real Estate Builders"
+    clientOrSector: "Top Tier Commercial Real Estate Builders",
+    volumeSupplied: "85,000+ Metric Tons",
+    duration: "18 Months Active Construction",
+    galleryImages: [
+      "/images/projects/project-highrise.jpg",
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/wheel-loader-loading-truck.png"
+    ]
   },
   {
     id: "proj-3",
+    slug: "metro-viaducts",
     title: "Urban Metro Rail Viaducts & Station Piers",
     category: "Metro Transit",
     location: "Metro Corridor Network",
     image: "/images/projects/project-metro.jpg",
     description: "Strictly graded IS 383:2016 coarse aggregates for heavy viaduct casting yards and station concourse foundations.",
     materialsSupplied: ["Super 20mm Aggregates", "Super 10mm Aggregates", "W.M.M Mix"],
-    clientOrSector: "Metro Rail Infrastructure Projects"
+    clientOrSector: "Metro Rail Infrastructure Projects",
+    volumeSupplied: "98,000+ Metric Tons",
+    duration: "Ongoing Strategic Partnership",
+    galleryImages: [
+      "/images/projects/project-metro.jpg",
+      "/images/gallery/lab-sieve-grading-test.png",
+      "/images/gallery/infra-crushing-complex.png"
+    ]
   },
   {
     id: "proj-4",
+    slug: "bridges-expressways",
     title: "Major River Bridge & Bypass Expressways",
     category: "Bridges & Expressways",
     location: "Regional Expressway Corridors",
     image: "/images/projects/project-bridge-2.jpg",
     description: "High-impact resistance aggregates for underwater well foundations, abutments, and asphalt concrete wearing course.",
     materialsSupplied: ["Super 40mm Aggregates", "G.S.B Road Sub-Base", "W.M.M Mix"],
-    clientOrSector: "National Highway Authority"
+    clientOrSector: "National Highway Authority",
+    volumeSupplied: "140,000+ Metric Tons",
+    duration: "30 Months Project Phase",
+    galleryImages: [
+      "/images/projects/project-bridge-2.jpg",
+      "/images/gallery/quarry-cliff-face.png",
+      "/images/gallery/dump-truck-haul-road.png"
+    ]
   },
   {
     id: "proj-5",
+    slug: "outer-ring-road",
     title: "Outer Ring Road (ORR) Expansion & Service Corridors",
     category: "Highways & Flyovers",
     location: "Hyderabad Ring Expressway",
     image: "/images/gallery/dump-truck-haul-road.png",
     description: "Continuous bulk delivery of MoRTH-certified W.M.M and G.S.B sub-base mixes for 8-lane expressway extensions.",
     materialsSupplied: ["W.M.M Mix", "G.S.B Grading II", "Super 40mm Aggregates"],
-    clientOrSector: "National Highway Contractors"
+    clientOrSector: "National Highway Contractors",
+    volumeSupplied: "210,000+ Metric Tons",
+    duration: "Multi-Year Supply Agreement",
+    galleryImages: [
+      "/images/gallery/dump-truck-haul-road.png",
+      "/images/gallery/wheel-loaders-fleet.png",
+      "/images/gallery/weighbridge-dispatch-station.png"
+    ]
   },
   {
     id: "proj-6",
+    slug: "logistics-warehouses",
     title: "Mega E-Commerce Logistics Hubs & Warehouses",
     category: "Commercial Towers",
     location: "Shamshabad & Medchal Industrial Corridors",
     image: "/images/gallery/wheel-loader-loading-truck.png",
     description: "Laser-screed floor slab aggregates requiring tight particle grading to resist heavy automated forklift wheel loads.",
     materialsSupplied: ["Super 10mm & 20mm Aggregates", "Engineered Insta Mix"],
-    clientOrSector: "Global Industrial Park Developers"
+    clientOrSector: "Global Industrial Park Developers",
+    volumeSupplied: "60,000+ Metric Tons",
+    duration: "12 Months Rapid Delivery",
+    galleryImages: [
+      "/images/gallery/wheel-loader-loading-truck.png",
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/lab-sieve-grading-test.png"
+    ]
   },
   {
     id: "proj-7",
+    slug: "airport-runways",
     title: "Regional Airport Runway & Taxiway Resurfacing",
     category: "Bridges & Expressways",
     location: "Aviation Infrastructure Hubs",
     image: "/images/gallery/aggregate-stockpile-conveyor.png",
     description: "High-abrasion resistance polish-resistant aggregates for high-friction aircraft landing surfaces.",
     materialsSupplied: ["Super 10mm Bitumen Chips", "Super 20mm Graded Granite"],
-    clientOrSector: "Aviation Infrastructure Corporation"
+    clientOrSector: "Aviation Infrastructure Corporation",
+    volumeSupplied: "45,000+ Metric Tons",
+    duration: "Fast-Track Night Overlay Window",
+    galleryImages: [
+      "/images/gallery/aggregate-stockpile-conveyor.png",
+      "/images/gallery/excavator-mining-face.png",
+      "/images/gallery/quarry-basin-access.png"
+    ]
   },
   {
     id: "proj-8",
+    slug: "precast-yards",
     title: "Precast Concrete Segmental Casting Yard",
     category: "Metro Transit",
     location: "Precast Fabrication Yard",
     image: "/images/gallery/infra-crushing-complex.png",
     description: "Dedicated daily supply of zero-silt VSI M-sand and 10mm stone chips for rapid-curing precast bridge segments.",
     materialsSupplied: ["VSI M-Sand Zone II", "Super 10mm Concrete Chips"],
-    clientOrSector: "Infrastructure Joint Ventures"
+    clientOrSector: "Infrastructure Joint Ventures",
+    volumeSupplied: "75,000+ Metric Tons",
+    duration: "16 Months Synchronized Daily Supply",
+    galleryImages: [
+      "/images/gallery/infra-crushing-complex.png",
+      "/images/gallery/hyundai-excavator-loading.png",
+      "/images/gallery/weighbridge-dispatch-station.png"
+    ]
+  }
+];
+
+export const initialInfrastructureItems: InfrastructureItem[] = [
+  {
+    id: "infra-1",
+    slug: "crushing-complex",
+    title: "3-Stage Advanced Crushing & Screening Plant Complex",
+    tag: "Crushing Complex",
+    specs: "350+ Tons Per Hour Capacity",
+    desc: "State-of-the-art multi-tier plant featuring primary heavy-duty jaw crushers, secondary cone crushers, tertiary Vertical Shaft Impactors (VSI), and dry air classifiers.",
+    heroImage: "/images/hero/hero-slide-2.png",
+    galleryImages: [
+      "/images/gallery/infra-crushing-complex.png",
+      "/images/gallery/aggregate-stockpile-conveyor.png",
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/lab-sieve-grading-test.png"
+    ],
+    technicalFeatures: [
+      "German-engineered triple-deck vibrating screen decks for pinpoint cut points",
+      "VSI rock-on-rock crushing creating 100% mechanical cubical shape",
+      "Automated air-classifier removing micro silt below 75 microns",
+      "Continuous PLC telemetry monitoring feed rate, motor amps, and bearing temperature"
+    ],
+    parameters: {
+      "Production Rate": "350 - 400 Metric Tons / Hour",
+      "Crushing Stages": "3 Stages (Jaw -> Cone -> VSI)",
+      "Screen Decks": "Triple Deck High-Frequency Sizing",
+      "Classification": "Dry Air-Wash Silt Separation"
+    }
+  },
+  {
+    id: "infra-2",
+    slug: "excavator-fleet",
+    title: "Heavy Earthmoving Crawler Excavators & Wheel Loaders",
+    tag: "Heavy Fleet",
+    specs: "Tata Hitachi 1200, Hyundai 210, CAT & XCMG",
+    desc: "Massive captive mining excavator fleet operating continuously to feed high-grade raw granite rock from multi-bench quarry pits to primary feeding hoppers.",
+    heroImage: "/images/gallery/excavator-machinery-fleet.png",
+    galleryImages: [
+      "/images/gallery/excavator-machinery-fleet.png",
+      "/images/gallery/excavator-mining-face.png",
+      "/images/gallery/hyundai-excavator-loading.png",
+      "/images/gallery/wheel-loaders-fleet.png"
+    ],
+    technicalFeatures: [
+      "Heavy Tata Hitachi 1200 primary mining excavators with reinforced rock buckets",
+      "Hyundai Robex 210 hydraulic loaders for rapid secondary rock clearing",
+      "High-breakout wheel loader fleet achieving sub-3 minute tipper fill times",
+      "Fleet maintenance bay manned by OEM-certified hydraulic mechanics"
+    ],
+    parameters: {
+      "Primary Excavators": "Tata Hitachi EX-1200 & Hyundai 210",
+      "Bucket Capacities": "2.5 m³ to 4.2 m³ Rock Buckets",
+      "Wheel Loaders": "High-Lift 3.0 m³ Stockpile Loaders",
+      "Daily Moving Capacity": "5,000+ Metric Tons Raw Rock"
+    }
+  },
+  {
+    id: "infra-3",
+    slug: "weighbridge-station",
+    title: "Automated 100-Ton Electronic Weighbridges & Dispatch Cabin",
+    tag: "Dispatch Automation",
+    specs: "Tamper-Proof Weight Slips & Sub-5 Min Turnaround",
+    desc: "Dual computerized 100-ton electronic weighbridge stations calibrated under Metrology Department supervision, delivering instant gross, tare, and net printed weight slips.",
+    heroImage: "/images/gallery/weighbridge-dispatch-station.png",
+    galleryImages: [
+      "/images/gallery/weighbridge-dispatch-station.png",
+      "/images/gallery/wheel-loader-loading-truck.png",
+      "/images/gallery/dump-truck-haul-road.png",
+      "/images/gallery/corporate-site-office.png"
+    ],
+    technicalFeatures: [
+      "High-precision digital load cells with 10kg graduation tolerance",
+      "Automated license plate recognition and CCTV snapshot on every slip",
+      "Direct integration with cloud dispatch and ERP customer billing portal",
+      "Zero vehicle queueing with streamlined in-and-out traffic loop"
+    ],
+    parameters: {
+      "Weighing Capacity": "100 Metric Tons Gross Capacity",
+      "Scale Dimensions": "18 Meters Length x 3 Meters Width",
+      "Average Turnaround": "Under 4.5 Minutes Per Vehicle",
+      "Calibration": "Quarterly Legal Metrology Stamped"
+    }
+  },
+  {
+    id: "infra-4",
+    slug: "spares-workshop",
+    title: "In-House Mechanical, Hydraulic & Spares Workshop Shed",
+    tag: "Maintenance",
+    specs: "24/7 Plant Engineering & Critical Spares Inventory",
+    desc: "Fully equipped engineering shed staffed by certified hydraulic and mechanical engineers, housing precision lathe bays, spare conveyor rollers, crusher jaws, and hydraulic cylinders.",
+    heroImage: "/images/gallery/maintenance-workshop.png",
+    galleryImages: [
+      "/images/gallery/maintenance-workshop.png",
+      "/images/gallery/excavator-machinery-fleet.png",
+      "/images/gallery/quarry-basin-access.png",
+      "/images/gallery/corporate-site-office.png"
+    ],
+    technicalFeatures: [
+      "In-house inventory of manganese jaw plates, cone mantles, and VSI anvils",
+      "High-pressure hydraulic hose crimping and cylinder rebuilding station",
+      "Preventative vibration analysis and thermal imaging on all heavy bearings",
+      "Guaranteed 99.4% plant uptime through planned nighttime maintenance shifts"
+    ],
+    parameters: {
+      "Operating Shifts": "24/7 Dedicated Maintenance Technicians",
+      "Spares Redundancy": "100% Critical Wear-Part Backup On-Site",
+      "Welding & Tooling": "Automated Hardfacing & Lathe Facility",
+      "Plant Uptime Rate": "> 99.4% Operational Reliability"
+    }
+  },
+  {
+    id: "infra-5",
+    slug: "plant-capacity",
+    title: "Radial Stacking Conveyor Network & Storage Stockpiles",
+    tag: "Material Handling",
+    specs: "150,000+ Metric Tons Monthly Capacity",
+    desc: "Expansive radial stacking conveyor systems segregating finished coarse aggregates, plastering sand, and road mixes into weather-protected 50,000-ton buffer stockpiles.",
+    heroImage: "/images/gallery/aggregate-stockpile-conveyor.png",
+    galleryImages: [
+      "/images/gallery/aggregate-stockpile-conveyor.png",
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/wheel-loaders-fleet.png",
+      "/images/gallery/infra-crushing-complex.png"
+    ],
+    technicalFeatures: [
+      "Radial movement creating massive conical storage piles without segregation",
+      "Drop-height optimization to prevent particle breakage during stacking",
+      "Dedicated multi-gate reclaim bins for automated custom blend feeds",
+      "High stockpile buffer insulating client sites from supply shortages"
+    ],
+    parameters: {
+      "Monthly Throughput": "150,000+ Metric Tons Finished Material",
+      "Stockpile Storage": "50,000 Tons On-Ground Buffer Reserve",
+      "Conveyor Length": "Over 1.2 Kilometers Integrated Belting",
+      "Loading Bay Bays": "6 Simultaneous Fast-Loading Stations"
+    }
+  }
+];
+
+export const initialSustainabilityItems: SustainabilityItem[] = [
+  {
+    id: "sust-1",
+    slug: "riverbed-conservation",
+    title: "Riverbed Conservation & 100% Eco-Friendly Sand Alternative",
+    tag: "River Conservation",
+    metric: "Millions of Tons of Natural Riverbed Preserved",
+    desc: "By manufacturing engineered sand from virgin rock through advanced VSI shaping, Super Sand directly substitutes natural river sand, stopping riverbank erosion and protecting critical aquatic habitats.",
+    heroImage: "/images/gallery/manufactured-sand-peak.png",
+    galleryImages: [
+      "/images/gallery/manufactured-sand-peak.png",
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/corporate-site-office.png",
+      "/images/gallery/aerial-quarry-operations.png"
+    ],
+    ecologicalImpact: [
+      "Completely halts destructive mechanical dredging of natural river basins",
+      "Zero organic impurities, silt, or agricultural runoff chemicals",
+      "Conserves natural groundwater water tables in riverbed valleys",
+      "Endorsed by Green Building Councils as sustainable construction material"
+    ],
+    certifications: [
+      "100% Eco-Friendly M-Sand Alternative",
+      "IS 383:2016 Compliant Fine Aggregate",
+      "Green Building Material Candidate"
+    ]
+  },
+  {
+    id: "sust-2",
+    slug: "water-mist-tankers",
+    title: "Dedicated Haul Road Water Mist Tankers & Dust Suppression",
+    tag: "Air Quality Control",
+    metric: "95% Reduction in Fugitive Dust",
+    desc: "Our captive mobile fleet of high-pressure water sprinkler tankers sprays all internal haul roads, quarry access routes, and crushing discharge chutes continuously to maintain clean air quality.",
+    heroImage: "/images/gallery/water-tanker-dust-control.png",
+    galleryImages: [
+      "/images/gallery/water-tanker-dust-control.png",
+      "/images/gallery/dump-truck-haul-road.png",
+      "/images/gallery/corporate-site-office.png",
+      "/images/gallery/aerial-quarry-operations.png"
+    ],
+    ecologicalImpact: [
+      "Continuous haul road sprinkling suppresses vehicle tire dust generation",
+      "High-pressure mist nozzles at crusher chutes atomize micro-dust particles",
+      "Protects respiratory health of operators and neighboring flora",
+      "Regular ambient air particulate monitoring meeting Telangana PCB norms"
+    ],
+    certifications: [
+      "Air Quality Standards Compliant",
+      "Active Dust Suppression Protocol",
+      "Ambient Air Quality Monitored"
+    ]
+  },
+  {
+    id: "sust-3",
+    slug: "green-plantation-belts",
+    title: "Green Tree Plantation Belts & Afforestation Sanctuary",
+    tag: "Green Belt",
+    metric: "Thousands of Native Trees Surrounding Plant",
+    desc: "Extensive native tree plantation belts have been nurtured around the perimeter of our production complex and quarry boundaries, acting as natural acoustic dampeners and carbon capture zones.",
+    heroImage: "/images/gallery/corporate-site-office.png",
+    galleryImages: [
+      "/images/gallery/corporate-site-office.png",
+      "/images/gallery/aerial-quarry-operations.png",
+      "/images/gallery/quarry-cliff-face.png",
+      "/images/gallery/water-tanker-dust-control.png"
+    ],
+    ecologicalImpact: [
+      "Native tree species including Neem, Peepal, and Conocarpus planted across buffer zones",
+      "Dampens sound vibrations from blasting and crushing equipment",
+      "Natural soil stabilization on quarry perimeter slopes",
+      "Creates natural bird and small wildlife corridors"
+    ],
+    certifications: [
+      "State Forestry Aligned Afforestation",
+      "Comprehensive Green Belt Buffer",
+      "Annual Tree Plantation Drive"
+    ]
+  },
+  {
+    id: "sust-4",
+    slug: "rainwater-harvesting",
+    title: "Rainwater Harvesting & Closed-Loop Settling Basins",
+    tag: "Water Management",
+    metric: "100% Industrial Water Recycled & Reused",
+    desc: "Quarry topography is engineered to collect all seasonal monsoon runoff into dedicated sedimentation basins. Water is gravity-filtered and pumped back into dust suppression tankers.",
+    heroImage: "/images/gallery/aerial-quarry-operations.png",
+    galleryImages: [
+      "/images/gallery/aerial-quarry-operations.png",
+      "/images/gallery/water-tanker-dust-control.png",
+      "/images/gallery/quarry-basin-access.png",
+      "/images/gallery/corporate-site-office.png"
+    ],
+    ecologicalImpact: [
+      "Zero groundwater extraction for haul road dust suppression",
+      "Multi-stage settling ponds filter suspended solids without chemical flocculants",
+      "Recharges peripheral aquifers and maintains natural water table",
+      "Complete zero-discharge industrial water cycle"
+    ],
+    certifications: [
+      "Zero Industrial Liquid Discharge",
+      "Rainwater Harvesting Certified",
+      "Closed-Loop Water Management"
+    ]
+  },
+  {
+    id: "sust-5",
+    slug: "pollution-board-compliance",
+    title: "Telangana State Pollution Control Board & Environmental Compliances",
+    tag: "Statutory Compliance",
+    metric: "100% Certified Environmental Approvals",
+    desc: "Sai Super Sand Minerals Pvt. Ltd. holds valid Consents for Establishment (CFE) and Operation (CFO) from the State Pollution Control Board, alongside approved Environmental Management Plans (EMP).",
+    heroImage: "/images/gallery/corporate-site-office.png",
+    galleryImages: [
+      "/images/gallery/corporate-site-office.png",
+      "/images/gallery/lab-sieve-grading-test.png",
+      "/images/gallery/infra-crushing-complex.png",
+      "/images/gallery/weighbridge-dispatch-station.png"
+    ],
+    ecologicalImpact: [
+      "Strict compliance with sound level limits per Industrial Noise Standards",
+      "Controlled, calibrated blast patterns designed to minimize peak ground vibration",
+      "Regular submission of environmental audits and stack emission clearances",
+      "Commitment to ethical mining and long-term land reclamation plans"
+    ],
+    certifications: [
+      "TSPCB Consent for Operation (CFO)",
+      "Approved Mine Closure & Reclamation Plan",
+      "Statutory Environmental Clearance (EC)"
+    ]
   }
 ];
 

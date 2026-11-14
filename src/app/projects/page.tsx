@@ -26,10 +26,10 @@ function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
     : initialProjects.filter((p) => p.category === activeFilter);
 
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Hero Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
             LANDMARK INFRASTRUCTURE FOOTPRINT
@@ -37,14 +37,14 @@ function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
           <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
             Our Projects & Deployments
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
             Supplying high-strength aggregates, manufactured sand, and engineered road sub-bases to premier flyovers, metro lines, commercial towers, and highways.
           </p>
         </div>
       </section>
 
       {/* Filter Tabs */}
-      <section className="py-6 bg-white border-b border-gray-100">
+      <section className="py-6 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center gap-2">
           {categories.map((cat) => (
             <button
@@ -53,7 +53,7 @@ function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
               className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
                 activeFilter === cat
                   ? 'bg-[#087A35] text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-white/90 text-gray-700 hover:bg-white border border-gray-200'
               }`}
             >
               {cat}
@@ -69,7 +69,7 @@ function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
             {filtered.map((proj) => (
               <div
                 key={proj.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-card hover:shadow-card-hover border border-gray-100 transition-all duration-300 flex flex-col justify-between group"
+                className="glass-card rounded-3xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   {/* Project Image */}
@@ -134,17 +134,27 @@ function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="p-6 pt-0 flex items-center justify-between border-t border-gray-100 mt-4">
+                <div className="p-6 pt-0 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 mt-4">
                   <span className="text-xs font-bold text-gray-500">
                     Client: {proj.clientOrSector}
                   </span>
-                  <button
-                    onClick={() => onOpenEnquiry && onOpenEnquiry()}
-                    className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1"
-                  >
-                    <span>Supply Quote</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-3">
+                    {proj.slug && (
+                      <Link
+                        href={`/projects/${proj.slug}`}
+                        className="text-xs font-bold text-[#087A35] hover:text-[#06632B] flex items-center gap-1"
+                      >
+                        <span>View Project Case</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => onOpenEnquiry && onOpenEnquiry()}
+                      className="text-xs font-bold text-gray-700 hover:text-[#087A35] bg-gray-100 px-3 py-1.5 rounded-full"
+                    >
+                      Enquire
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

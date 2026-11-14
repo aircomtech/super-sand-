@@ -17,10 +17,10 @@ export default function ProductsPage() {
 
 function ProductsPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
             ENGINEERED AGGREGATES & SAND
@@ -28,7 +28,7 @@ function ProductsPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
           <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
             Premium Construction Solutions
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
             From precision 6mm chips to heavy 60mm ballast, zero-silt manufactured plastering sand, and MoRTH-certified road sub-bases.
           </p>
         </div>
@@ -44,7 +44,7 @@ function ProductsPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
             return (
               <div
                 key={product.id}
-                className="bg-white rounded-[36px] p-6 sm:p-10 shadow-card hover:shadow-card-hover border border-gray-100 transition-all duration-300"
+                className="glass-card rounded-[36px] p-6 sm:p-10 shadow-card hover:shadow-card-hover transition-all duration-300"
               >
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                   

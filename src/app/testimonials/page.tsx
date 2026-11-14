@@ -16,10 +16,10 @@ export default function TestimonialsPage() {
 
 function TestimonialsPageContent({ onOpenEnquiry }: any) {
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/85 via-white/60 to-transparent py-14 sm:py-20 border-b border-gray-100/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
             CLIENT ENDORSEMENTS
@@ -27,7 +27,7 @@ function TestimonialsPageContent({ onOpenEnquiry }: any) {
           <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
             What Our Clients Say
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed">
             Trusted by top infrastructure builders, RMC manufacturers, and developers for nearly 20 years.
           </p>
         </div>
@@ -40,7 +40,7 @@ function TestimonialsPageContent({ onOpenEnquiry }: any) {
             {initialTestimonials.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-3xl p-8 shadow-card hover:shadow-card-hover border border-gray-100 flex flex-col justify-between transition-all duration-300"
+                className="glass-card rounded-3xl p-8 shadow-card hover:shadow-card-hover flex flex-col justify-between transition-all duration-300"
               >
                 <div>
                   {/* Rating Stars */}

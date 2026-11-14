@@ -49,7 +49,7 @@ export default function WhyChooseUsSection() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto rounded-[36px] sm:rounded-[48px] bg-gradient-to-br from-[#004B2D] via-[#004227] to-[#003822] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
         
         {/* Decorative Leaf / Grain Watermark */}
