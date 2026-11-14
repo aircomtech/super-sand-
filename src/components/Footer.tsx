@@ -8,35 +8,35 @@ export default function Footer() {
   const mapUrl = "https://maps.google.com/?q=Lane+No.+4,+Opposite+SBI,+Nehru+Nagar+Colony,+West+Marredpally,+Secunderabad,+Telangana+500026";
 
   return (
-    <footer className="bg-[#003822] text-white pt-16 pb-8 border-t border-[#064e26]">
+    <footer className="bg-[#003822] text-white pt-12 pb-6 border-t border-[#064e26] relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Main Footer Columns Matching Reference */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 border-b border-white/10">
+        {/* Main Footer Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 pb-8 border-b border-white/10">
           
           {/* Col 1: Brand & Logo */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-3 space-y-3">
             <Link href="/" className="inline-block">
               <img
                 src="/images/logos/logo-white.png"
                 alt="Super Sand"
-                className="h-12 w-auto object-contain"
+                className="h-10 w-auto object-contain"
               />
             </Link>
-            <p className="text-[14px] text-gray-300 font-medium leading-relaxed">
+            <p className="text-[13px] text-gray-300 font-medium leading-relaxed">
               Building a Stronger Tomorrow
             </p>
-            <p className="text-[12px] text-gray-400 leading-relaxed">
+            <p className="text-[11px] text-gray-400 leading-relaxed">
               Sai Super Sand Minerals Pvt. Ltd. — Leaders in mechanized quarrying, high-precision concrete aggregates, and eco-friendly manufactured sand since 2006.
             </p>
           </div>
 
           {/* Col 2: Quick Links */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-[14px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-2">
+          <div className="lg:col-span-2 space-y-2.5">
+            <h4 className="text-[13px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-1.5">
               Quick Links
             </h4>
-            <ul className="space-y-2 text-[13px] text-gray-300 font-medium">
+            <ul className="space-y-1.5 text-[12px] text-gray-300 font-medium">
               <li>
                 <Link href="/" className="hover:text-[#F4C928] transition-colors">Home</Link>
               </li>
@@ -50,17 +50,17 @@ export default function Footer() {
                 <Link href="/services" className="hover:text-[#F4C928] transition-colors">Services</Link>
               </li>
               <li>
-                <Link href="/admin" className="text-gray-400 hover:text-white transition-colors text-[11px]">Admin Portal</Link>
+                <Link href="/admin" className="text-gray-400 hover:text-white transition-colors text-[10px]">Admin Portal</Link>
               </li>
             </ul>
           </div>
 
           {/* Col 3: More Links */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-[14px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-2">
+          <div className="lg:col-span-2 space-y-2.5">
+            <h4 className="text-[13px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-1.5">
               More Links
             </h4>
-            <ul className="space-y-2 text-[13px] text-gray-300 font-medium">
+            <ul className="space-y-1.5 text-[12px] text-gray-300 font-medium">
               <li>
                 <Link href="/infrastructure" className="hover:text-[#F4C928] transition-colors">Infrastructure</Link>
               </li>
@@ -80,25 +80,25 @@ export default function Footer() {
           </div>
 
           {/* Col 4: Contact Us */}
-          <div className="lg:col-span-3 space-y-3">
-            <h4 className="text-[14px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-2">
+          <div className="lg:col-span-3 space-y-2.5">
+            <h4 className="text-[13px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-1.5">
               Contact Us
             </h4>
-            <ul className="space-y-2.5 text-[12px] text-gray-300">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#F4C928] flex-shrink-0 mt-0.5" />
+            <ul className="space-y-2 text-[11px] text-gray-300">
+              <li className="flex items-start gap-2">
+                <MapPin className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0 mt-0.5" />
                 <span className="leading-snug">
                   Lane No. 4, Opposite SBI, Nehru Nagar Colony, Secunderabad – 500026
                 </span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#F4C928] flex-shrink-0" />
+              <li className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0" />
                 <a href="tel:+919533895920" className="hover:text-[#F4C928] transition-colors font-semibold">
                   +91 95338 95920
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#F4C928] flex-shrink-0" />
+              <li className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0" />
                 <a href="mailto:info@supersand.in" className="hover:text-[#F4C928] transition-colors font-semibold">
                   info@supersand.in
                 </a>
@@ -107,18 +107,17 @@ export default function Footer() {
           </div>
 
           {/* Col 5: Follow Us & Embedded Google Maps */}
-          <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-[14px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-2">
+          <div className="lg:col-span-2 space-y-2.5">
+            <h4 className="text-[13px] font-bold text-white tracking-wider uppercase border-b border-white/20 pb-1.5">
               Follow Us
             </h4>
             
-            {/* Social Icons */}
             <div className="flex items-center gap-2">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-7 h-7 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform"
+                className="w-6 h-6 rounded-full bg-[#1877F2] text-white flex items-center justify-center text-[10px] font-bold hover:scale-110 transition-transform"
                 aria-label="Facebook"
               >
                 f
@@ -127,7 +126,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-7 h-7 rounded-full bg-[#0A66C2] text-white flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform"
+                className="w-6 h-6 rounded-full bg-[#0A66C2] text-white flex items-center justify-center text-[10px] font-bold hover:scale-110 transition-transform"
                 aria-label="LinkedIn"
               >
                 in
@@ -136,22 +135,20 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-7 h-7 rounded-full bg-[#FF0000] text-white flex items-center justify-center text-xs font-bold hover:scale-110 transition-transform"
+                className="w-6 h-6 rounded-full bg-[#FF0000] text-white flex items-center justify-center text-[10px] font-bold hover:scale-110 transition-transform"
                 aria-label="YouTube"
               >
                 ▶
               </a>
             </div>
 
-            {/* Google Maps Thumbnail Card */}
-            <div className="relative rounded-xl overflow-hidden border border-white/20 bg-white/5 mt-3 group">
-              <div className="h-20 w-full bg-[#E5E3DF] relative">
-                {/* Simulated clean map preview */}
-                <div className="absolute inset-0 opacity-80 bg-[radial-gradient(#9ca3af_1px,transparent_1px)] [background-size:12px_12px]" />
+            <div className="relative rounded-xl overflow-hidden border border-white/20 bg-white/5 mt-2 group">
+              <div className="h-16 w-full bg-[#E5E3DF] relative">
+                <div className="absolute inset-0 opacity-80 bg-[radial-gradient(#9ca3af_1px,transparent_1px)] [background-size:10px_10px]" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex flex-col items-center animate-bounce">
-                    <MapPin className="w-6 h-6 text-red-600 fill-red-600 drop-shadow-md" />
-                    <span className="text-[9px] font-extrabold bg-white text-gray-800 px-1.5 py-0.5 rounded shadow">
+                  <div className="flex flex-col items-center">
+                    <MapPin className="w-5 h-5 text-red-600 fill-red-600 drop-shadow-md" />
+                    <span className="text-[8px] font-extrabold bg-white text-gray-800 px-1 py-0.5 rounded shadow">
                       Super Sand
                     </span>
                   </div>
@@ -161,10 +158,10 @@ export default function Footer() {
                 href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-center bg-white/10 hover:bg-[#F4C928] hover:text-[#003822] text-white text-[11px] font-bold py-1.5 transition-colors flex items-center justify-center gap-1"
+                className="block text-center bg-white/10 hover:bg-[#F4C928] hover:text-[#003822] text-white text-[10px] font-bold py-1 transition-colors flex items-center justify-center gap-1"
               >
                 <span>View on Google Maps</span>
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="w-2.5 h-2.5" />
               </a>
             </div>
 
@@ -172,11 +169,11 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Bar Matching Reference */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[12px] text-gray-400 gap-3">
+        {/* Bottom Bar */}
+        <div className="pt-5 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-400 gap-2">
           <p>© 2026 Super Sand (Sai Super Sand Minerals Pvt. Ltd.). All Rights Reserved.</p>
-          <div className="flex items-center gap-2 text-gray-300 font-medium">
-            <Sparkles className="w-3.5 h-3.5 text-[#F4C928]" />
+          <div className="flex items-center gap-1.5 text-gray-300 font-medium">
+            <Sparkles className="w-3 h-3 text-[#F4C928]" />
             <span>Quality Today... A Stronger Tomorrow...</span>
           </div>
         </div>

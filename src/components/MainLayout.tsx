@@ -29,14 +29,16 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const closeLightbox = () => setActiveLightboxItem(null);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
+      {/* Animated Background from image copy 28.png applied across header to footer */}
+      <div className="site-animated-bg" />
+
       <TopBar />
       <Navbar onOpenEnquiry={openEnquiry} />
 
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {
-            // Pass modal openers to child components if they accept them
             return React.cloneElement(child as React.ReactElement<any>, {
               onOpenEnquiry: openEnquiry,
               onOpenVideo: openVideo,

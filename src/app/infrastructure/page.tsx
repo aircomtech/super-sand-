@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
+import AnimatedCounter from '@/components/AnimatedCounter';
 import { Factory, Cog, Truck, Scale, Shield, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function InfrastructurePage() {
@@ -43,65 +44,80 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       desc: "Dedicated engineering shed with certified hydraulic specialists, pneumatic torque bays, conveyor spares, and preventative maintenance schedules.",
       image: "/images/gallery/maintenance-workshop.png",
       tag: "Maintenance"
+    },
+    {
+      title: "High-Capacity Radial Stacking Conveyor Network",
+      specs: "Automated Weather-Protected Stockpiling",
+      desc: "High-discharge radial conveyors segregating finished aggregate fractions into expansive stockpiles to buffer project surges.",
+      image: "/images/gallery/aggregate-stockpile-conveyor.png",
+      tag: "Material Handling"
     }
   ];
 
   return (
-    <div className="bg-[#FAFCFA]">
+    <div className="bg-transparent">
       
       {/* Hero Header */}
-      <section className="bg-gradient-to-b from-[#E8F5E9]/60 via-white to-white py-14 sm:py-20 border-b border-gray-100">
+      <section className="bg-gradient-to-b from-white/90 via-white/80 to-transparent py-12 sm:py-16 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
-          <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase block mb-3">
+          <span className="text-[#087A35] font-extrabold text-xs tracking-[0.25em] uppercase block mb-2">
             MANUFACTURING MIGHT
           </span>
-          <h1 className="text-4xl sm:text-5xl font-black text-[#17231D] tracking-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231D] tracking-tight mb-3">
             Our Infrastructure
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">
             State-of-the-art manufacturing facilities with advanced technology, heavy excavator fleets, automated classifying screens, and 350+ TPH processing capacity.
           </p>
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="py-8 bg-white border-b border-gray-100">
+      {/* Stats Bar with Animated Counter Numbers in Typing/Counting Mode */}
+      <section className="py-6 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="p-4 rounded-2xl bg-[#F8FAF8]">
-              <div className="text-3xl sm:text-4xl font-black text-[#087A35]">350+</div>
-              <div className="text-xs font-bold text-gray-700 mt-1 uppercase tracking-wider">TPH Capacity</div>
-              <div className="text-xs text-gray-500">Tons Per Hour Processing</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="p-3.5 rounded-2xl bg-[#F8FAF8] border border-gray-100">
+              <div className="text-2xl sm:text-3xl font-black text-[#087A35]">
+                <AnimatedCounter end={350} suffix="+" />
+              </div>
+              <div className="text-[11px] font-bold text-gray-700 mt-1 uppercase tracking-wider">TPH Capacity</div>
+              <div className="text-[10px] text-gray-500">Tons Per Hour Processing</div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#F8FAF8]">
-              <div className="text-3xl sm:text-4xl font-black text-[#087A35]">150K+</div>
-              <div className="text-xs font-bold text-gray-700 mt-1 uppercase tracking-wider">Metric Tons / Mo</div>
-              <div className="text-xs text-gray-500">Monthly Extraction Rate</div>
+            <div className="p-3.5 rounded-2xl bg-[#F8FAF8] border border-gray-100">
+              <div className="text-2xl sm:text-3xl font-black text-[#087A35]">
+                <AnimatedCounter end={150} suffix="K+" />
+              </div>
+              <div className="text-[11px] font-bold text-gray-700 mt-1 uppercase tracking-wider">Metric Tons / Mo</div>
+              <div className="text-[10px] text-gray-500">Monthly Extraction Rate</div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#F8FAF8]">
-              <div className="text-3xl sm:text-4xl font-black text-[#087A35]">300+</div>
-              <div className="text-xs font-bold text-gray-700 mt-1 uppercase tracking-wider">Daily Dispatches</div>
-              <div className="text-xs text-gray-500">Truckloads Dispatched Daily</div>
+            <div className="p-3.5 rounded-2xl bg-[#F8FAF8] border border-gray-100">
+              <div className="text-2xl sm:text-3xl font-black text-[#087A35]">
+                <AnimatedCounter end={300} suffix="+" />
+              </div>
+              <div className="text-[11px] font-bold text-gray-700 mt-1 uppercase tracking-wider">Daily Dispatches</div>
+              <div className="text-[10px] text-gray-500">Truckloads Dispatched Daily</div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#F8FAF8]">
-              <div className="text-3xl sm:text-4xl font-black text-[#087A35]">100%</div>
-              <div className="text-xs font-bold text-gray-700 mt-1 uppercase tracking-wider">Weighbridge Slips</div>
-              <div className="text-xs text-gray-500">Transparent Computerized Slips</div>
+            <div className="p-3.5 rounded-2xl bg-[#F8FAF8] border border-gray-100">
+              <div className="text-2xl sm:text-3xl font-black text-[#087A35]">
+                <AnimatedCounter end={100} suffix="%" />
+              </div>
+              <div className="text-[11px] font-bold text-gray-700 mt-1 uppercase tracking-wider">Weighbridge Slips</div>
+              <div className="text-[10px] text-gray-500">Transparent Computerized Slips</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Facilities Grid */}
-      <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {infraAssets.map((asset, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-[32px] p-6 sm:p-8 shadow-card border border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+              className="bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-card border border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
             >
               <div className="lg:col-span-6">
                 <div
@@ -119,26 +135,26 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
                     alt={asset.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-3 left-3 bg-[#087A35] text-white text-[11px] font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-3 left-3 bg-[#087A35] text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
                     {asset.tag}
                   </div>
                 </div>
               </div>
 
-              <div className="lg:col-span-6 space-y-3">
-                <div className="text-xs font-extrabold text-[#087A35] uppercase tracking-wider">
+              <div className="lg:col-span-6 space-y-2.5">
+                <div className="text-[11px] font-extrabold text-[#087A35] uppercase tracking-wider">
                   {asset.specs}
                 </div>
-                <h3 className="text-2xl font-black text-[#17231D]">
+                <h3 className="text-xl sm:text-2xl font-black text-[#17231D]">
                   {asset.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
                   {asset.desc}
                 </p>
                 <div className="pt-2">
                   <button
                     onClick={() => onOpenEnquiry && onOpenEnquiry()}
-                    className="inline-flex items-center gap-2 bg-[#087A35] text-white px-5 py-2.5 rounded-full font-bold text-xs shadow hover:bg-[#06632B]"
+                    className="inline-flex items-center gap-1.5 bg-[#087A35] text-white px-5 py-2 rounded-full font-bold text-xs shadow hover:bg-[#06632B]"
                   >
                     <span>Enquire Supply Capacity</span>
                     <ArrowRight className="w-3.5 h-3.5" />
