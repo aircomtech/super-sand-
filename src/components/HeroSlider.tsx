@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Play, ChevronLeft, ChevronRight, Award, Truck, Leaf, ShieldCheck, ChevronDown } from 'lucide-react';
 
@@ -23,10 +23,10 @@ const slides = [
   },
   {
     id: 2,
-    tag: "STATE-OF-THE-ART CRUSHING",
-    titleLine1: "Engineered for",
-    titleLine2: "Unmatched Strength",
-    subtitle: "Multi-stage automated crushing producing 100% cubical aggregates and zero-silt sand.",
+    tag: "STATE-OF-THE-ART INFRASTRUCTURE",
+    titleLine1: "Precision Crushed",
+    titleLine2: "Superior Strength",
+    subtitle: "3-Stage automated crushing delivering 100% cubical aggregates and zero-silt sand.",
     desktopImage: "/images/hero/hero-slide-2.png",
     mobileImage: "/images/hero/hero-slide-2.png",
     ctaText: "Explore Facilities",
@@ -34,21 +34,21 @@ const slides = [
   },
   {
     id: 3,
-    tag: "RELIABLE SUPPLY CHAIN",
-    titleLine1: "Express Logistics",
-    titleLine2: "On-Time Delivery",
-    subtitle: "Dedicated multi-axle tipper fleet and automated electronic weighbridge dispatch.",
+    tag: "RELIABLE LOGISTICS FLEET",
+    titleLine1: "Uninterrupted",
+    titleLine2: "Express Dispatch",
+    subtitle: "Dedicated commercial tipper fleet and automated electronic weighbridges operating 24/7.",
     desktopImage: "/images/hero/hero-slide-3.png",
     mobileImage: "/images/hero/hero-slide-3.png",
-    ctaText: "View Our Services",
+    ctaText: "View Logistics & Fleet",
     ctaLink: "/services",
   },
   {
     id: 4,
-    tag: "SUSTAINABILITY FIRST",
-    titleLine1: "Preserving Rivers",
-    titleLine2: "Greener Tomorrow",
-    subtitle: "Eco-friendly manufactured sand meeting IS 383:2016 standards with superior bonding.",
+    tag: "ENVIRONMENTAL EXCELLENCE",
+    titleLine1: "Eco-Friendly",
+    titleLine2: "Greener Future",
+    subtitle: "Conserving fragile riverbeds with certified, zero-silt manufactured plastering sand.",
     desktopImage: "/images/hero/hero-slide-4.png",
     mobileImage: "/images/hero/hero-slide-4.png",
     ctaText: "Our Sustainability",
@@ -61,7 +61,6 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -71,235 +70,218 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
 
-  // Autoplay timer: 5.5 seconds
+  // Autoplay timer: 5.5s
   useEffect(() => {
     if (!isPaused) {
-      autoPlayRef.current = setInterval(() => {
+      const timer = setInterval(() => {
         nextSlide();
       }, 5500);
+      return () => clearInterval(timer);
     }
-    return () => {
-      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    };
   }, [isPaused, nextSlide]);
 
-  // Touch Swipe handlers for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStartX(e.targetTouches[0].clientX);
   };
-
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEndX(e.targetTouches[0].clientX);
   };
-
   const handleTouchEnd = () => {
-    if (touchStartX - touchEndX > 50) {
-      nextSlide();
-    }
-    if (touchStartX - touchEndX < -50) {
-      prevSlide();
-    }
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchStartX - touchEndX < -50) prevSlide();
   };
 
   const scrollToProducts = () => {
     const el = document.getElementById('products-section');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const current = slides[currentSlide];
 
   return (
     <section
-      className="relative overflow-hidden bg-gradient-to-b from-[#F5F9F6] via-white to-white min-h-[580px] sm:min-h-[640px] lg:min-h-[700px] flex items-center"
+      className="relative overflow-hidden w-full min-h-[580px] sm:min-h-[640px] lg:min-h-[720px] flex items-center bg-white"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      aria-label="Hero Carousel"
+      aria-label="Hero Showcase"
     >
-      {/* Background Graphic Elements */}
-      <div className="absolute top-0 right-0 w-2/3 h-full pointer-events-none opacity-40 lg:opacity-100">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F5F9F6] via-transparent to-transparent z-10" />
+      {/* FULL-BLEED SLIDER BACKGROUND (Desktop & Mobile) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {slides.map((s, index) => {
+          const isActive = index === currentSlide;
+          return (
+            <div
+              key={s.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
+              } transition-transform duration-1000`}
+            >
+              {/* Responsive picture element: vertical mobile image on phones, wide desktop image on laptops */}
+              <picture>
+                <source media="(max-width: 767px)" srcSet={s.mobileImage} />
+                <img
+                  src={s.desktopImage}
+                  alt={s.titleLine2}
+                  className="w-full h-full object-cover object-right lg:object-center"
+                />
+              </picture>
+
+              {/* Seamless Vignette & Readability Gradient Overlay matching image.png & image copy.png */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent lg:w-3/5 w-full pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent md:hidden pointer-events-none" />
+            </div>
+          );
+        })}
       </div>
 
-      {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 w-full relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+      {/* Hero Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 w-full relative z-10">
+        <div className="max-w-2xl lg:max-w-xl text-left space-y-6">
           
-          {/* Left Column: Content */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-6">
-            
-            {/* Tag Badge */}
-            <div className="inline-flex items-center gap-2">
-              <span className="text-[#087A35] font-extrabold text-[13px] sm:text-[14px] tracking-[0.2em] uppercase py-1 px-0 border-b-2 border-[#087A35]">
-                {current.tag}
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <div className="space-y-1">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#17231D] tracking-tight leading-[1.12]">
-                {current.titleLine1}{' '}
-                <span className="text-[#087A35] block sm:inline">{current.titleLine2}</span>
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-[16px] sm:text-[18px] text-gray-600 font-medium max-w-xl leading-relaxed">
-              {current.subtitle}
-            </p>
-
-            {/* Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link
-                href={current.ctaLink}
-                className="inline-flex items-center gap-2.5 bg-[#087A35] hover:bg-[#06632B] text-white px-7 py-3.5 rounded-full font-bold text-[15px] tracking-wide shadow-brand transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <span>{current.ctaText}</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <button
-                onClick={onOpenVideo}
-                className="inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-[#17231D] border border-gray-200 hover:border-gray-300 px-6 py-3.5 rounded-full font-semibold text-[15px] shadow-sm transition-all duration-300 transform hover:-translate-y-0.5 group"
-              >
-                <span className="w-8 h-8 rounded-full bg-[#E8F5E9] text-[#087A35] flex items-center justify-center transition-transform group-hover:scale-110">
-                  <Play className="w-4 h-4 fill-[#087A35] ml-0.5" />
-                </span>
-                <span>Watch Our Story</span>
-              </button>
-            </div>
-
-            {/* 4 Trust Indicators Matching Reference Screenshot Exactly */}
-            <div className="pt-6 sm:pt-8 border-t border-gray-200/80">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Award className="w-5 h-5 text-[#087A35]" />
-                  </div>
-                  <div className="text-[13px] font-bold text-[#17231D] leading-snug">
-                    Premium Quality
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Truck className="w-5 h-5 text-[#087A35]" />
-                  </div>
-                  <div className="text-[13px] font-bold text-[#17231D] leading-snug">
-                    Reliable Supply
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Leaf className="w-5 h-5 text-[#087A35]" />
-                  </div>
-                  <div className="text-[13px] font-bold text-[#17231D] leading-snug">
-                    Environmentally Responsible
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <ShieldCheck className="w-5 h-5 text-[#087A35]" />
-                  </div>
-                  <div className="text-[13px] font-bold text-[#17231D] leading-snug">
-                    Trusted Partner
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+          {/* Green Category / Brand Tag */}
+          <div className="inline-flex items-center gap-2">
+            <span className="text-[#087A35] font-black text-xs sm:text-sm tracking-[0.25em] uppercase border-b-2 border-[#087A35] pb-0.5">
+              {current.tag}
+            </span>
           </div>
 
-          {/* Right Column: Dynamic Slider Visual Showcase */}
-          <div className="lg:col-span-6 relative">
-            <div className="relative w-full h-[320px] sm:h-[400px] lg:h-[480px] rounded-3xl lg:rounded-[40px] overflow-hidden shadow-2xl border-4 border-white">
+          {/* Main Headline Matching image.png */}
+          <div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#17231D] tracking-tight leading-[1.12]">
+              {current.titleLine1}{' '}
+              <span className="text-[#087A35] block sm:inline">
+                {current.titleLine2}
+              </span>
+            </h1>
+          </div>
+
+          {/* Subtitle */}
+          <p className="text-base sm:text-lg text-gray-700 font-medium leading-relaxed max-w-lg">
+            {current.subtitle}
+          </p>
+
+          {/* Call to Actions */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Link
+              href={current.ctaLink}
+              className="inline-flex items-center gap-2.5 bg-[#087A35] hover:bg-[#06632B] text-white px-7 py-3.5 rounded-full font-bold text-sm sm:text-base tracking-wide shadow-brand transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-0.5"
+            >
+              <span>{current.ctaText}</span>
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            </Link>
+
+            <button
+              onClick={onOpenVideo}
+              className="inline-flex items-center gap-2.5 bg-white/90 backdrop-blur-md hover:bg-white text-[#17231D] border border-gray-200 px-6 py-3.5 rounded-full font-semibold text-sm sm:text-base shadow-sm transition-all duration-300 transform hover:-translate-y-0.5 group"
+            >
+              <span className="w-7 h-7 rounded-full bg-[#E8F5E9] text-[#087A35] flex items-center justify-center transition-transform group-hover:scale-110">
+                <Play className="w-3.5 h-3.5 fill-[#087A35] ml-0.5" />
+              </span>
+              <span>Watch Our Story</span>
+            </button>
+          </div>
+
+          {/* 4 Trust Indicators Matching Reference Screenshot */}
+          <div className="pt-6 sm:pt-8 border-t border-gray-200/90">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               
-              {/* Carousel Slides */}
-              {slides.map((s, index) => {
-                const isActive = index === currentSlide;
-                return (
-                  <div
-                    key={s.id}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                      isActive ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-105 pointer-events-none'
-                    } transition-transform duration-1000`}
-                  >
-                    {/* Responsive image loading: mobile hero image on small screens, widescreen desktop on large */}
-                    <picture>
-                      <source media="(max-width: 767px)" srcSet={s.mobileImage} />
-                      <img
-                        src={s.desktopImage}
-                        alt={s.titleLine2}
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </picture>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <Award className="w-5 h-5 text-[#087A35]" />
+                </div>
+                <div className="text-xs sm:text-[13px] font-bold text-[#17231D] leading-snug">
+                  Premium Quality
+                </div>
+              </div>
 
-                    {/* Gradient Overlay for polish and depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <Truck className="w-5 h-5 text-[#087A35]" />
+                </div>
+                <div className="text-xs sm:text-[13px] font-bold text-[#17231D] leading-snug">
+                  Reliable Supply
+                </div>
+              </div>
 
-                    {/* Subtle caption badge */}
-                    <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-2xl flex items-center justify-between text-xs font-semibold text-[#17231D] shadow-md">
-                      <span className="truncate pr-2 font-bold text-[#087A35]">{s.tag}</span>
-                      <span className="text-gray-500 whitespace-nowrap">Slide {index + 1} of {slides.length}</span>
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <Leaf className="w-5 h-5 text-[#087A35]" />
+                </div>
+                <div className="text-xs sm:text-[13px] font-bold text-[#17231D] leading-snug">
+                  Environmentally Responsible
+                </div>
+              </div>
 
-              {/* Slider Navigation Arrows */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#17231D] shadow-lg flex items-center justify-center backdrop-blur-sm transition-all hover:scale-110 active:scale-95"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="w-5 h-5 text-[#087A35]" />
-              </button>
-
-              <button
-                onClick={nextSlide}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/80 hover:bg-white text-[#17231D] shadow-lg flex items-center justify-center backdrop-blur-sm transition-all hover:scale-110 active:scale-95"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="w-5 h-5 text-[#087A35]" />
-              </button>
-
-              {/* Pagination Dots */}
-              <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentSlide(i)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      i === currentSlide ? 'w-8 bg-[#087A35]' : 'w-2.5 bg-white/80 hover:bg-white'
-                    }`}
-                    aria-label={`Go to slide ${i + 1}`}
-                  />
-                ))}
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#E8F5E9] text-[#087A35] flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <ShieldCheck className="w-5 h-5 text-[#087A35]" />
+                </div>
+                <div className="text-xs sm:text-[13px] font-bold text-[#17231D] leading-snug">
+                  Trusted Partner
+                </div>
               </div>
 
             </div>
+          </div>
 
-            {/* Scroll Down Target Button matching Reference */}
-            <button
-              onClick={scrollToProducts}
-              className="hidden lg:flex absolute -bottom-5 right-10 z-30 w-12 h-12 rounded-full bg-[#087A35] hover:bg-[#06632B] text-white shadow-xl items-center justify-center transition-transform hover:scale-110 animate-bounce"
-              title="Scroll to Products"
-            >
-              <ChevronDown className="w-6 h-6" />
-            </button>
+          {/* Elegant Carousel Controls & Dots */}
+          <div className="flex items-center gap-4 pt-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevSlide}
+                className="w-8 h-8 rounded-full bg-white/90 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
+                aria-label="Previous Hero Slide"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="w-8 h-8 rounded-full bg-white/90 hover:bg-[#087A35] hover:text-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-colors"
+                aria-label="Next Hero Slide"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
 
+            <div className="flex items-center gap-2">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === currentSlide ? 'w-7 bg-[#087A35]' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Slide ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <span className="text-[11px] font-semibold text-gray-500">
+              0{currentSlide + 1} / 0{slides.length}
+            </span>
           </div>
 
         </div>
       </div>
+
+      {/* Curved Bottom Decorative Wave & Scroll Down Target matching image.png */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none z-10">
+        <svg viewBox="0 0 1440 64" fill="none" className="w-full h-full preserve-3d" preserveAspectRatio="none">
+          <path d="M0,64 C480,20 960,64 1440,24 L1440,64 L0,64 Z" fill="#FAFCFA" />
+        </svg>
+      </div>
+
+      {/* Floating Scroll Down Button */}
+      <button
+        onClick={scrollToProducts}
+        className="hidden lg:flex absolute bottom-4 right-12 z-20 w-11 h-11 rounded-full bg-[#087A35] hover:bg-[#06632B] text-white shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 animate-bounce"
+        title="Scroll down to Products"
+      >
+        <ChevronDown className="w-6 h-6 stroke-[2.5]" />
+      </button>
     </section>
   );
 }

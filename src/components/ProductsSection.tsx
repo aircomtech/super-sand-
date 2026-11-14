@@ -1,24 +1,27 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Eye, CheckCircle2, X, Phone, MessageSquare } from 'lucide-react';
 import { Product } from '@/lib/types';
 
 interface ProductsSectionProps {
   products: Product[];
+  onOpenEnquiry?: () => void;
 }
 
-export default function ProductsSection({ products }: ProductsSectionProps) {
+export default function ProductsSection({ products, onOpenEnquiry }: ProductsSectionProps) {
+  const [activeQuickViewProduct, setActiveQuickViewProduct] = useState<Product | null>(null);
+
   return (
-    <section id="products-section" className="py-16 sm:py-24 bg-[#FAFCFA]">
+    <section id="products-section" className="py-16 sm:py-24 bg-[#FAFCFA] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header Matching Reference Screenshot */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-3 justify-center mb-3">
             <span className="w-10 h-0.5 bg-[#087A35]"></span>
-            <span className="text-[#087A35] font-extrabold text-[13px] sm:text-[14px] tracking-[0.25em] uppercase">
+            <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase">
               OUR PRODUCTS
             </span>
             <span className="w-10 h-0.5 bg-[#087A35]"></span>
@@ -28,18 +31,17 @@ export default function ProductsSection({ products }: ProductsSectionProps) {
             Premium Construction Solutions
           </h2>
 
-          <p className="text-[15px] sm:text-[17px] text-gray-600 font-medium">
-            Delivering the best quality for all your construction needs.
+          <p className="text-sm sm:text-base text-gray-600 font-medium">
+            Delivering the best quality for all your construction needs — 8 engineered aggregate and sand classifications.
           </p>
         </div>
 
-        {/* 4 Product Cards Grid */}
+        {/* 8 Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {products.map((product) => (
-            <Link
+            <div
               key={product.id}
-              href={`/products/${product.slug}`}
-              className="group bg-white rounded-3xl p-4 shadow-card hover:shadow-card-hover border border-gray-100/80 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-1.5"
+              className="group bg-white rounded-3xl p-4 shadow-card hover:shadow-card-hover border border-gray-100/80 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-2 relative"
             >
               <div>
                 {/* Product Image Frame */}
@@ -49,34 +51,132 @@ export default function ProductsSection({ products }: ProductsSectionProps) {
                     alt={product.name}
                     className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
+
+                  {/* Quick View Button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveQuickViewProduct(product);
+                    }}
+                    className="absolute top-3 right-3 bg-white/90 hover:bg-[#087A35] hover:text-white text-gray-800 p-2 rounded-xl text-xs font-bold shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center gap-1"
+                    title="Quick Specs Preview"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span className="text-[10px] hidden sm:inline">Quick View</span>
+                  </button>
                 </div>
 
                 {/* Product Name */}
-                <h3 className="text-xl font-bold text-[#17231D] group-hover:text-[#087A35] transition-colors mb-2">
-                  {product.name}
+                <h3 className="text-lg sm:text-xl font-bold text-[#17231D] group-hover:text-[#087A35] transition-colors mb-1.5 leading-snug">
+                  <Link href={`/products/${product.slug}`}>
+                    {product.name}
+                  </Link>
                 </h3>
 
+                {/* Product Tagline / Sizes */}
+                <p className="text-xs font-semibold text-[#087A35] mb-2 line-clamp-1">
+                  {product.tagline}
+                </p>
+
                 {/* Product Description */}
-                <p className="text-[13px] sm:text-[14px] text-gray-500 leading-relaxed line-clamp-2">
+                <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
                   {product.shortDesc}
                 </p>
               </div>
 
               {/* Bottom Action Arrow matching Reference */}
               <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-[#087A35] opacity-0 group-hover:opacity-100 transition-opacity">
-                  View Specifications
-                </span>
-                <div className="w-9 h-9 rounded-full bg-[#087A35] text-white flex items-center justify-center transition-all duration-300 group-hover:bg-[#06632B] group-hover:scale-110 ml-auto shadow-sm">
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="text-xs font-bold text-[#087A35] hover:underline"
+                >
+                  View Details
+                </Link>
+
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="w-9 h-9 rounded-full bg-[#087A35] text-white flex items-center justify-center transition-all duration-300 group-hover:bg-[#06632B] group-hover:scale-110 shadow-sm"
+                  aria-label={`Open ${product.name}`}
+                >
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />
-                </div>
+                </Link>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
       </div>
+
+      {/* Interactive Quick-View Modal Popup */}
+      {activeQuickViewProduct && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setActiveQuickViewProduct(null)}
+        >
+          <div
+            className="relative max-w-xl w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="text-[#087A35] font-extrabold text-[11px] uppercase tracking-wider block mb-1">
+                  PRODUCT SPECIFICATION SUMMARY
+                </span>
+                <h3 className="text-2xl font-black text-[#17231D]">
+                  {activeQuickViewProduct.name}
+                </h3>
+                <p className="text-xs font-bold text-[#087A35]">
+                  {activeQuickViewProduct.subtitle}
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveQuickViewProduct(null)}
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              {activeQuickViewProduct.fullDesc}
+            </p>
+
+            {/* Sizes */}
+            <div>
+              <h5 className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-2">
+                Available Fractions / Grades:
+              </h5>
+              <div className="flex flex-wrap gap-2">
+                {activeQuickViewProduct.sizesOrTypes.map((st, i) => (
+                  <span key={i} className="bg-gray-100 text-gray-800 text-xs font-bold px-2.5 py-1 rounded-lg">
+                    {st}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
+              <Link
+                href={`/products/${activeQuickViewProduct.slug}`}
+                className="flex-1 text-center bg-[#087A35] hover:bg-[#06632B] text-white py-3 rounded-full font-bold text-xs shadow"
+              >
+                Full Product Page
+              </Link>
+              <button
+                onClick={() => {
+                  setActiveQuickViewProduct(null);
+                  if (onOpenEnquiry) onOpenEnquiry();
+                }}
+                className="flex-1 bg-[#F4C928] hover:bg-[#E2B81C] text-[#003822] py-3 rounded-full font-black text-xs shadow"
+              >
+                Instant Quote
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

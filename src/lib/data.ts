@@ -20,7 +20,9 @@ export const initialSiteInfo: SiteInfo = {
     "Trust and Transparency",
     "Sustainability and Environmental Responsibility",
     "Innovation and Technology",
-    "Reliability and Long-Term Relationships"
+    "Reliability and Long-Term Relationships",
+    "Safety and Integrity",
+    "Operational Agility"
   ]
 };
 
@@ -168,6 +170,66 @@ export const initialProducts: Product[] = [
       "Fineness Index": "Uniformly balanced",
       "Moisture": "Controlled dry-batch delivery"
     }
+  },
+  {
+    id: "micro-chips-4-6mm",
+    slug: "micro-chips-4-6mm",
+    name: "Micro Aggregates & Chips",
+    subtitle: "Precision 4mm - 6mm Graded Micro Stone",
+    tagline: "Ideal for paver blocks, mosaic tiles, and asphalt tack coats.",
+    shortDesc: "Screened micro stone chips offering supreme compressive density.",
+    fullDesc: "Clean, dry-screened micro chips graded between 4mm and 6mm. Highly demanded by precast concrete block manufacturers, tactile paver fabricators, and asphalt micro-surfacing contractors. Uniform angular geometry ensures rapid compaction and immaculate surface finish.",
+    image: "/images/gallery/lab-sieve-grading-test.png",
+    heroImage: "/images/gallery/lab-sieve-grading-test.png",
+    sizesOrTypes: ["4mm Screened Chips", "6mm Micro Stone", "Fine Grit 0-4mm"],
+    applications: ["Interlocking paver blocks", "Precast boundary walls", "Asphalt micro-surfacing", "Terrazzo flooring"],
+    features: ["Zero dust adherence", "Uniform grain geometry", "Maximum surface friction"],
+    specifications: { "Size Range": "4mm - 6.3mm", "Grading": "IS 383:2016", "Moisture": "< 0.5%" }
+  },
+  {
+    id: "railway-ballast-60mm",
+    slug: "railway-ballast-60mm",
+    name: "Railway Track Ballast",
+    subtitle: "Heavy-Duty 60mm Angular Granite Ballast",
+    tagline: "Engineered for heavy-haul rail corridors and high-impact tracks.",
+    shortDesc: "High crushing resistance granite ballast meeting strict RDSO specifications.",
+    fullDesc: "Massive, angular 60mm granite aggregate quarry-blasted and shaped to withstand cyclic train load vibration, dynamic track stresses, and aggressive freeze-thaw cycles. Provides immediate water drainage and maintains long-term rail alignment.",
+    image: "/images/gallery/excavator-mining-face.png",
+    heroImage: "/images/gallery/excavator-mining-face.png",
+    sizesOrTypes: ["50mm - 65mm RDSO Ballast", "Heavy Foundation Spalls"],
+    applications: ["Indian Railways high-speed corridors", "Industrial private siding tracks", "Metro depot formations"],
+    features: ["Exceptional impact resistance", "Negligible water absorption", "Zero weathered particles"],
+    specifications: { "Crushing Value": "< 15%", "Impact Value": "< 14%", "Abrasion Value": "< 18%" }
+  },
+  {
+    id: "rmc-special-aggregates",
+    slug: "rmc-special-aggregates",
+    name: "RMC Plant Special Mix",
+    subtitle: "Dedicated Pre-Graded Feed for Concrete Batching Plants",
+    tagline: "Consistent moisture and slump retention for automated batching.",
+    shortDesc: "Pre-screened structural 10mm & 20mm aggregates tuned for pumpable concrete.",
+    fullDesc: "Formulated specifically for automated Ready-Mix Concrete batching towers. Eliminates pump blockage, enhances workability, and lowers water-cement ratios without sacrificing early 7-day and 28-day target compressive strength.",
+    image: "/images/gallery/aggregate-stockpile-conveyor.png",
+    heroImage: "/images/gallery/aggregate-stockpile-conveyor.png",
+    sizesOrTypes: ["RMC 10mm Pump Mix", "RMC 20mm Structural Mix", "Combined 10/20mm Feed"],
+    applications: ["Commercial RMC towers", "High-rise tower pumping up to 50 floors", "Mass pile caps"],
+    features: ["Zero pump pipe blockage", "High cohesion without segregation", "Guaranteed daily supply volume"],
+    specifications: { "Pumpability Index": "Superior", "Flakiness": "< 12%", "Silt": "Nil" }
+  },
+  {
+    id: "dlc-road-aggregates",
+    slug: "dlc-road-aggregates",
+    name: "Dry Lean Concrete (DLC)",
+    subtitle: "MoRTH Compliant Sub-Base for Rigid Highway Pavements",
+    tagline: "Maximum compaction density for National and State Expressways.",
+    shortDesc: "Continuous grading aggregate blend engineered for zero-void sub-bases.",
+    fullDesc: "Strictly graded to MoRTH Clause 601 specifications. Provides a uniform, non-erodible structural platform beneath high-strength PQC (Pavement Quality Concrete) highway slabs, preventing pumping and subgrade settlement under heavy axle loads.",
+    image: "/images/gallery/dump-truck-haul-road.png",
+    heroImage: "/images/gallery/dump-truck-haul-road.png",
+    sizesOrTypes: ["DLC Continuous 0 - 26.5mm", "DLC Fine Aggregates"],
+    applications: ["National Expressways", "Airport heavy aircraft taxiways", "Logistics container terminal aprons"],
+    features: ["High CBR strength", "Rapid vibro-roller compaction", "Engineered particle interlock"],
+    specifications: { "Standard": "MoRTH Clause 601", "7-Day Strength": "> 10 MPa", "Compaction": "98% MDD" }
   }
 ];
 
@@ -300,6 +362,25 @@ export const initialServices: Service[] = [
       "Rainwater harvesting ponds recharging local groundwater tables"
     ],
     capacityOrSpecs: "100% compliant with State Pollution Control Board environmental norms"
+  },
+  {
+    id: "custom-batch-blending",
+    slug: "custom-batch-blending",
+    title: "Customized Aggregate Grading & Batch Blending",
+    category: "Custom Engineering",
+    tagline: "Tailored particle size distributions matching project engineering specifications",
+    description: "We configure specialized multi-deck screen fractions to deliver bespoke aggregate recipes for high-performance concrete (M60+), precast segmental bridge boxes, underwater tremie concrete, and porous asphalt friction courses.",
+    mainImage: "/images/gallery/sand-conveyor-discharge.png",
+    galleryImages: [
+      "/images/gallery/sand-conveyor-discharge.png",
+      "/images/gallery/aggregate-stockpile-conveyor.png"
+    ],
+    highlights: [
+      "Custom continuous grading curves engineered per client mix design",
+      "Exact fineness modulus adjustments for concrete and plaster",
+      "Pre-blended moisture control for reduced on-site water adjustments"
+    ],
+    capacityOrSpecs: "Custom formulation turnaround within 24 hours"
   }
 ];
 
@@ -500,6 +581,46 @@ export const initialProjects: Project[] = [
     description: "High-impact resistance aggregates for underwater well foundations, abutments, and asphalt concrete wearing course.",
     materialsSupplied: ["Super 40mm Aggregates", "G.S.B Road Sub-Base", "W.M.M Mix"],
     clientOrSector: "National Highway Authority"
+  },
+  {
+    id: "proj-5",
+    title: "Outer Ring Road (ORR) Expansion & Service Corridors",
+    category: "Highways & Flyovers",
+    location: "Hyderabad Ring Expressway",
+    image: "/images/gallery/dump-truck-haul-road.png",
+    description: "Continuous bulk delivery of MoRTH-certified W.M.M and G.S.B sub-base mixes for 8-lane expressway extensions.",
+    materialsSupplied: ["W.M.M Mix", "G.S.B Grading II", "Super 40mm Aggregates"],
+    clientOrSector: "National Highway Contractors"
+  },
+  {
+    id: "proj-6",
+    title: "Mega E-Commerce Logistics Hubs & Warehouses",
+    category: "Commercial Towers",
+    location: "Shamshabad & Medchal Industrial Corridors",
+    image: "/images/gallery/wheel-loader-loading-truck.png",
+    description: "Laser-screed floor slab aggregates requiring tight particle grading to resist heavy automated forklift wheel loads.",
+    materialsSupplied: ["Super 10mm & 20mm Aggregates", "Engineered Insta Mix"],
+    clientOrSector: "Global Industrial Park Developers"
+  },
+  {
+    id: "proj-7",
+    title: "Regional Airport Runway & Taxiway Resurfacing",
+    category: "Bridges & Expressways",
+    location: "Aviation Infrastructure Hubs",
+    image: "/images/gallery/aggregate-stockpile-conveyor.png",
+    description: "High-abrasion resistance polish-resistant aggregates for high-friction aircraft landing surfaces.",
+    materialsSupplied: ["Super 10mm Bitumen Chips", "Super 20mm Graded Granite"],
+    clientOrSector: "Aviation Infrastructure Corporation"
+  },
+  {
+    id: "proj-8",
+    title: "Precast Concrete Segmental Casting Yard",
+    category: "Metro Transit",
+    location: "Precast Fabrication Yard",
+    image: "/images/gallery/infra-crushing-complex.png",
+    description: "Dedicated daily supply of zero-silt VSI M-sand and 10mm stone chips for rapid-curing precast bridge segments.",
+    materialsSupplied: ["VSI M-Sand Zone II", "Super 10mm Concrete Chips"],
+    clientOrSector: "Infrastructure Joint Ventures"
   }
 ];
 
@@ -528,6 +649,33 @@ export const initialTestimonials: Testimonial[] = [
     designation: "Managing Director",
     company: "Bhavani Constructions",
     quote: "Having worked with Sai Super Sand for over 12 years, their electronic weighbridge transparency, prompt fleet dispatch, and professional management make them the most dependable supplier in the region.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-4",
+    name: "M. Anjaneyulu",
+    designation: "Senior Highway Engineer",
+    company: "Deccan Expressways",
+    quote: "Their W.M.M and G.S.B road sub-base mixes achieve required compaction densities effortlessly with minimum rolling passes. Deliveries have never delayed our paving train.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-5",
+    name: "Dr. P. Chandrasekhar",
+    designation: "Structural Consultant",
+    company: "Matrix Civil Consultants",
+    quote: "We routinely recommend Super Sand for high-rise commercial structures. Test reports for crushing, impact, and flakiness consistently surpass IS 383:2016 tolerances.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-6",
+    name: "G. Sudhakar",
+    designation: "Procurement Head",
+    company: "Pride Urban Developers",
+    quote: "Switching completely to Super Sand Plastering Sand eliminated all map cracking on our apartment internal walls. Their quality is exemplary.",
     rating: 5,
     avatar: "/images/testimonials/avatar-ramesh.jpg"
   }

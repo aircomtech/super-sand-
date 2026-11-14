@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Trophy, Users, Shield, Leaf, Lightbulb, Handshake } from 'lucide-react';
+import { ArrowRight, Trophy, Users, Shield, Leaf, Lightbulb, Handshake, Gem, Zap } from 'lucide-react';
 
 export default function WhyChooseUsSection() {
   const features = [
@@ -23,7 +23,7 @@ export default function WhyChooseUsSection() {
     },
     {
       icon: Leaf,
-      title: "Sustainability & Environmental",
+      title: "Sustainability & Environment",
       desc: "Protecting natural riverbeds with eco-responsible manufactured sand."
     },
     {
@@ -35,6 +35,16 @@ export default function WhyChooseUsSection() {
       icon: Handshake,
       title: "Reliability & Long-Term",
       desc: "Uninterrupted 24/7 dedicated fleet supply since 2008."
+    },
+    {
+      icon: Gem,
+      title: "Geological Hard Rock Purity",
+      desc: "Extracted from captive virgin crystalline granite formations."
+    },
+    {
+      icon: Zap,
+      title: "Sub-5-Min Turnaround",
+      desc: "Heavy wheel loader fleets loading commercial tippers instantly."
     }
   ];
 
@@ -63,38 +73,38 @@ export default function WhyChooseUsSection() {
               <span className="text-[#F4C928]">Built on Trust.</span>
             </h2>
 
-            <p className="text-[14px] sm:text-[15px] text-gray-200/90 font-normal leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-200/90 font-normal leading-relaxed">
               We are committed to delivering excellence in every grain of sand we provide. Our continuous laboratory testing and prompt logistics ensure your construction projects stand the test of time.
             </p>
 
             <div className="pt-2">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 bg-[#F4C928] hover:bg-[#E2B81C] text-[#003822] px-6 py-3 rounded-full font-bold text-[13px] tracking-wide transition-all duration-300 shadow-md hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 bg-[#F4C928] hover:bg-[#E2B81C] text-[#003822] px-6 py-3 rounded-full font-bold text-xs tracking-wide transition-all duration-300 shadow-md hover:scale-105 active:scale-95"
               >
                 <span>Our Strength</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </Link>
             </div>
           </div>
 
-          {/* Right Column: 6 Attractive Icon-Based Feature Items */}
+          {/* Right Column: 8 Attractive Icon-Based Feature Items */}
           <div className="lg:col-span-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-7">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
               {features.map((item, idx) => {
                 const IconComponent = item.icon;
                 return (
                   <div
                     key={idx}
-                    className="flex flex-col items-center sm:items-start text-center sm:text-left p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 group hover:-translate-y-1"
+                    className="flex flex-col items-center sm:items-start text-center sm:text-left p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 group hover:-translate-y-1"
                   >
-                    <div className="w-12 h-12 rounded-full bg-white/15 text-[#F4C928] flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-[#F4C928] group-hover:text-[#004B2D] transition-all shadow-sm">
-                      <IconComponent className="w-6 h-6 transition-colors" />
+                    <div className="w-10 h-10 rounded-full bg-white/15 text-[#F4C928] flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-[#F4C928] group-hover:text-[#004B2D] transition-all shadow-sm">
+                      <IconComponent className="w-5 h-5 transition-colors" />
                     </div>
-                    <h3 className="text-[14px] font-bold text-white group-hover:text-[#F4C928] transition-colors mb-1.5 leading-snug">
+                    <h3 className="text-xs font-bold text-white group-hover:text-[#F4C928] transition-colors mb-1 leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-[12px] text-gray-300/80 leading-relaxed hidden sm:block">
+                    <p className="text-[11px] text-gray-300/80 leading-relaxed hidden sm:block">
                       {item.desc}
                     </p>
                   </div>
