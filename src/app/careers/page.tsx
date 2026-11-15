@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
+import TypingNumber from '@/components/TypingNumber';
 import {
   Briefcase,
   Users,
@@ -18,7 +19,8 @@ import {
   FileText,
   Phone,
   Mail,
-  ChevronDown
+  ChevronDown,
+  X
 } from 'lucide-react';
 
 interface JobPosition {
@@ -140,6 +142,7 @@ export default function CareersPage() {
   const [selectedJob, setSelectedJob] = useState<string | null>("job-1");
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
   const [appliedJobTitle, setAppliedJobTitle] = useState("");
+  const [activeStatPopup, setActiveStatPopup] = useState<{ title: string; number: string; desc: string; details: string[] } | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -177,11 +180,11 @@ export default function CareersPage() {
   return (
     <MainLayout>
       <div className="relative z-10">
-        
-        {/* Section 1: Hero Banner */}
+
+        {/* Section 1: Hero Banner with Scrolling Animations & Typing Numbers */}
         <section className="relative py-16 sm:py-24 bg-gradient-to-b from-[#087A35]/15 via-white/80 to-transparent border-b border-gray-100 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div className="inline-flex items-center gap-2 bg-[#E8F5E9] text-[#087A35] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 border border-[#087A35]/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 bg-[#E8F5E9] text-[#087A35] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-4 border border-[#087A35]/20 shadow-sm">
               <Sparkles className="w-4 h-4 text-[#F4C928]" />
               <span>CAREERS AT SAI SUPER SAND</span>
             </div>
@@ -195,46 +198,190 @@ export default function CareersPage() {
               Join a 200+ strong workforce transforming India&apos;s infrastructure with precision-crushed aggregates, sustainable manufactured sand, and world-class mining technologies.
             </p>
 
-            {/* Quick Stat Pill Band */}
+            {/* Quick Stat Pill Band with TYPING MODE Numbers & Interactive Popups (image copy 60.png) */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <div className="glass-card p-4 rounded-2xl border border-[#087A35]/20">
-                <div className="text-2xl sm:text-3xl font-black text-[#087A35]">200+</div>
-                <div className="text-xs font-bold text-gray-600">Empowered Professionals</div>
+              {/* Stat 1: 200+ */}
+              <div
+                onClick={() => setActiveStatPopup({
+                  title: "Empowered Professionals Collective",
+                  number: "200+",
+                  desc: "Our human capital spans mining engineers, hydraulic operators, PLC control specialists, laboratory chemists, and transport coordinators.",
+                  details: [
+                    "45+ Heavy Excavator & Tipper Pilots",
+                    "30+ Plant Mechanical & Crushing Specialists",
+                    "15+ IS 383:2016 Certified Quality Technicians",
+                    "Dedicated On-Site Medical & Safety Officers"
+                  ]
+                })}
+                className="glass-card p-4 rounded-2xl border border-[#087A35]/30 hover:border-[#087A35] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group"
+              >
+                <div className="text-3xl sm:text-4xl font-black text-[#087A35] flex items-center justify-center">
+                  <TypingNumber value="200+" speed={100} />
+                </div>
+                <div className="text-xs font-bold text-gray-800 mt-1 group-hover:text-[#087A35] transition-colors">
+                  Empowered Professionals
+                </div>
+                <div className="text-[10px] text-gray-500 mt-0.5">Click to view breakdown</div>
               </div>
-              <div className="glass-card p-4 rounded-2xl border border-[#087A35]/20">
-                <div className="text-2xl sm:text-3xl font-black text-[#087A35]">18+</div>
-                <div className="text-xs font-bold text-gray-600">Years of Growth</div>
+
+              {/* Stat 2: 18+ */}
+              <div
+                onClick={() => setActiveStatPopup({
+                  title: "18+ Years Continuous Production Legacy",
+                  number: "18+",
+                  desc: "Incorporated in 2006, commercial operations commenced in 2008. Over nearly two decades, we have maintained continuous uninterrupted production.",
+                  details: [
+                    "Commercial extraction began 2008 in Telangana",
+                    "Over 10 Million MT aggregate produced to date",
+                    "Long-term concession leases ensuring operational stability",
+                    "Continuous reinvestment in German crushing equipment"
+                  ]
+                })}
+                className="glass-card p-4 rounded-2xl border border-[#087A35]/30 hover:border-[#087A35] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group"
+              >
+                <div className="text-3xl sm:text-4xl font-black text-[#087A35] flex items-center justify-center">
+                  <TypingNumber value="18+" speed={120} />
+                </div>
+                <div className="text-xs font-bold text-gray-800 mt-1 group-hover:text-[#087A35] transition-colors">
+                  Years of Growth
+                </div>
+                <div className="text-[10px] text-gray-500 mt-0.5">Click to view milestones</div>
               </div>
-              <div className="glass-card p-4 rounded-2xl border border-[#087A35]/20">
-                <div className="text-2xl sm:text-3xl font-black text-[#087A35]">Zero</div>
-                <div className="text-xs font-bold text-gray-600">Lost Time Injury Record</div>
+
+              {/* Stat 3: Zero */}
+              <div
+                onClick={() => setActiveStatPopup({
+                  title: "Zero Lost Time Safety Protocol",
+                  number: "Zero",
+                  desc: "Workplace safety is our primary metric. We operate in strict conformity with Director General of Mines Safety (DGMS) norms.",
+                  details: [
+                    "Daily pre-shift toolbox safety briefings",
+                    "Certified high-visibility PPE gear for all personnel",
+                    "Computerized haul road dust suppression fleets",
+                    "Annual emergency preparedness & medical drill simulations"
+                  ]
+                })}
+                className="glass-card p-4 rounded-2xl border border-[#087A35]/30 hover:border-[#087A35] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group"
+              >
+                <div className="text-3xl sm:text-4xl font-black text-[#087A35] flex items-center justify-center">
+                  <TypingNumber value="Zero" speed={130} />
+                </div>
+                <div className="text-xs font-bold text-gray-800 mt-1 group-hover:text-[#087A35] transition-colors">
+                  Lost Time Injury Record
+                </div>
+                <div className="text-[10px] text-gray-500 mt-0.5">Click to view safety record</div>
               </div>
-              <div className="glass-card p-4 rounded-2xl border border-[#087A35]/20">
-                <div className="text-2xl sm:text-3xl font-black text-[#087A35]">100%</div>
-                <div className="text-xs font-bold text-gray-600">PF, ESI & Medical Cover</div>
+
+              {/* Stat 4: 100% */}
+              <div
+                onClick={() => setActiveStatPopup({
+                  title: "100% Statutory & Health Benefits Coverage",
+                  number: "100%",
+                  desc: "Every team member at Sai Super Sand Minerals receives full statutory benefits, family medical coverage, and competitive performance incentives.",
+                  details: [
+                    "100% Provident Fund (PF) & ESI Enrollment",
+                    "Comprehensive Family Health & Accident Insurance",
+                    "Annual Performance & Longevity Bonus Schemes",
+                    "Subsidized On-Site Catering & Staff Transportation"
+                  ]
+                })}
+                className="glass-card p-4 rounded-2xl border border-[#087A35]/30 hover:border-[#087A35] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer group"
+              >
+                <div className="text-3xl sm:text-4xl font-black text-[#087A35] flex items-center justify-center">
+                  <TypingNumber value="100%" speed={110} />
+                </div>
+                <div className="text-xs font-bold text-gray-800 mt-1 group-hover:text-[#087A35] transition-colors">
+                  PF, ESI & Medical Cover
+                </div>
+                <div className="text-[10px] text-gray-500 mt-0.5">Click to view employee benefits</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 2: Our Team Collective Feature Card (image copy 50.png) */}
+        {/* Stat Detail Popup Modal */}
+        {activeStatPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in-up">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative border-2 border-[#087A35]">
+              <button
+                onClick={() => setActiveStatPopup(null)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="mb-4">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#087A35] bg-[#E8F5E9] px-2.5 py-1 rounded-full">
+                  ORGANIZATIONAL METRIC
+                </span>
+                <div className="text-3xl font-black text-[#087A35] mt-2">
+                  {activeStatPopup.number}
+                </div>
+                <h3 className="text-xl font-black text-[#17231D] mt-1">
+                  {activeStatPopup.title}
+                </h3>
+                <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+                  {activeStatPopup.desc}
+                </p>
+              </div>
+
+              <div className="space-y-2 bg-[#F5FAF6] rounded-2xl p-4 border border-[#087A35]/20 mb-6">
+                <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#087A35] mb-1">
+                  Key Verification Highlights:
+                </div>
+                {activeStatPopup.details.map((detail, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-xs text-gray-700 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-[#087A35] flex-shrink-0 mt-0.5" />
+                    <span>{detail}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={() => setActiveStatPopup(null)}
+                  className="px-5 py-2.5 rounded-full text-xs font-bold text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveStatPopup(null);
+                    handleOpenApply("General Careers");
+                  }}
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-md transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>Join Our Team</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 2: Our Team Collective Feature Card with Grand Look (image copy 61 & 62.png) */}
         <section className="py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="glass-card rounded-[36px] p-6 sm:p-10 border-2 border-[#087A35]/30 shadow-2xl">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-5">
-                  <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-[#087A35]/30 bg-gray-900 group">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-[#087A35] bg-gray-900 group">
                     <img
-                      src="/images/team/team-collective-conveyor.png"
-                      alt="Super Sand Crushing Plant Conveyor Discharge"
-                      className="w-full h-72 sm:h-80 object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      src="/images/team/team-collective-grand-hd.png"
+                      alt="Super Sand Crushing Plant Conveyor Circuits - High-Tech Operations"
+                      className="w-full h-80 sm:h-96 object-cover object-center group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <span className="bg-[#087A35] text-[10px] font-black uppercase px-2.5 py-1 rounded-full inline-block mb-1">
-                        High-Tech Operations
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#087A35] text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
+                        HIGH-TECH OPERATIONS
                       </span>
-                      <h4 className="text-base font-bold">Automated Conveyor Circuits</h4>
+                    </div>
+
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <div className="text-xs font-bold text-[#F4C928]">Automated Conveyor Circuits</div>
+                      <h4 className="text-base sm:text-lg font-black">Super Sand Plant Infrastructure</h4>
                     </div>
                   </div>
                 </div>
@@ -243,29 +390,32 @@ export default function CareersPage() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-[#087A35] border-b-2 border-[#087A35] pb-0.5">
                     OUR TEAM • WE ARE STRONG COLLECTIVE
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-black text-[#17231D]">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#17231D]">
                     A Culture of Respect, Innovation & Collective Pride
                   </h2>
                   <p className="text-sm text-gray-700 leading-relaxed font-medium">
-                    At Sai Super Sand Minerals, our people are our cornerstone. Whether you are an experienced mining engineer, a heavy machinery pilot, a precision lab technician, or a commercial strategist, you work in an environment where your contributions are recognized and celebrated.
+                    At Super Sand, we believe that our team is our greatest asset, and we take great pride in the expertise, dedication, and passion of every member of our organization. From our skilled workers on the plant floor to our knowledgeable technical and logistics teams, every individual is an essential part of our strong collective.
                   </p>
-                  
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium">
+                    Our team is committed to delivering excellence in everything we do — from producing top-quality IS 383:2016 certified products to providing outstanding client dispatch service. We work collaboratively to implement innovative solutions and sustainable ecological practices.
+                  </p>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <div className="flex items-center gap-2.5 text-xs font-bold text-[#17231D]">
                       <CheckCircle2 className="w-4 h-4 text-[#087A35]" />
-                      <span>Structured On-Job Training</span>
+                      <span>Structured On-Job Technical Training</span>
                     </div>
                     <div className="flex items-center gap-2.5 text-xs font-bold text-[#17231D]">
                       <CheckCircle2 className="w-4 h-4 text-[#087A35]" />
-                      <span>Modern Industrial Safety Gear</span>
+                      <span>Modern Industrial Safety Protocols</span>
                     </div>
                     <div className="flex items-center gap-2.5 text-xs font-bold text-[#17231D]">
                       <CheckCircle2 className="w-4 h-4 text-[#087A35]" />
-                      <span>Competitive Merit Increments</span>
+                      <span>Competitive Merit Increments & Bonus</span>
                     </div>
                     <div className="flex items-center gap-2.5 text-xs font-bold text-[#17231D]">
                       <CheckCircle2 className="w-4 h-4 text-[#087A35]" />
-                      <span>Equal Opportunity Workplace</span>
+                      <span>Equal Opportunity Career Advancement</span>
                     </div>
                   </div>
                 </div>
@@ -347,9 +497,8 @@ export default function CareersPage() {
                 return (
                   <div
                     key={job.id}
-                    className={`glass-card rounded-2xl border-2 transition-all duration-300 overflow-hidden ${
-                      isExpanded ? 'border-[#087A35] shadow-xl' : 'border-gray-200/80 hover:border-[#087A35]/50'
-                    }`}
+                    className={`glass-card rounded-2xl border-2 transition-all duration-300 overflow-hidden ${isExpanded ? 'border-[#087A35] shadow-xl' : 'border-gray-200/80 hover:border-[#087A35]/50'
+                      }`}
                   >
                     <div
                       onClick={() => setSelectedJob(isExpanded ? null : job.id)}
