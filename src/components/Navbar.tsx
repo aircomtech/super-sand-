@@ -36,6 +36,8 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
       hasDropdown: true,
       subItems: [
         { name: 'Corporate Profile & Legacy', href: '/about', desc: 'Established 2006, commercial operations 2008' },
+        { name: 'Board of Directors', href: '/about#leadership', desc: 'Dr. Ramachandra Reddy, Dr. P. Krishna Reddy, Mrs. Meghana Reddy' },
+        { name: 'Who We Are - Team Excellence', href: '/about#who-we-are', desc: 'Passionate engineering & mining operations workforce' },
         { name: 'Client Testimonials & Trust', href: '/about#testimonials', desc: 'Endorsements from top builders and technologist partners' },
         { name: 'Vision, Mission & Core Values', href: '/about#values', desc: 'Foundational pillars of excellence & sustainability' }
       ]
@@ -109,6 +111,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
         { name: 'Precast Casting Yards', href: '/projects/precast-yards', desc: 'Zero-silt VSI M-sand and 10mm chips' }
       ]
     },
+    { name: 'Careers', href: '/careers' },
     { name: 'Contact Us', href: '/contact' },
   ];
 
@@ -135,7 +138,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
         </Link>
 
         {/* Desktop Navigation Menu with Multi-Dropdowns */}
-        <nav className="hidden xl:flex items-center gap-1 text-[13px] font-semibold text-[#17231D]">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 text-[12px] xl:text-[13px] font-bold text-[#17231D]">
           {navLinks.map((link) => {
             const isActive = pathname === link.href || (link.hasDropdown && pathname.startsWith(link.href));
             const isDropdownOpen = openDropdownName === link.name;
@@ -150,20 +153,22 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                 >
                   <Link
                     href={link.href}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-full transition-all duration-200 ${
+                    className={`flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-full transition-all duration-200 ${
                       isActive
-                        ? 'text-[#087A35] font-bold bg-[#E8F5E9]/70'
-                        : 'hover:text-[#087A35] hover:bg-gray-50'
+                        ? 'text-[#087A35] font-bold bg-[#E8F5E9]'
+                        : 'hover:text-[#087A35] hover:bg-gray-100/70'
                     }`}
                   >
                     <span>{link.name}</span>
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-[#087A35]' : 'text-gray-400'}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 text-[#087A35] ${isDropdownOpen ? 'rotate-180' : 'group-hover:rotate-180'}`} />
                   </Link>
 
-                  {/* Rich Animated Dropdown Menu */}
+                  {/* Rich Animated Dropdown Menu with CSS + State Trigger */}
                   <div
-                    className={`absolute top-full left-0 w-80 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100 p-2.5 transition-all duration-200 origin-top-left z-50 ${
-                      isDropdownOpen ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'
+                    className={`absolute top-full left-0 w-80 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 p-2.5 transition-all duration-200 origin-top-left z-50 ${
+                      isDropdownOpen
+                        ? 'opacity-100 scale-100 pointer-events-auto'
+                        : 'opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto'
                     }`}
                   >
                     <div className="text-[10px] font-extrabold tracking-wider text-gray-400 uppercase px-3 py-1 border-b border-gray-100 mb-1 flex items-center justify-between">
@@ -176,7 +181,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                         <Link
                           key={sub.name}
                           href={sub.href}
-                          className="block px-3 py-2 rounded-xl hover:bg-[#E8F5E9]/60 transition-colors group/sub"
+                          className="block px-3 py-2 rounded-xl hover:bg-[#E8F5E9]/80 transition-colors group/sub"
                         >
                           <div className="text-[12px] font-bold text-[#17231D] group-hover/sub:text-[#087A35] transition-colors flex items-center justify-between">
                             <span>{sub.name}</span>
@@ -207,10 +212,10 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+                className={`px-2.5 xl:px-3 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'text-[#087A35] font-bold bg-[#E8F5E9]/70'
-                    : 'hover:text-[#087A35] hover:bg-gray-50'
+                    ? 'text-[#087A35] font-bold bg-[#E8F5E9]'
+                    : 'hover:text-[#087A35] hover:bg-gray-100/70'
                 }`}
               >
                 {link.name}
@@ -231,7 +236,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
         </div>
 
         {/* Mobile Buttons */}
-        <div className="flex xl:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <a
             href="https://wa.me/919533895920?text=Hello%20Super%20Sand%2C%20I%20would%20like%20to%20enquire%20about%20materials."
             target="_blank"
@@ -254,7 +259,7 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
 
       {/* Mobile Menu Drawer with Expandable Accordions */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 pt-3 pb-6 shadow-2xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-top duration-200">
+        <div className="lg:hidden bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 pt-3 pb-6 shadow-2xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-top duration-200">
           <div className="flex flex-col gap-1">
             {navLinks.map((link) => {
               const isItemDropdownOpen = openDropdownName === link.name;

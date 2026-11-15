@@ -8,6 +8,8 @@ import AboutSection from '@/components/AboutSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import DualFeatureSection from '@/components/DualFeatureSection';
 import ProjectsShowcaseSection from '@/components/ProjectsShowcaseSection';
+import WhoWeAreTeamSection from '@/components/WhoWeAreTeamSection';
+import ClientPartnersSection from '@/components/ClientPartnersSection';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProducts, initialProjects } from '@/lib/data';
 
@@ -54,7 +56,13 @@ function HeroContent({ onOpenEnquiry, onOpenVideo, onOpenLightbox }: any) {
         }}
       />
 
-      {/* Section 11: Curved Contact CTA Bar */}
+      {/* Section 10: Client Partners & Collaborations (image copy 49.png) */}
+      <ClientPartnersSection />
+
+      {/* Section 11: Who We Are - Operations & Engineering Team (image copy 45, 46, 47.png) */}
+      <WhoWeAreTeamSection />
+
+      {/* Section 12: Curved Contact CTA Bar */}
       <ContactCtaBar onOpenEnquiry={onOpenEnquiry} />
     </>
   );

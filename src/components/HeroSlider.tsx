@@ -100,7 +100,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
 
   return (
     <section
-      className="relative overflow-hidden w-full min-h-[580px] sm:min-h-[640px] lg:min-h-[720px] flex items-center bg-transparent"
+      className="relative overflow-hidden w-full min-h-[500px] sm:min-h-[560px] lg:min-h-[620px] flex items-center bg-transparent"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -138,7 +138,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
       </div>
 
       {/* Hero Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 w-full relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-12 sm:pb-14 lg:pt-14 lg:pb-14 w-full relative z-10">
         <div className="max-w-2xl lg:max-w-xl text-left space-y-5">
           
           {/* Green Category / Brand Tag */}

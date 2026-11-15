@@ -4,6 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
+import LeadershipSection from '@/components/LeadershipSection';
+import WhoWeAreTeamSection from '@/components/WhoWeAreTeamSection';
+import OurTeamCollectiveSection from '@/components/OurTeamCollectiveSection';
 import { initialSiteInfo, initialTestimonials } from '@/lib/data';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import { Award, ShieldCheck, Target, Eye, Calendar, MapPin, CheckCircle2, Star, Quote } from 'lucide-react';
@@ -151,6 +154,21 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Section: Board of Directors / Leadership (image copy 48.png) */}
+          <div className="mb-16">
+            <LeadershipSection />
+          </div>
+
+          {/* Section: Who We Are - Management & Operations Team (image copy 45, 46, 47.png) */}
+          <div className="mb-16">
+            <WhoWeAreTeamSection />
+          </div>
+
+          {/* Section: Our Team Collective (image copy 50.png) */}
+          <div className="mb-16">
+            <OurTeamCollectiveSection />
           </div>
 
           {/* Client Testimonials Section within About Us */}

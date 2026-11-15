@@ -548,14 +548,14 @@ export const initialProjects: Project[] = [
     title: "Strategic Highway Flyovers & Elevated Corridors",
     category: "Highways & Flyovers",
     location: "Hyderabad Metropolitan Area, Telangana",
-    image: "/images/projects/project-bridge-1.jpg",
+    image: "/images/projects/project-highway-flyover-hd.png",
     description: "Supply of high-strength Super 20mm aggregates and M-Sand for RCC piers, deck slabs, and pre-stressed concrete girders.",
     materialsSupplied: ["Super 20mm Aggregates", "Plastering Sand", "Concrete M-Sand"],
     clientOrSector: "State Infrastructure & Road Development",
     volumeSupplied: "125,000+ Metric Tons",
     duration: "24 Months On-Demand Supply",
     galleryImages: [
-      "/images/projects/project-bridge-1.jpg",
+      "/images/projects/project-highway-flyover-hd.png",
       "/images/gallery/dump-truck-haul-road.png",
       "/images/gallery/excavator-mining-face.png"
     ]
@@ -566,14 +566,14 @@ export const initialProjects: Project[] = [
     title: "Commercial High-Rise IT Towers & Tech Parks",
     category: "Commercial Towers",
     location: "HITEC City & Financial District",
-    image: "/images/projects/project-highrise.jpg",
+    image: "/images/projects/project-techpark-highrise-hd.png",
     description: "Continuous concrete aggregate supply for M50 & M60 grade high-performance pumpable concrete in 40+ floor towers.",
     materialsSupplied: ["Super 10mm & 20mm Aggregates", "P-Sand", "VSI M-Sand"],
     clientOrSector: "Top Tier Commercial Real Estate Builders",
     volumeSupplied: "85,000+ Metric Tons",
     duration: "18 Months Active Construction",
     galleryImages: [
-      "/images/projects/project-highrise.jpg",
+      "/images/projects/project-techpark-highrise-hd.png",
       "/images/gallery/sand-conveyor-discharge.png",
       "/images/gallery/wheel-loader-loading-truck.png"
     ]
@@ -584,14 +584,14 @@ export const initialProjects: Project[] = [
     title: "Urban Metro Rail Viaducts & Station Piers",
     category: "Metro Transit",
     location: "Metro Corridor Network",
-    image: "/images/projects/project-metro.jpg",
+    image: "/images/projects/project-metro-viaduct-hd.png",
     description: "Strictly graded IS 383:2016 coarse aggregates for heavy viaduct casting yards and station concourse foundations.",
     materialsSupplied: ["Super 20mm Aggregates", "Super 10mm Aggregates", "W.M.M Mix"],
     clientOrSector: "Metro Rail Infrastructure Projects",
     volumeSupplied: "98,000+ Metric Tons",
     duration: "Ongoing Strategic Partnership",
     galleryImages: [
-      "/images/projects/project-metro.jpg",
+      "/images/projects/project-metro-viaduct-hd.png",
       "/images/gallery/lab-sieve-grading-test.png",
       "/images/gallery/infra-crushing-complex.png"
     ]
@@ -602,14 +602,14 @@ export const initialProjects: Project[] = [
     title: "Major River Bridge & Bypass Expressways",
     category: "Bridges & Expressways",
     location: "Regional Expressway Corridors",
-    image: "/images/projects/project-bridge-2.jpg",
+    image: "/images/projects/project-river-bridge-hd.png",
     description: "High-impact resistance aggregates for underwater well foundations, abutments, and asphalt concrete wearing course.",
     materialsSupplied: ["Super 40mm Aggregates", "G.S.B Road Sub-Base", "W.M.M Mix"],
     clientOrSector: "National Highway Authority",
     volumeSupplied: "140,000+ Metric Tons",
     duration: "30 Months Project Phase",
     galleryImages: [
-      "/images/projects/project-bridge-2.jpg",
+      "/images/projects/project-river-bridge-hd.png",
       "/images/gallery/quarry-cliff-face.png",
       "/images/gallery/dump-truck-haul-road.png"
     ]
