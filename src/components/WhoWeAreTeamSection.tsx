@@ -28,24 +28,24 @@ export default function WhoWeAreTeamSection() {
           </p>
         </div>
 
-        {/* Dual Team Showcase Grid with Original Assets (image copy 46.png & 47.png) */}
+        {/* Dual Team Showcase Grid with Ultra-HD Photos (image copy 68.png & 69.png) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-12">
           
-          {/* Card 1: Management, Technical & Quality Engineering Team (image copy 46.png) */}
-          <div className="glass-card glass-card-hover rounded-[32px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/20 hover:border-[#087A35]/50 transition-all duration-500 shadow-xl">
+          {/* Card 1: Management, Technical & Quality Engineering Team (image copy 68.png) */}
+          <div className="glass-card glass-card-hover rounded-[36px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/25 hover:border-[#087A35] transition-all duration-500 shadow-2xl">
             <div>
-              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden mb-6 shadow-md bg-gray-900 group">
+              <div className="relative w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 shadow-xl bg-gray-900 group border-2 border-[#087A35]/30">
                 <img
                   src="/images/team/team-management-plant.png"
-                  alt="Super Sand Technical Management & Engineering Team at Crushing Plant"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  alt="Super Sand Leadership & Operations - Executive Engineers & Plant Supervisors"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-[1.03] contrast-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="bg-[#087A35] text-white text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-1.5 inline-block">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <span className="bg-[#087A35] text-white text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-md border border-white/20">
                     Leadership & Operations
                   </span>
-                  <h3 className="text-lg sm:text-xl font-black">
+                  <h3 className="text-xl sm:text-2xl font-black drop-shadow-md">
                     Executive Engineers & Plant Supervisors
                   </h3>
                 </div>
@@ -82,21 +82,21 @@ export default function WhoWeAreTeamSection() {
             </div>
           </div>
 
-          {/* Card 2: Operations, Mining & Heavy Plant Workforce (image copy 47.png) */}
-          <div className="glass-card glass-card-hover rounded-[32px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/20 hover:border-[#087A35]/50 transition-all duration-500 shadow-xl">
+          {/* Card 2: Operations, Mining & Heavy Plant Workforce (image copy 69.png) */}
+          <div className="glass-card glass-card-hover rounded-[36px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/25 hover:border-[#087A35] transition-all duration-500 shadow-2xl">
             <div>
-              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden mb-6 shadow-md bg-gray-900 group">
+              <div className="relative w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 shadow-xl bg-gray-900 group border-2 border-[#087A35]/30">
                 <img
                   src="/images/team/team-workforce-plant.png"
-                  alt="Super Sand Full Mining and Plant Workforce"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  alt="Super Sand Operational Backbone - Heavy Fleet Operators & Quarry Technicians"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-[1.03] contrast-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="bg-[#F4C928] text-[#17231D] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-1.5 inline-block">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <span className="bg-[#F4C928] text-[#17231D] text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-md">
                     Operational Backbone
                   </span>
-                  <h3 className="text-lg sm:text-xl font-black">
+                  <h3 className="text-xl sm:text-2xl font-black drop-shadow-md">
                     Heavy Fleet Operators & Quarry Technicians
                   </h3>
                 </div>

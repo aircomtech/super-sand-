@@ -91,21 +91,21 @@ export default function LeadershipSection() {
               className="glass-card glass-card-hover rounded-[32px] p-6 sm:p-7 flex flex-col justify-between border-2 border-[#087A35]/20 hover:border-[#087A35]/60 transition-all duration-500 shadow-xl group"
             >
               <div>
-                {/* Director Portrait Frame with Grand Green Halo */}
-                <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden mb-6 bg-gradient-to-b from-gray-100 to-gray-200 border border-gray-200 shadow-md flex items-center justify-center">
+                {/* Director Portrait Frame with Grand Look & HD Styling (image copy 64, 65, 66.png) */}
+                <div className="relative w-full h-72 sm:h-80 rounded-2xl overflow-hidden mb-6 bg-gradient-to-b from-gray-100 to-gray-200 border-2 border-[#087A35]/30 shadow-lg flex items-center justify-center group-hover:border-[#087A35] transition-colors">
                   <img
                     src={leader.image}
                     alt={`${leader.name} - ${leader.designation}`}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 brightness-[1.03] contrast-[1.03]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
                   
                   {/* Badge */}
-                  <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <span className="bg-[#087A35] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-1 shadow-sm">
+                  <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                    <span className="bg-[#087A35] text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-1 shadow-md border border-white/20">
                       {leader.designation}
                     </span>
-                    <h3 className="text-lg font-black tracking-tight text-white drop-shadow-sm">
+                    <h3 className="text-xl font-black tracking-tight text-white drop-shadow-md">
                       {leader.name}
                     </h3>
                   </div>
