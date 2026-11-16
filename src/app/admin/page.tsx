@@ -293,6 +293,8 @@ export default function AdminPage() {
       if (editingProject) setEditingProject({ ...editingProject, image: url });
     } else if (target === 'editing_director') {
       if (editingDirector) setEditingDirector({ ...editingDirector, image: url });
+    } else if (target === 'editing_testimonial') {
+      if (editingTestimonial) setEditingTestimonial({ ...editingTestimonial, avatar: url });
     } else if (target === 'editing_gallery') {
       if (editingGalleryItem) setEditingGalleryItem({ ...editingGalleryItem, image: url });
     } else if (target === 'partner_master_banner') {
@@ -1458,6 +1460,50 @@ export default function AdminPage() {
                     </div>
                   </div>
                 ))}
+
+                {/* Quick Add Service Action Card */}
+                <button
+                  onClick={() => {
+                    setIsNewService(true);
+                    const newId = `srv-${Date.now()}`;
+                    setEditingService({
+                      id: newId,
+                      slug: `service-${Date.now()}`,
+                      title: '',
+                      category: 'Quarrying',
+                      tagline: 'Precision Engineered Operation',
+                      description: '',
+                      mainImage: '/images/gallery/quarry-bench-drilling.png',
+                      specs: 'High Performance Infrastructure Grade',
+                      capacityOrSpecs: 'High Performance Infrastructure Grade',
+                      highlights: [
+                        'Systematic mechanized multi-bench extraction',
+                        'Zero silt air-wash classifying process',
+                        '24/7 express dispatch with computerized weighbridge'
+                      ],
+                      features: [
+                        'Systematic mechanized multi-bench extraction',
+                        'Zero silt air-wash classifying process',
+                        '24/7 express dispatch with computerized weighbridge'
+                      ],
+                      galleryImages: [
+                        '/images/gallery/quarry-bench-drilling.png',
+                        '/images/gallery/weighbridge-dispatch-station.png'
+                      ],
+                      isPublished: true,
+                      displayOrder: cmsData.services.length + 1
+                    });
+                  }}
+                  className="rounded-3xl border-2 border-dashed border-[#087A35]/40 hover:border-[#087A35] bg-[#E8F5E9]/20 hover:bg-[#E8F5E9]/50 p-8 flex flex-col items-center justify-center text-center gap-3 transition-all duration-300 group min-h-[220px]"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#087A35] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-sm text-[#087A35]">Add New Service</h4>
+                    <p className="text-[11px] text-gray-500 mt-0.5">Click to configure & publish operational capability</p>
+                  </div>
+                </button>
               </div>
             </div>
           )}
@@ -1855,12 +1901,12 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {cmsData.testimonials.map((test) => (
-                  <div key={test.id} className="bg-white rounded-3xl p-5 border border-gray-200 shadow-md flex flex-col justify-between">
+                  <div key={test.id} className="bg-white rounded-3xl p-5 border border-gray-200/90 shadow-md flex flex-col justify-between hover:border-[#087A35]/40 transition-colors">
                     <div>
                       <div className="flex items-center gap-3 mb-3">
-                        <img src={test.avatar} alt={test.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#087A35]" />
+                        <img src={test.avatar} alt={test.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#087A35] shadow-sm" />
                         <div>
                           <h4 className="font-bold text-sm text-[#17231D]">{test.name}</h4>
                           <p className="text-xs text-gray-500">{test.designation} • {test.company}</p>
@@ -1871,19 +1917,64 @@ export default function AdminPage() {
 
                     <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-xs font-bold text-[#F4C928]">★ {test.rating}/5 Stars</span>
-                      <button
-                        onClick={() => {
-                          if (confirm(`Delete testimonial from ${test.name}?`)) {
-                            saveAction('delete_testimonial', { id: test.id }, 'Testimonial deleted');
-                          }
-                        }}
-                        className="text-gray-400 hover:text-red-600"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setEditingTestimonial(test);
+                            setIsNewTestimonial(false);
+                          }}
+                          className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                          <span>Edit</span>
+                        </button>
+                        
+                        <button
+                          onClick={() => {
+                            if (confirm(`Delete testimonial from ${test.name}?`)) {
+                              const updated = cmsData.testimonials.filter((t) => t.id !== test.id);
+                              setCmsData({ ...cmsData, testimonials: updated });
+                              saveAction('update_testimonials', updated, `Testimonial from ${test.name} deleted`);
+                            }
+                          }}
+                          className="p-1 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                          title="Delete Testimonial"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
+
+                {/* Quick Add Testimonial Action Card */}
+                <button
+                  onClick={() => {
+                    const newTest: Testimonial = {
+                      id: `test-${Date.now()}`,
+                      name: "Rajesh Varma",
+                      designation: "Chief Project Manager",
+                      company: "Premier Infra Projects",
+                      quote: "Super Sand has been our preferred supplier for cubical 20mm aggregates and M-Sand with flawless consistency.",
+                      rating: 5,
+                      avatar: "/images/testimonials/avatar-1.jpg",
+                      isPublished: true,
+                      displayOrder: cmsData.testimonials.length + 1
+                    };
+                    setEditingTestimonial(newTest);
+                    setIsNewTestimonial(true);
+                  }}
+                  className="rounded-3xl border-2 border-dashed border-[#087A35]/40 hover:border-[#087A35] bg-[#E8F5E9]/20 hover:bg-[#E8F5E9]/50 p-6 flex flex-col items-center justify-center text-center gap-2.5 transition-all duration-300 group min-h-[190px]"
+                >
+                  <div className="w-11 h-11 rounded-2xl bg-[#087A35] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                    <Plus className="w-5 h-5 stroke-[2.5]" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-sm text-[#087A35]">Add New Testimonial</h4>
+                    <p className="text-[11px] text-gray-500 mt-0.5">Click to add client review & ratings</p>
+                  </div>
+                </button>
               </div>
             </div>
           )}
@@ -3040,6 +3131,165 @@ export default function AdminPage() {
                   className="bg-[#087A35] hover:bg-[#06632B] text-white px-6 py-2.5 rounded-full font-bold shadow-md"
                 >
                   Save Job Opening
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------------------------------------------------------------- */}
+      {/* MODAL: ADD / EDIT TESTIMONIAL */}
+      {/* ---------------------------------------------------------------------- */}
+      {editingTestimonial && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto border-2 border-[#087A35]">
+            <button
+              onClick={() => {
+                setEditingTestimonial(null);
+                setIsNewTestimonial(false);
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-5">
+              <span className="bg-[#E8F5E9] text-[#087A35] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase">
+                {isNewTestimonial ? 'New Testimonial' : 'Edit Testimonial'}
+              </span>
+              <h3 className="text-xl font-black text-[#17231D]">
+                {isNewTestimonial ? 'Add Client Testimonial' : `Edit: ${editingTestimonial.name}`}
+              </h3>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              {/* Avatar Preview & Upload */}
+              <div className="flex items-center gap-4 p-3.5 bg-gray-50 rounded-2xl border border-gray-200">
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-900 flex-shrink-0 shadow-sm border-2 border-[#087A35]">
+                  <img src={editingTestimonial.avatar} alt="Avatar Preview" className="w-full h-full object-cover" />
+                </div>
+                <div className="space-y-1.5 flex-1">
+                  <div className="font-bold text-gray-800 text-[13px]">Client / Partner Avatar</div>
+                  <p className="text-[11px] text-gray-500">Upload portrait photo of the executive or client</p>
+                  <button
+                    onClick={() => triggerImageUpload('editing_testimonial')}
+                    className="inline-flex items-center gap-1.5 bg-[#087A35] hover:bg-[#06632B] text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg shadow-sm transition-colors"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload & Replace Photo</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Name & Designation */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Client Name <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Rajesh Varma"
+                    value={editingTestimonial.name}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, name: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Designation / Role</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Chief Project Director"
+                    value={editingTestimonial.designation}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, designation: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Company & Rating */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Company / Organization <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Premier Infra Projects"
+                    value={editingTestimonial.company}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, company: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Star Rating (1 - 5)</label>
+                  <select
+                    value={editingTestimonial.rating}
+                    onChange={(e) => setEditingTestimonial({ ...editingTestimonial, rating: parseInt(e.target.value, 10) })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white font-bold text-yellow-600 focus:border-[#087A35] focus:outline-none"
+                  >
+                    <option value="5">★★★★★ 5 Stars (Exceptional)</option>
+                    <option value="4">★★★★☆ 4 Stars (Very Good)</option>
+                    <option value="3">★★★☆☆ 3 Stars (Good)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Quote */}
+              <div>
+                <label className="font-bold text-gray-700 block mb-1">Testimonial Quote / Review <span className="text-red-500">*</span></label>
+                <textarea
+                  rows={4}
+                  required
+                  placeholder="Super Sand has been our preferred supplier for cubical aggregates and M-Sand with flawless consistency..."
+                  value={editingTestimonial.quote}
+                  onChange={(e) => setEditingTestimonial({ ...editingTestimonial, quote: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl border border-gray-200 italic focus:border-[#087A35] focus:outline-none"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <button
+                  onClick={() => {
+                    setEditingTestimonial(null);
+                    setIsNewTestimonial(false);
+                  }}
+                  className="px-5 py-2.5 rounded-full font-bold text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (!editingTestimonial.name.trim() || !editingTestimonial.quote.trim()) {
+                      alert('Please provide client name and testimonial quote');
+                      return;
+                    }
+
+                    const testimonialToSave: Testimonial = {
+                      ...editingTestimonial,
+                      avatar: editingTestimonial.avatar || '/images/testimonials/avatar-1.jpg',
+                      isPublished: true,
+                      displayOrder: editingTestimonial.displayOrder || cmsData.testimonials.length + 1
+                    };
+
+                    let updated: Testimonial[];
+                    if (isNewTestimonial) {
+                      updated = [testimonialToSave, ...cmsData.testimonials];
+                    } else {
+                      updated = cmsData.testimonials.map((t) => (t.id === testimonialToSave.id ? testimonialToSave : t));
+                    }
+
+                    setCmsData({ ...cmsData, testimonials: updated });
+                    saveAction('update_testimonials', updated, isNewTestimonial ? `Testimonial from ${testimonialToSave.name} added successfully!` : `Testimonial updated successfully!`);
+                    setEditingTestimonial(null);
+                    setIsNewTestimonial(false);
+                  }}
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white px-6 py-2.5 rounded-full font-bold shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isNewTestimonial ? 'Add Testimonial' : 'Save Changes'}</span>
                 </button>
               </div>
             </div>
