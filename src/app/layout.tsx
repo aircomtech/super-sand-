@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { CMSProvider } from '@/context/CMSContext';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://supersand.in'),
@@ -47,7 +48,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white text-[#17231D] antialiased selection:bg-[#087A35] selection:text-white flex flex-col justify-between">
-        {children}
+        <CMSProvider>
+          {children}
+        </CMSProvider>
       </body>
     </html>
   );

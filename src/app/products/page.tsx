@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProducts } from '@/lib/data';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ShieldCheck, Layers, FileText } from 'lucide-react';
 
 export default function ProductsPage() {
@@ -16,6 +17,9 @@ export default function ProductsPage() {
 }
 
 function ProductsPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
+  const { data } = useCMS();
+  const products = data?.products && data.products.length > 0 ? data.products : initialProducts;
+
   return (
     <div className="bg-transparent">
       
@@ -38,7 +42,7 @@ function ProductsPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           
-          {initialProducts.map((product, idx) => {
+          {products.map((product, idx) => {
             const isReversed = idx % 2 === 1;
 
             return (

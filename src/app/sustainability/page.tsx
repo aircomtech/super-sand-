@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
+import { useCMS } from '@/context/CMSContext';
 import { Leaf, Droplets, TreePine, ShieldCheck, Sun, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function SustainabilityPage() {
@@ -15,7 +16,8 @@ export default function SustainabilityPage() {
 }
 
 function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
-  const initiatives = [
+  const { data } = useCMS();
+  const defaultInitiatives = [
     {
       icon: Leaf,
       title: "Saving Natural River Ecosystems",
@@ -45,6 +47,8 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Water Management"
     }
   ];
+
+  const initiatives = data?.sustainabilityItems && data.sustainabilityItems.length > 0 ? data.sustainabilityItems : defaultInitiatives;
 
   return (
     <div className="bg-transparent">
@@ -127,7 +131,8 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {initiatives.map((item, idx) => {
-              const IconComp = item.icon;
+              const IconComp = (item as any).icon || Leaf;
+              const imgUrl = (item as any).image || (item as any).heroImage || "/images/gallery/water-tanker-dust-control.png";
               return (
                 <div
                   key={idx}
@@ -140,12 +145,12 @@ function SustainabilityContent({ onOpenEnquiry, onOpenLightbox }: any) {
                         id: `sust-${idx}`,
                         title: item.title,
                         category: 'Sustainability',
-                        image: item.image,
+                        image: imgUrl,
                         description: item.desc
                       })}
                     >
                       <img
-                        src={item.image}
+                        src={imgUrl}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />

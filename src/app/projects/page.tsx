@@ -6,6 +6,7 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProjects } from '@/lib/data';
 import { Project } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { MapPin, Building2, CheckCircle2, ArrowRight, ZoomIn } from 'lucide-react';
 
 export default function ProjectsPage() {
@@ -17,13 +18,15 @@ export default function ProjectsPage() {
 }
 
 function ProjectsContent({ onOpenEnquiry, onOpenLightbox }: any) {
+  const { data } = useCMS();
+  const projects = data?.projects && data.projects.length > 0 ? data.projects : initialProjects;
   const [activeFilter, setActiveFilter] = useState('All');
 
   const categories = ['All', 'Highways & Flyovers', 'Commercial Towers', 'Metro Transit', 'Bridges & Expressways'];
 
   const filtered = activeFilter === 'All'
-    ? initialProjects
-    : initialProjects.filter((p) => p.category === activeFilter);
+    ? projects
+    : projects.filter((p) => p.category === activeFilter);
 
   return (
     <div className="bg-transparent">

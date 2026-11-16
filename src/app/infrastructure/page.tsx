@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import { useCMS } from '@/context/CMSContext';
 import { Factory, Cog, Truck, Scale, Shield, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function InfrastructurePage() {
@@ -16,7 +17,8 @@ export default function InfrastructurePage() {
 }
 
 function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
-  const infraAssets = [
+  const { data } = useCMS();
+  const defaultInfraAssets = [
     {
       slug: "crushing-complex",
       title: "German-Engineered 3-Stage Crushing Plant",
@@ -58,6 +60,8 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       tag: "Material Handling"
     }
   ];
+
+  const infraAssets = data?.infrastructureItems && data.infrastructureItems.length > 0 ? data.infrastructureItems : defaultInfraAssets;
 
   return (
     <div className="bg-transparent">
@@ -119,7 +123,7 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
       {/* Facilities Grid */}
       <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          {infraAssets.map((asset, idx) => (
+          {infraAssets.map((asset: any, idx) => (
             <div
               key={idx}
               className="glass-card rounded-3xl p-5 sm:p-7 shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
@@ -131,12 +135,12 @@ function InfrastructureContent({ onOpenEnquiry, onOpenLightbox }: any) {
                     id: `infra-${idx}`,
                     title: asset.title,
                     category: 'Infrastructure',
-                    image: asset.image,
+                    image: asset.image || asset.heroImage,
                     description: asset.desc
                   })}
                 >
                   <img
-                    src={asset.image}
+                    src={asset.image || asset.heroImage}
                     alt={asset.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

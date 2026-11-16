@@ -3,9 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Trophy, Users, Shield, Leaf, Lightbulb, Handshake, Gem, Zap } from 'lucide-react';
+import { WhyChooseUsPillar } from '@/lib/types';
 
-export default function WhyChooseUsSection() {
-  const features = [
+interface WhyChooseUsSectionProps {
+  pillars?: WhyChooseUsPillar[];
+}
+
+export default function WhyChooseUsSection({ pillars }: WhyChooseUsSectionProps) {
+  const defaultFeatures = [
     {
       icon: Trophy,
       title: "Quality & Excellence",
@@ -47,6 +52,25 @@ export default function WhyChooseUsSection() {
       desc: "Heavy wheel loader fleets loading commercial tippers instantly."
     }
   ];
+
+  const iconMap: Record<string, any> = {
+    Trophy,
+    Users,
+    Shield,
+    Leaf,
+    Lightbulb,
+    Handshake,
+    Gem,
+    Zap,
+  };
+
+  const features = pillars && pillars.length > 0
+    ? pillars.map((p: any) => ({
+        icon: iconMap[p.icon || ''] || Trophy,
+        title: p.title,
+        desc: p.desc || p.description || ""
+      }))
+    : defaultFeatures;
 
   return (
     <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-transparent">

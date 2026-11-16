@@ -3,9 +3,21 @@
 import React, { useState } from 'react';
 import MainLayout from '@/components/MainLayout';
 import { initialSiteInfo } from '@/lib/data';
+import { useCMS } from '@/context/CMSContext';
 import { MapPin, Phone, Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, ExternalLink } from 'lucide-react';
 
 export default function ContactPage() {
+  const { data: cmsData } = useCMS();
+  const contact = cmsData?.contactSettings;
+  const address = contact?.companyAddress || initialSiteInfo.address;
+  const primaryPhone = contact?.primaryPhone || "+91 95338 95920";
+  const alternatePhone = contact?.altPhone || "+91 95536 31919";
+  const primaryEmail = contact?.primaryEmail || "info@supersand.in";
+  const alternateEmail = contact?.altEmail || "krishnareddy@supersand.in";
+  const whatsappNumber = contact?.whatsappNumber || "+91 95338 95920";
+  const mapEmbedUrl = contact?.googleMapsEmbedUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.496738587372!2d78.5037!3d17.436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDI2JzA5LjYiTiA3OMKwMzAnMTMuMyJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin";
+  const mapUrl = contact?.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(address)}`;
+
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -56,8 +68,6 @@ export default function ContactPage() {
     }
   };
 
-  const mapUrl = "https://maps.google.com/?q=Lane+No.+4,+Opposite+SBI,+Nehru+Nagar+Colony,+West+Marredpally,+Secunderabad,+Telangana+500026";
-
   return (
     <MainLayout>
       <div className="bg-transparent">
@@ -98,7 +108,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <div className="font-bold text-[#17231D]">Registered Office</div>
-                        <div className="text-gray-500 leading-snug mt-0.5">{initialSiteInfo.address}</div>
+                        <div className="text-gray-500 leading-snug mt-0.5">{address}</div>
                         <a
                           href={mapUrl}
                           target="_blank"
@@ -119,12 +129,14 @@ export default function ContactPage() {
                       <div>
                         <div className="font-bold text-[#17231D]">Direct Telephone</div>
                         <div className="space-y-1 mt-1">
-                          <a href="tel:+919533895920" className="block text-[#087A35] font-bold hover:underline">
-                            +91 95338 95920 (Primary)
+                          <a href={`tel:${primaryPhone.replace(/\s+/g, '')}`} className="block text-[#087A35] font-bold hover:underline">
+                            {primaryPhone} (Primary)
                           </a>
-                          <a href="tel:+919553631919" className="block text-gray-600 font-semibold hover:underline">
-                            +91 95536 31919 (Alternative)
-                          </a>
+                          {alternatePhone && (
+                            <a href={`tel:${alternatePhone.replace(/\s+/g, '')}`} className="block text-gray-600 font-semibold hover:underline">
+                              {alternatePhone} (Alternative)
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -137,12 +149,14 @@ export default function ContactPage() {
                       <div>
                         <div className="font-bold text-[#17231D]">Email Enquiries</div>
                         <div className="space-y-1 mt-1">
-                          <a href="mailto:info@supersand.in" className="block text-[#087A35] font-bold hover:underline">
-                            info@supersand.in
+                          <a href={`mailto:${primaryEmail}`} className="block text-[#087A35] font-bold hover:underline">
+                            {primaryEmail}
                           </a>
-                          <a href="mailto:krishnareddy@supersand.in" className="block text-gray-600 font-semibold hover:underline">
-                            krishnareddy@supersand.in
-                          </a>
+                          {alternateEmail && (
+                            <a href={`mailto:${alternateEmail}`} className="block text-gray-600 font-semibold hover:underline">
+                              {alternateEmail}
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -155,12 +169,12 @@ export default function ContactPage() {
                       <div>
                         <div className="font-bold text-[#17231D]">WhatsApp Instant Channel</div>
                         <a
-                          href="https://wa.me/919533895920?text=Hello%20Super%20Sand%2C%20I%20would%20like%20to%20enquire%20about%20materials."
+                          href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=Hello%20Super%20Sand%2C%20I%20would%20like%20to%20enquire%20about%20materials.`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 text-xs font-bold bg-[#25D366] text-white px-3.5 py-1.5 rounded-full mt-1.5 hover:bg-[#20ba59] transition-colors"
                         >
-                          <span>Chat on WhatsApp: +91 95338 95920</span>
+                          <span>Chat on WhatsApp: {whatsappNumber}</span>
                         </a>
                       </div>
                     </div>
@@ -329,6 +343,48 @@ export default function ContactPage() {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </section>
+
+        {/* Dynamic Google Maps Embed Section */}
+        <section className="pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="glass-card rounded-[36px] p-6 sm:p-8 shadow-card overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                  <span className="text-[#087A35] font-extrabold text-xs uppercase tracking-wider block mb-1">
+                    LOCATION PIN & DIRECTIONS
+                  </span>
+                  <h3 className="text-2xl font-black text-[#17231D]">
+                    Find Sai Super Sand on Google Maps
+                  </h3>
+                </div>
+                <a
+                  href={mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#087A35] hover:bg-[#06632B] text-white px-5 py-2.5 rounded-full font-bold text-xs shadow transition-all hover:scale-105 self-start sm:self-auto"
+                >
+                  <span>Open in Google Maps App</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Responsive Google Maps Iframe */}
+              <div className="relative w-full h-[380px] sm:h-[450px] rounded-2xl overflow-hidden border border-gray-200 shadow-inner bg-gray-100">
+                <iframe
+                  title="Sai Super Sand Location Map"
+                  src={mapEmbedUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                />
+              </div>
             </div>
           </div>
         </section>

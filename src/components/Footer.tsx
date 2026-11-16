@@ -3,9 +3,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { MapPin, Phone, Mail, Sparkles, ExternalLink } from 'lucide-react';
+import { useCMS } from '@/context/CMSContext';
 
 export default function Footer() {
-  const mapUrl = "https://maps.google.com/?q=Lane+No.+4,+Opposite+SBI,+Nehru+Nagar+Colony,+West+Marredpally,+Secunderabad,+Telangana+500026";
+  const { data } = useCMS();
+  const contact = data?.contactSettings;
+  const footer = data?.footerSettings;
+
+  const phone = contact?.primaryPhone || "+91 95338 95920";
+  const email = contact?.primaryEmail || "info@supersand.in";
+  const address = contact?.companyAddress || "Lane No. 4, Opposite SBI, Nehru Nagar Colony, West Marredpally, Secunderabad, Telangana 500026";
+  const copyright = footer?.copyrightText || "© 2026 Super Sand (Sai Super Sand Minerals Pvt. Ltd.). All Rights Reserved.";
+  const tagline = footer?.certificationsNotice || "Quality Today... A Stronger Tomorrow...";
+  const mapUrl = contact?.googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(address)}`;
 
   return (
     <footer className="bg-[#003822] text-white pt-12 pb-6 border-t border-[#064e26] relative z-20">
@@ -88,19 +98,19 @@ export default function Footer() {
               <li className="flex items-start gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0 mt-0.5" />
                 <span className="leading-snug">
-                  Lane No. 4, Opposite SBI, Nehru Nagar Colony, Secunderabad – 500026
+                  {address}
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0" />
-                <a href="tel:+919533895920" className="hover:text-[#F4C928] transition-colors font-semibold">
-                  +91 95338 95920
+                <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-[#F4C928] transition-colors font-semibold">
+                  {phone}
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#F4C928] flex-shrink-0" />
-                <a href="mailto:info@supersand.in" className="hover:text-[#F4C928] transition-colors font-semibold">
-                  info@supersand.in
+                <a href={`mailto:${email}`} className="hover:text-[#F4C928] transition-colors font-semibold">
+                  {email}
                 </a>
               </li>
             </ul>
@@ -171,10 +181,10 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-5 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-400 gap-2">
-          <p>© 2026 Super Sand (Sai Super Sand Minerals Pvt. Ltd.). All Rights Reserved.</p>
+          <p>{copyright}</p>
           <div className="flex items-center gap-1.5 text-gray-300 font-medium">
             <Sparkles className="w-3 h-3 text-[#F4C928]" />
-            <span>Quality Today... A Stronger Tomorrow...</span>
+            <span>{tagline}</span>
           </div>
         </div>
 

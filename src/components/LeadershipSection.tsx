@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Award, Briefcase, GraduationCap, CheckCircle2, Linkedin, Mail } from 'lucide-react';
+import { Director } from '@/lib/types';
 
 interface Leader {
   name: string;
@@ -14,7 +15,7 @@ interface Leader {
   focusAreas: string[];
 }
 
-const leaders: Leader[] = [
+const defaultLeaders: Leader[] = [
   {
     name: "Dr. Ramachandra Reddy",
     designation: "Managing Director",
@@ -59,7 +60,22 @@ const leaders: Leader[] = [
   }
 ];
 
-export default function LeadershipSection() {
+interface LeadershipSectionProps {
+  directors?: Director[];
+}
+
+export default function LeadershipSection({ directors }: LeadershipSectionProps) {
+  const leaders: Leader[] = directors && directors.length > 0
+    ? directors.map((d: any) => ({
+        name: d.name,
+        designation: d.designation || d.role || "Director",
+        roleTitle: d.roleTitle || d.designation || "Executive Leadership",
+        image: d.image,
+        bio: d.bio,
+        qualifications: d.qualifications || "Industry Executive",
+        focusAreas: d.focusAreas || ["Corporate Governance", "Operational Excellence"]
+      }))
+    : defaultLeaders;
   return (
     <section id="leadership" className="py-14 sm:py-20 bg-transparent relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

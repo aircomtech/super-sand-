@@ -4,6 +4,7 @@ import React from 'react';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialTestimonials } from '@/lib/data';
+import { useCMS } from '@/context/CMSContext';
 import { Quote, Star, Building2, CheckCircle } from 'lucide-react';
 
 export default function TestimonialsPage() {
@@ -15,6 +16,9 @@ export default function TestimonialsPage() {
 }
 
 function TestimonialsPageContent({ onOpenEnquiry }: any) {
+  const { data } = useCMS();
+  const testimonials = data?.testimonials && data.testimonials.length > 0 ? data.testimonials : initialTestimonials;
+
   return (
     <div className="bg-transparent">
       
@@ -37,7 +41,7 @@ function TestimonialsPageContent({ onOpenEnquiry }: any) {
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {initialTestimonials.map((item) => (
+            {testimonials.map((item) => (
               <div
                 key={item.id}
                 className="glass-card rounded-3xl p-8 shadow-card hover:shadow-card-hover flex flex-col justify-between transition-all duration-300"

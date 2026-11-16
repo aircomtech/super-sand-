@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, X, ArrowRight, MessageSquare, Phone } from 'lucide-react';
+import { ChevronDown, Menu, X, ArrowRight, MessageSquare, Phone, ExternalLink } from 'lucide-react';
+import { useCMS } from '@/context/CMSContext';
 
 interface NavbarProps {
   onOpenEnquiry?: () => void;
@@ -181,11 +182,15 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                         <Link
                           key={sub.name}
                           href={sub.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block px-3 py-2 rounded-xl hover:bg-[#E8F5E9]/80 transition-colors group/sub"
                         >
                           <div className="text-[12px] font-bold text-[#17231D] group-hover/sub:text-[#087A35] transition-colors flex items-center justify-between">
                             <span>{sub.name}</span>
-                            <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all text-[#087A35]" />
+                            <div className="flex items-center gap-1 opacity-0 -translate-x-2 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all text-[#087A35]">
+                              <ExternalLink className="w-3 h-3" />
+                            </div>
                           </div>
                           <div className="text-[10px] text-gray-500 line-clamp-1 mt-0.5">
                             {sub.desc}
@@ -197,10 +202,12 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                     <div className="mt-1 pt-1.5 border-t border-gray-100 px-3">
                       <Link
                         href={link.href}
-                        className="text-[11px] font-bold text-[#087A35] hover:underline flex items-center justify-between"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold text-[#087A35] hover:underline flex items-center justify-between py-1"
                       >
                         <span>Open Complete {link.name} Page</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <ExternalLink className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
@@ -292,9 +299,12 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
                         <Link
                           key={sub.name}
                           href={sub.href}
-                          className="block px-3 py-1.5 text-[12px] font-medium text-gray-700 hover:text-[#087A35]"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between px-3 py-1.5 text-[12px] font-medium text-gray-700 hover:text-[#087A35] rounded-lg hover:bg-white"
                         >
-                          • {sub.name}
+                          <span>• {sub.name}</span>
+                          <ExternalLink className="w-3 h-3 text-[#087A35] opacity-70" />
                         </Link>
                       ))}
                     </div>

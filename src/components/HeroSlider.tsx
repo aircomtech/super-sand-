@@ -3,13 +3,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Play, ChevronLeft, ChevronRight, Award, Truck, Leaf, ShieldCheck, ChevronDown } from 'lucide-react';
+import { HeroSlide } from '@/lib/types';
 
 interface HeroSliderProps {
+  slides?: HeroSlide[];
   onOpenVideo?: () => void;
   onOpenEnquiry?: () => void;
 }
 
-const slides = [
+const defaultSlides = [
   {
     id: 1,
     tag: "SUPER SAND",
@@ -56,7 +58,8 @@ const slides = [
   }
 ];
 
-export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderProps) {
+export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnquiry }: HeroSliderProps) {
+  const slides = cmsSlides && cmsSlides.length > 0 ? cmsSlides : defaultSlides;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState(0);
@@ -64,11 +67,11 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   // Autoplay timer: 5.5s
   useEffect(() => {
@@ -96,11 +99,11 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const current = slides[currentSlide];
+  const current = slides[currentSlide] || slides[0];
 
   return (
     <section
-      className="relative overflow-hidden w-full min-h-[500px] sm:min-h-[560px] lg:min-h-[620px] flex items-center bg-transparent"
+      className="relative overflow-hidden w-full min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] flex items-center bg-transparent"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
@@ -138,7 +141,7 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
       </div>
 
       {/* Hero Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-12 sm:pb-14 lg:pt-14 lg:pb-14 w-full relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-5 sm:pt-7 sm:pb-7 lg:pt-8 lg:pb-7 w-full relative z-10">
         <div className="max-w-2xl lg:max-w-xl text-left space-y-5">
           
           {/* Green Category / Brand Tag */}
@@ -267,13 +270,14 @@ export default function HeroSlider({ onOpenVideo, onOpenEnquiry }: HeroSliderPro
         </div>
       </div>
 
-      {/* Floating Scroll Down Button */}
+      {/* Scroll Down Indicator with elegant badge */}
       <button
         onClick={scrollToProducts}
-        className="hidden lg:flex absolute bottom-4 right-10 z-20 w-11 h-11 rounded-full bg-[#087A35] hover:bg-[#06632B] text-white shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 animate-bounce"
+        className="hidden lg:flex absolute bottom-3 right-8 z-20 items-center gap-2 bg-white/90 backdrop-blur-md hover:bg-[#087A35] text-[#17231D] hover:text-white px-3.5 py-1.5 rounded-full shadow-md border border-gray-200/80 transition-all duration-300 hover:scale-105 active:scale-95 text-[11px] font-bold group"
         title="Scroll down to Products"
       >
-        <ChevronDown className="w-6 h-6 stroke-[2.5]" />
+        <span>Explore Products</span>
+        <ChevronDown className="w-3.5 h-3.5 stroke-[2.5] text-[#087A35] group-hover:text-white transition-colors" />
       </button>
     </section>
   );

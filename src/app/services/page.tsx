@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialServices, initialGallery } from '@/lib/data';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, Factory, Truck, Award, ShieldCheck, Wrench, Leaf, ZoomIn } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -16,13 +17,16 @@ export default function ServicesPage() {
 }
 
 function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
+  const { data } = useCMS();
+  const services = data?.services && data.services.length > 0 ? data.services : initialServices;
+  const gallery = data?.gallery && data.gallery.length > 0 ? data.gallery : initialGallery;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const categories = ['All', 'Quarrying', 'Production', 'Logistics', 'Quality', 'Infrastructure', 'Sustainability', 'Maintenance'];
 
   const filteredGallery = selectedCategory === 'All'
-    ? initialGallery
-    : initialGallery.filter((item) => item.category === selectedCategory);
+    ? gallery
+    : gallery.filter((item) => item.category === selectedCategory);
 
   return (
     <div className="bg-transparent">
@@ -46,7 +50,7 @@ function ServicesContent({ onOpenEnquiry, onOpenLightbox }: any) {
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
           
-          {initialServices.map((service, idx) => {
+          {services.map((service, idx) => {
             const isReversed = idx % 2 === 1;
 
             return (

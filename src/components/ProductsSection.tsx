@@ -14,12 +14,12 @@ export default function ProductsSection({ products, onOpenEnquiry }: ProductsSec
   const [activeQuickViewProduct, setActiveQuickViewProduct] = useState<Product | null>(null);
 
   return (
-    <section id="products-section" className="pt-4 sm:pt-6 pb-14 sm:pb-20 bg-transparent relative z-10">
+    <section id="products-section" className="pt-2 sm:pt-3 pb-12 sm:pb-16 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-3 justify-center mb-2.5">
+        <div className="text-center max-w-3xl mx-auto mb-5 sm:mb-6">
+          <div className="inline-flex items-center gap-3 justify-center mb-2">
             <span className="w-10 h-0.5 bg-[#087A35]"></span>
             <span className="text-[#087A35] font-extrabold text-xs sm:text-sm tracking-[0.25em] uppercase">
               OUR PRODUCTS

@@ -12,6 +12,7 @@ import WhoWeAreTeamSection from '@/components/WhoWeAreTeamSection';
 import ClientPartnersSection from '@/components/ClientPartnersSection';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProducts, initialProjects } from '@/lib/data';
+import { useCMS } from '@/context/CMSContext';
 
 export default function HomePage() {
   return (
@@ -23,26 +24,33 @@ export default function HomePage() {
 
 // Child component to receive injected modal props from MainLayout
 function HeroContent({ onOpenEnquiry, onOpenVideo, onOpenLightbox }: any) {
+  const { data } = useCMS();
+
+  const heroSlides = data?.heroSlides && data.heroSlides.length > 0 ? data.heroSlides : undefined;
+  const products = data?.products && data.products.length > 0 ? data.products : initialProducts;
+  const projects = data?.projects && data.projects.length > 0 ? data.projects : initialProjects;
+  const whyChooseUs = data?.whyChooseUs && data.whyChooseUs.length > 0 ? data.whyChooseUs : undefined;
+
   return (
     <>
       {/* Section 3: Hero Section with Dynamic Carousel */}
-      <HeroSlider onOpenVideo={onOpenVideo} onOpenEnquiry={onOpenEnquiry} />
+      <HeroSlider slides={heroSlides} onOpenVideo={onOpenVideo} onOpenEnquiry={onOpenEnquiry} />
 
       {/* Section 4: Our Products */}
-      <ProductsSection products={initialProducts} />
+      <ProductsSection products={products} onOpenEnquiry={onOpenEnquiry} />
 
       {/* Section 5: About Super Sand */}
       <AboutSection />
 
       {/* Section 6: Why Choose Us */}
-      <WhyChooseUsSection />
+      <WhyChooseUsSection pillars={whyChooseUs} />
 
       {/* Section 7 & 8: Infrastructure & Sustainability Dual Cards */}
       <DualFeatureSection />
 
       {/* Section 9: Landmark Projects Showcase */}
       <ProjectsShowcaseSection
-        projects={initialProjects}
+        projects={projects}
         onOpenProjectPreview={(proj) => {
           if (onOpenLightbox) {
             onOpenLightbox({
@@ -50,7 +58,7 @@ function HeroContent({ onOpenEnquiry, onOpenVideo, onOpenLightbox }: any) {
               title: proj.title,
               category: 'Infrastructure',
               image: proj.image,
-              description: `${proj.description} - Supplied: ${proj.materialsSupplied.join(', ')}`
+              description: `${proj.description} - Supplied: ${proj.materialsSupplied?.join(', ')}`
             });
           }
         }}

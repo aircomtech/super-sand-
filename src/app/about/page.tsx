@@ -9,6 +9,7 @@ import WhoWeAreTeamSection from '@/components/WhoWeAreTeamSection';
 import OurTeamCollectiveSection from '@/components/OurTeamCollectiveSection';
 import { initialSiteInfo, initialTestimonials } from '@/lib/data';
 import AnimatedCounter from '@/components/AnimatedCounter';
+import { useCMS } from '@/context/CMSContext';
 import { Award, ShieldCheck, Target, Eye, Calendar, MapPin, CheckCircle2, Star, Quote } from 'lucide-react';
 
 export default function AboutPage() {
@@ -20,6 +21,9 @@ export default function AboutPage() {
 }
 
 function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
+  const { data } = useCMS();
+  const directors = data?.directors;
+  const testimonials = data?.testimonials && data.testimonials.length > 0 ? data.testimonials : initialTestimonials;
   return (
     <div className="bg-transparent">
       
@@ -158,7 +162,7 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
 
           {/* Section: Board of Directors / Leadership (image copy 48.png) */}
           <div className="mb-16">
-            <LeadershipSection />
+            <LeadershipSection directors={directors} />
           </div>
 
           {/* Section: Who We Are - Management & Operations Team (image copy 45, 46, 47.png) */}
@@ -186,7 +190,7 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {initialTestimonials.map((item) => (
+              {testimonials.map((item) => (
                 <div
                   key={item.id}
                   className="glass-card rounded-3xl p-6 sm:p-7 shadow-card flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]"

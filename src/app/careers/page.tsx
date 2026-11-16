@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import MainLayout from '@/components/MainLayout';
 import TypingNumber from '@/components/TypingNumber';
+import { useCMS } from '@/context/CMSContext';
 import {
   Briefcase,
   Users,
@@ -139,7 +140,9 @@ const jobOpenings: JobPosition[] = [
 ];
 
 export default function CareersPage() {
-  const [selectedJob, setSelectedJob] = useState<string | null>("job-1");
+  const { data } = useCMS();
+  const currentOpenings = data?.jobOpenings && data.jobOpenings.length > 0 ? data.jobOpenings : jobOpenings;
+  const [selectedJob, setSelectedJob] = useState<string | null>(currentOpenings[0]?.id || "job-1");
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
   const [appliedJobTitle, setAppliedJobTitle] = useState("");
   const [activeStatPopup, setActiveStatPopup] = useState<{ title: string; number: string; desc: string; details: string[] } | null>(null);
@@ -479,7 +482,7 @@ export default function CareersPage() {
                   CAREER OPPORTUNITIES
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-black text-[#17231D] mt-1">
-                  Current Open Positions ({jobOpenings.length})
+                  Current Open Positions ({currentOpenings.length})
                 </h2>
               </div>
               <button
@@ -492,7 +495,7 @@ export default function CareersPage() {
             </div>
 
             <div className="space-y-4">
-              {jobOpenings.map((job) => {
+              {currentOpenings.map((job) => {
                 const isExpanded = selectedJob === job.id;
                 return (
                   <div
