@@ -209,6 +209,17 @@ export default function AdminPage() {
       if (res.ok) {
         flashStatus(successMessage);
         loadAdminData();
+
+        // Broadcast to live website tabs immediately
+        if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+          try {
+            const channel = new BroadcastChannel('super_sand_cms_sync');
+            channel.postMessage({ type: 'CMS_UPDATED', timestamp: Date.now() });
+            channel.close();
+          } catch (e) {
+            // Ignore channel errors
+          }
+        }
         return true;
       } else {
         const json = await res.json();
@@ -816,27 +827,65 @@ export default function AdminPage() {
 
                 {cmsData.heroSlides.map((slide, idx) => (
                   <div key={slide.id} className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-md flex flex-col md:flex-row gap-5 items-start">
-                    {/* Slide Image Preview with Replace Action */}
-                    <div className="w-full md:w-64 flex-shrink-0 space-y-2">
-                      <div className="relative rounded-2xl overflow-hidden h-36 bg-gray-900 border border-gray-200">
-                        <img src={slide.desktopImage} alt={slide.titleLine2} className="w-full h-full object-cover" />
-                        <span className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">Desktop</span>
+                    {/* Dual Image Preview: Desktop Banner + Mobile View Visible Side-by-Side */}
+                    <div className="w-full lg:w-[350px] flex-shrink-0 space-y-2 bg-gradient-to-br from-gray-50 to-gray-100/60 p-3 rounded-2xl border border-gray-200 shadow-sm">
+                      <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-wider text-gray-500 pb-1 border-b border-gray-200/60">
+                        <span>Slide Visuals</span>
+                        <span className="text-[#087A35] font-extrabold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#087A35] animate-ping" />
+                          Desktop + Mobile Active
+                        </span>
                       </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => triggerImageUpload(`hero_desktop_${slide.id}`)}
-                          className="flex-1 bg-gray-100 hover:bg-[#E8F5E9] text-[11px] font-bold text-[#087A35] py-1.5 rounded-lg border border-gray-200 flex items-center justify-center gap-1"
-                        >
-                          <Upload className="w-3 h-3" />
-                          <span>Replace Desk</span>
-                        </button>
-                        <button
-                          onClick={() => triggerImageUpload(`hero_mobile_${slide.id}`)}
-                          className="flex-1 bg-gray-100 hover:bg-[#E8F5E9] text-[11px] font-bold text-[#087A35] py-1.5 rounded-lg border border-gray-200 flex items-center justify-center gap-1"
-                        >
-                          <Upload className="w-3 h-3" />
-                          <span>Replace Mob</span>
-                        </button>
+
+                      <div className="grid grid-cols-12 gap-2.5 items-stretch">
+                        
+                        {/* 1. Desktop Image Preview (Wide 16:9) */}
+                        <div className="col-span-7 flex flex-col justify-between space-y-1.5">
+                          <div className="relative rounded-xl overflow-hidden h-32 bg-gray-900 border border-gray-300 shadow-sm group">
+                            <img
+                              src={slide.desktopImage}
+                              alt={`Slide ${idx + 1} Desktop`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <span className="absolute top-1.5 left-1.5 bg-[#004B2D]/95 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow">
+                              🖥️ Desktop (16:9)
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => triggerImageUpload(`hero_desktop_${slide.id}`)}
+                            className="w-full bg-white hover:bg-[#E8F5E9] text-[10px] font-bold text-[#087A35] py-2 rounded-lg border border-gray-300 shadow-sm flex items-center justify-center gap-1 transition-colors"
+                          >
+                            <Upload className="w-3 h-3" />
+                            <span>Replace Desk</span>
+                          </button>
+                        </div>
+
+                        {/* 2. Mobile View Image Preview (Visible Phone Portrait) */}
+                        <div className="col-span-5 flex flex-col justify-between space-y-1.5">
+                          <div className="relative rounded-xl overflow-hidden h-32 bg-gray-900 border-2 border-[#087A35] shadow-sm group">
+                            <img
+                              src={slide.mobileImage || slide.desktopImage}
+                              alt={`Slide ${idx + 1} Mobile`}
+                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300 brightness-[1.08]"
+                            />
+                            <span className="absolute top-1.5 left-1.5 bg-[#087A35] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow">
+                              📱 Mobile View
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => triggerImageUpload(`hero_mobile_${slide.id}`)}
+                            className="w-full bg-[#E8F5E9] hover:bg-[#087A35] hover:text-white text-[10px] font-bold text-[#087A35] py-2 rounded-lg border border-[#087A35]/30 shadow-sm flex items-center justify-center gap-1 transition-colors"
+                          >
+                            <Upload className="w-3 h-3" />
+                            <span>Replace Mob</span>
+                          </button>
+                        </div>
+
+                      </div>
+
+                      <div className="text-[9px] text-gray-500 font-semibold flex items-center justify-between px-1 pt-1 border-t border-gray-200/60">
+                        <span>Desktop: 1920×1080</span>
+                        <span className="text-[#087A35] font-bold">Mobile: 800×1200 HD</span>
                       </div>
                     </div>
 
@@ -1312,20 +1361,58 @@ export default function AdminPage() {
           {/* TAB 5: SERVICES MANAGER */}
           {activeTab === 'services' && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-2xl font-black text-[#17231D]">Services Manager (7 Operations)</h2>
+                  <h2 className="text-2xl font-black text-[#17231D]">Services Manager ({cmsData.services.length} Operations)</h2>
                   <p className="text-xs text-gray-500 font-medium">Quarrying, crushing, quality assurance, fleet logistics, and plant workshop</p>
                 </div>
+
+                <button
+                  onClick={() => {
+                    setIsNewService(true);
+                    const newId = `srv-${Date.now()}`;
+                    setEditingService({
+                      id: newId,
+                      slug: `service-${Date.now()}`,
+                      title: '',
+                      category: 'Quarrying',
+                      tagline: 'Precision Engineered Operation',
+                      description: '',
+                      mainImage: '/images/gallery/quarry-bench-drilling.png',
+                      specs: 'High Performance Infrastructure Grade',
+                      capacityOrSpecs: 'High Performance Infrastructure Grade',
+                      highlights: [
+                        'Systematic mechanized multi-bench extraction',
+                        'Zero silt air-wash classifying process',
+                        '24/7 express dispatch with computerized weighbridge'
+                      ],
+                      features: [
+                        'Systematic mechanized multi-bench extraction',
+                        'Zero silt air-wash classifying process',
+                        '24/7 express dispatch with computerized weighbridge'
+                      ],
+                      galleryImages: [
+                        '/images/gallery/quarry-bench-drilling.png',
+                        '/images/gallery/weighbridge-dispatch-station.png'
+                      ],
+                      isPublished: true,
+                      displayOrder: cmsData.services.length + 1
+                    });
+                  }}
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md transition-all hover:scale-105 active:scale-95 self-start sm:self-auto"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add New Service</span>
+                </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {cmsData.services.map((service) => (
-                  <div key={service.id} className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-md flex flex-col justify-between">
+                  <div key={service.id} className="bg-white rounded-3xl p-5 border border-gray-200/80 shadow-md flex flex-col justify-between group hover:border-[#087A35]/40 transition-colors">
                     <div>
-                      <div className="relative w-full h-44 rounded-2xl overflow-hidden bg-gray-900 mb-3">
-                        <img src={service.mainImage} alt={service.title} className="w-full h-full object-cover" />
-                        <span className="absolute top-2 left-2 bg-[#087A35] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      <div className="relative w-full h-44 rounded-2xl overflow-hidden bg-gray-900 mb-3 shadow-inner">
+                        <img src={service.mainImage} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <span className="absolute top-2 left-2 bg-[#087A35] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">
                           {service.category}
                         </span>
                       </div>
@@ -1333,7 +1420,7 @@ export default function AdminPage() {
                       <h3 className="font-bold text-sm text-[#17231D] mb-1">
                         {service.title}
                       </h3>
-                      <p className="text-xs text-gray-600 line-clamp-3 mb-2">
+                      <p className="text-xs text-gray-600 line-clamp-3 mb-2 leading-relaxed">
                         {service.description}
                       </p>
                     </div>
@@ -1350,9 +1437,24 @@ export default function AdminPage() {
                         <span>Edit Service</span>
                       </button>
 
-                      <Link href={`/services/${service.slug}`} target="_blank" className="text-xs text-gray-400 hover:text-gray-700">
-                        View Page ↗
-                      </Link>
+                      <div className="flex items-center gap-2.5">
+                        <Link href={`/services/${service.slug}`} target="_blank" className="text-xs text-gray-400 hover:text-[#087A35] font-semibold">
+                          View Page ↗
+                        </Link>
+                        <button
+                          onClick={() => {
+                            if (confirm(`Delete service "${service.title}"?`)) {
+                              const updated = cmsData.services.filter((s) => s.id !== service.id);
+                              setCmsData({ ...cmsData, services: updated });
+                              saveAction('update_services', updated, `Service "${service.title}" deleted`);
+                            }
+                          }}
+                          className="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                          title="Delete Service"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -2442,80 +2544,199 @@ export default function AdminPage() {
       )}
 
       {/* ---------------------------------------------------------------------- */}
-      {/* MODAL: EDIT SERVICE */}
+      {/* MODAL: ADD / EDIT SERVICE */}
       {/* ---------------------------------------------------------------------- */}
       {editingService && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto border-2 border-[#087A35]">
             <button
-              onClick={() => setEditingService(null)}
+              onClick={() => {
+                setEditingService(null);
+                setIsNewService(false);
+              }}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <h3 className="text-xl font-black text-[#17231D] mb-4">
-              Edit Service: {editingService.title}
-            </h3>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="bg-[#E8F5E9] text-[#087A35] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase">
+                {isNewService ? 'New Operation' : 'Edit Operation'}
+              </span>
+              <h3 className="text-xl font-black text-[#17231D]">
+                {isNewService ? 'Create New Operational Service' : `Edit: ${editingService.title}`}
+              </h3>
+            </div>
 
             <div className="space-y-4 text-xs">
-              <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-2xl border border-gray-200">
-                <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-900 flex-shrink-0">
-                  <img src={editingService.mainImage} alt="Preview" className="w-full h-full object-cover" />
+              {/* Image Preview & Upload */}
+              <div className="flex items-center gap-4 p-3.5 bg-gray-50 rounded-2xl border border-gray-200">
+                <div className="w-28 h-24 rounded-xl overflow-hidden bg-gray-900 flex-shrink-0 shadow-sm border border-gray-300">
+                  <img src={editingService.mainImage} alt="Service Preview" className="w-full h-full object-cover" />
                 </div>
-                <div className="space-y-1">
-                  <div className="font-bold text-gray-700">Service Main Image</div>
+                <div className="space-y-1.5 flex-1">
+                  <div className="font-bold text-gray-800 text-[13px]">Service Hero / Card Image</div>
+                  <p className="text-[11px] text-gray-500">Upload or replace high-definition operational photography</p>
                   <button
                     onClick={() => triggerImageUpload('editing_service')}
-                    className="inline-flex items-center gap-1 bg-[#087A35] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm"
+                    className="inline-flex items-center gap-1.5 bg-[#087A35] hover:bg-[#06632B] text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg shadow-sm transition-colors"
                   >
-                    <Upload className="w-3 h-3" />
-                    <span>Upload & Replace</span>
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload & Replace Photo</span>
                   </button>
                 </div>
               </div>
 
+              {/* Title & Slug */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Service Title <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Laser-Guided Earthmoving & Bench Excavation"
+                    value={editingService.title}
+                    onChange={(e) => {
+                      const title = e.target.value;
+                      const slug = isNewService
+                        ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+                        : editingService.slug;
+                      setEditingService({ ...editingService, title, slug });
+                    }}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">URL Slug <span className="text-red-500">*</span></label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. earthmoving-bench-excavation"
+                    value={editingService.slug}
+                    onChange={(e) => setEditingService({ ...editingService, slug: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 text-gray-700 font-mono text-[11px] focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Category & Tagline */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Category Group</label>
+                  <select
+                    value={editingService.category}
+                    onChange={(e) => setEditingService({ ...editingService, category: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white font-medium focus:border-[#087A35] focus:outline-none"
+                  >
+                    <option value="Quarrying">Quarrying & Mining</option>
+                    <option value="Production">Production & Crushing</option>
+                    <option value="Quality">Quality Testing & QA</option>
+                    <option value="Logistics">Fleet Logistics & Dispatch</option>
+                    <option value="Workshop">Plant Engineering Workshop</option>
+                    <option value="Dust Control">Environmental Dust Control</option>
+                    <option value="Custom Blending">Custom Batch Blending</option>
+                    <option value="Infrastructure">Heavy Infrastructure</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Tagline / Short Badge</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Deep pit mechanized extraction"
+                    value={editingService.tagline || ''}
+                    onChange={(e) => setEditingService({ ...editingService, tagline: e.target.value })}
+                    className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-[#087A35] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Specifications / Standards */}
               <div>
-                <label className="font-bold text-gray-700 block mb-1">Service Title</label>
+                <label className="font-bold text-gray-700 block mb-1">Capacity / Operational Specs</label>
                 <input
                   type="text"
-                  value={editingService.title}
-                  onChange={(e) => setEditingService({ ...editingService, title: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200 font-bold"
+                  placeholder="e.g. 350+ TPH Capacity / IS 383:2016 Aligned"
+                  value={editingService.specs || ''}
+                  onChange={(e) => setEditingService({ ...editingService, specs: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-[#087A35] focus:outline-none"
                 />
               </div>
 
+              {/* Description */}
               <div>
-                <label className="font-bold text-gray-700 block mb-1">Tagline</label>
-                <input
-                  type="text"
-                  value={editingService.tagline}
-                  onChange={(e) => setEditingService({ ...editingService, tagline: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200"
-                />
-              </div>
-
-              <div>
-                <label className="font-bold text-gray-700 block mb-1">Description</label>
+                <label className="font-bold text-gray-700 block mb-1">Primary Description</label>
                 <textarea
-                  rows={4}
+                  rows={3}
+                  placeholder="Provide comprehensive details about this operation, process mechanics, or machinery deployed..."
                   value={editingService.description}
                   onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-[#087A35] focus:outline-none"
                 />
               </div>
 
+              {/* Technical Features (Newline separated) */}
+              <div>
+                <label className="font-bold text-gray-700 block mb-1">Key Operational Highlights (1 per line)</label>
+                <textarea
+                  rows={3}
+                  placeholder="Systematic multi-bench extraction&#10;Zero silt air-wash classifying&#10;Sub-5 minute weighbridge dispatch"
+                  value={editingService.features?.join('\n') || ''}
+                  onChange={(e) => setEditingService({ ...editingService, features: e.target.value.split('\n').filter(Boolean) })}
+                  className="w-full px-3 py-2 rounded-xl border border-gray-200 font-mono text-[11px] focus:border-[#087A35] focus:outline-none"
+                />
+              </div>
+
+              {/* Action Buttons */}
               <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <button onClick={() => setEditingService(null)} className="px-5 py-2.5 rounded-full font-bold text-gray-600">Cancel</button>
                 <button
                   onClick={() => {
-                    const updated = cmsData.services.map((s) => (s.id === editingService.id ? editingService : s));
-                    saveAction('update_services', updated, 'Service saved');
                     setEditingService(null);
+                    setIsNewService(false);
                   }}
-                  className="bg-[#087A35] hover:bg-[#06632B] text-white px-6 py-2.5 rounded-full font-bold shadow-md"
+                  className="px-5 py-2.5 rounded-full font-bold text-gray-600 hover:bg-gray-100 transition-colors"
                 >
-                  Save Service
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (!editingService.title.trim()) {
+                      alert('Please provide a service title');
+                      return;
+                    }
+
+                    const cleanSlug = editingService.slug?.trim() || editingService.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                    const serviceToSave: Service = {
+                      ...editingService,
+                      slug: cleanSlug,
+                      capacityOrSpecs: editingService.capacityOrSpecs || editingService.specs || 'Engineered Mining Grade',
+                      specs: editingService.specs || editingService.capacityOrSpecs || 'Engineered Mining Grade',
+                      highlights: editingService.highlights || editingService.features || ['Systematic mechanized extraction', 'Automated quality monitoring', 'Express tipper fleet logistics'],
+                      features: editingService.features && editingService.features.length > 0
+                        ? editingService.features
+                        : ['Systematic mechanized extraction', 'Automated quality monitoring', 'Express tipper fleet logistics'],
+                      galleryImages: editingService.galleryImages && editingService.galleryImages.length > 0
+                        ? editingService.galleryImages
+                        : [editingService.mainImage, '/images/gallery/weighbridge-dispatch-station.png']
+                    };
+
+                    let updated: Service[];
+                    if (isNewService) {
+                      updated = [serviceToSave, ...cmsData.services];
+                    } else {
+                      updated = cmsData.services.map((s) => (s.id === serviceToSave.id ? serviceToSave : s));
+                    }
+
+                    setCmsData({ ...cmsData, services: updated });
+                    saveAction('update_services', updated, isNewService ? `Service "${serviceToSave.title}" created successfully!` : `Service "${serviceToSave.title}" saved successfully!`);
+                    setEditingService(null);
+                    setIsNewService(false);
+                  }}
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white px-6 py-2.5 rounded-full font-bold shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isNewService ? 'Create & Publish Service' : 'Save Changes'}</span>
                 </button>
               </div>
             </div>

@@ -26,7 +26,9 @@ export interface Service {
   mainImage: string;
   galleryImages: string[];
   highlights: string[];
+  features?: string[];
   capacityOrSpecs: string;
+  specs?: string;
   isPublished?: boolean;
   displayOrder?: number;
 }

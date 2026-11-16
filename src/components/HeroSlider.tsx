@@ -270,14 +270,30 @@ export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnqui
         </div>
       </div>
 
-      {/* Scroll Down Indicator with elegant badge */}
+      {/* Curved Bottom Divider Transition matching Image 2 & supersand.in */}
+      <div className="absolute -bottom-1 left-0 right-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
+        <svg
+          viewBox="0 0 1440 70"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-10 sm:h-14 lg:h-16 block"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 30 Q 720 70 1440 20 L1440 70 L0 70 Z"
+            fill="#ffffff"
+          />
+        </svg>
+      </div>
+
+      {/* Circular Green Scroll Down Button Resting on the Curve (as in Image 2) */}
       <button
         onClick={scrollToProducts}
-        className="hidden lg:flex absolute bottom-3 right-8 z-20 items-center gap-2 bg-white/90 backdrop-blur-md hover:bg-[#087A35] text-[#17231D] hover:text-white px-3.5 py-1.5 rounded-full shadow-md border border-gray-200/80 transition-all duration-300 hover:scale-105 active:scale-95 text-[11px] font-bold group"
-        title="Scroll down to Products"
+        className="absolute bottom-2 sm:bottom-4 right-6 sm:right-10 z-30 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#087A35] hover:bg-[#004B2D] text-white shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer group border-2 border-white/60"
+        aria-label="Scroll to Our Products"
+        title="Scroll to Products"
       >
-        <span>Explore Products</span>
-        <ChevronDown className="w-3.5 h-3.5 stroke-[2.5] text-[#087A35] group-hover:text-white transition-colors" />
+        <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5] text-white transition-transform group-hover:translate-y-0.5" />
       </button>
     </section>
   );

@@ -6,10 +6,19 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const db = getDatabase();
-    return NextResponse.json({
-      success: true,
-      data: db
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: db
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      }
+    );
   } catch (err: any) {
     console.error('Failed to get public CMS content:', err);
     return NextResponse.json(

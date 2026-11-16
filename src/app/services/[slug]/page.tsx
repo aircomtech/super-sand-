@@ -7,12 +7,15 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialServices } from '@/lib/data';
 import { Service } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ChevronRight, ShieldCheck, Factory, Truck, Wrench, ZoomIn, MessageSquare, Phone } from 'lucide-react';
 
 export default function ServiceDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const service = initialServices.find((s) => s.slug === slug);
+  const { data } = useCMS();
+  const services = data?.services && data.services.length > 0 ? data.services : initialServices;
+  const service = services.find((s) => s.slug === slug || s.id === slug) || initialServices.find((s) => s.slug === slug);
 
   if (!service) {
     return (

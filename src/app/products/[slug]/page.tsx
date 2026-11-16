@@ -7,12 +7,15 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProducts } from '@/lib/data';
 import { Product } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ShieldCheck, Layers, ChevronRight, MessageSquare } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const product = initialProducts.find((p) => p.slug === slug);
+  const { data } = useCMS();
+  const products = data?.products && data.products.length > 0 ? data.products : initialProducts;
+  const product = products.find((p) => p.slug === slug || p.id === slug) || initialProducts.find((p) => p.slug === slug);
 
   if (!product) {
     return (

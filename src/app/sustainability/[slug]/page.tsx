@@ -7,12 +7,15 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialSustainabilityItems } from '@/lib/data';
 import { SustainabilityItem } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ChevronRight, Leaf, ShieldCheck, Droplets, ZoomIn, Phone, MessageSquare } from 'lucide-react';
 
 export default function SustainabilityDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const item = initialSustainabilityItems.find((s) => s.slug === slug);
+  const { data } = useCMS();
+  const items = data?.sustainabilityItems && data.sustainabilityItems.length > 0 ? data.sustainabilityItems : initialSustainabilityItems;
+  const item = items.find((s) => s.slug === slug || s.id === slug) || initialSustainabilityItems.find((s) => s.slug === slug);
 
   if (!item) {
     return (

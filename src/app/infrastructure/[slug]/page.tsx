@@ -7,12 +7,15 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialInfrastructureItems } from '@/lib/data';
 import { InfrastructureItem } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ChevronRight, Factory, Cog, ShieldCheck, Scale, ZoomIn, Phone, MessageSquare } from 'lucide-react';
 
 export default function InfrastructureDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const item = initialInfrastructureItems.find((i) => i.slug === slug);
+  const { data } = useCMS();
+  const items = data?.infrastructureItems && data.infrastructureItems.length > 0 ? data.infrastructureItems : initialInfrastructureItems;
+  const item = items.find((i) => i.slug === slug || i.id === slug) || initialInfrastructureItems.find((i) => i.slug === slug);
 
   if (!item) {
     return (

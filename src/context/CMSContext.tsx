@@ -39,6 +39,28 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchContent();
+
+    // Cross-tab real-time synchronization via BroadcastChannel
+    if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+      const channel = new BroadcastChannel('super_sand_cms_sync');
+      channel.onmessage = (event) => {
+        if (event.data?.type === 'CMS_UPDATED') {
+          fetchContent();
+        }
+      };
+      return () => {
+        channel.close();
+      };
+    }
+  }, [fetchContent]);
+
+  // Also auto-refresh when tab receives focus
+  useEffect(() => {
+    const handleFocus = () => {
+      fetchContent();
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, [fetchContent]);
 
   return (

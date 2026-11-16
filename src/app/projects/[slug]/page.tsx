@@ -7,12 +7,15 @@ import MainLayout from '@/components/MainLayout';
 import ContactCtaBar from '@/components/ContactCtaBar';
 import { initialProjects } from '@/lib/data';
 import { Project } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 import { ArrowRight, CheckCircle2, ChevronRight, Building2, MapPin, ShieldCheck, ZoomIn, Phone, MessageSquare, Award } from 'lucide-react';
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const project = initialProjects.find((p) => p.slug === slug || p.id === slug);
+  const { data } = useCMS();
+  const projects = data?.projects && data.projects.length > 0 ? data.projects : initialProjects;
+  const project = projects.find((p) => p.slug === slug || p.id === slug) || initialProjects.find((p) => p.slug === slug || p.id === slug);
 
   if (!project) {
     return (
