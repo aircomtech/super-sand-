@@ -151,7 +151,14 @@ export default function AdminPage() {
       if (res.ok) {
         const json = await res.json();
         if (json.data) {
-          setCmsData(json.data);
+          setCmsData({
+            ...defaultCMSData,
+            ...json.data,
+            testimonials: Array.isArray(json.data.testimonials) && json.data.testimonials.length > 0 ? json.data.testimonials : defaultCMSData.testimonials,
+            services: Array.isArray(json.data.services) && json.data.services.length > 0 ? json.data.services : defaultCMSData.services,
+            products: Array.isArray(json.data.products) && json.data.products.length > 0 ? json.data.products : defaultCMSData.products,
+            heroSlides: Array.isArray(json.data.heroSlides) && json.data.heroSlides.length > 0 ? json.data.heroSlides : defaultCMSData.heroSlides,
+          });
         }
       }
     } catch (err) {
@@ -1879,22 +1886,23 @@ export default function AdminPage() {
                   <p className="text-xs text-gray-500 font-medium">Manage customer reviews, company names, ratings, and quotes</p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => {
                     const newTest: Testimonial = {
                       id: `test-${Date.now()}`,
-                      name: "Rajesh Varma",
-                      designation: "Chief Project Manager",
-                      company: "Premier Infra Projects",
-                      quote: "Super Sand has been our preferred supplier for cubical 20mm aggregates and M-Sand with flawless consistency.",
+                      name: '',
+                      designation: '',
+                      company: '',
+                      quote: '',
                       rating: 5,
-                      avatar: "/images/testimonials/avatar-1.jpg",
+                      avatar: '/images/testimonials/avatar-1.jpg',
                       isPublished: true,
-                      displayOrder: cmsData.testimonials.length + 1
+                      displayOrder: (cmsData.testimonials?.length || 0) + 1
                     };
                     setEditingTestimonial(newTest);
                     setIsNewTestimonial(true);
                   }}
-                  className="bg-[#087A35] hover:bg-[#06632B] text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-md"
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Add Testimonial</span>
@@ -1950,22 +1958,23 @@ export default function AdminPage() {
 
                 {/* Quick Add Testimonial Action Card */}
                 <button
+                  type="button"
                   onClick={() => {
                     const newTest: Testimonial = {
                       id: `test-${Date.now()}`,
-                      name: "Rajesh Varma",
-                      designation: "Chief Project Manager",
-                      company: "Premier Infra Projects",
-                      quote: "Super Sand has been our preferred supplier for cubical 20mm aggregates and M-Sand with flawless consistency.",
+                      name: '',
+                      designation: '',
+                      company: '',
+                      quote: '',
                       rating: 5,
-                      avatar: "/images/testimonials/avatar-1.jpg",
+                      avatar: '/images/testimonials/avatar-1.jpg',
                       isPublished: true,
-                      displayOrder: cmsData.testimonials.length + 1
+                      displayOrder: (cmsData.testimonials?.length || 0) + 1
                     };
                     setEditingTestimonial(newTest);
                     setIsNewTestimonial(true);
                   }}
-                  className="rounded-3xl border-2 border-dashed border-[#087A35]/40 hover:border-[#087A35] bg-[#E8F5E9]/20 hover:bg-[#E8F5E9]/50 p-6 flex flex-col items-center justify-center text-center gap-2.5 transition-all duration-300 group min-h-[190px]"
+                  className="rounded-3xl border-2 border-dashed border-[#087A35]/40 hover:border-[#087A35] bg-[#E8F5E9]/20 hover:bg-[#E8F5E9]/50 p-6 flex flex-col items-center justify-center text-center gap-2.5 transition-all duration-300 group min-h-[190px] cursor-pointer"
                 >
                   <div className="w-11 h-11 rounded-2xl bg-[#087A35] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                     <Plus className="w-5 h-5 stroke-[2.5]" />
@@ -2638,7 +2647,7 @@ export default function AdminPage() {
       {/* MODAL: ADD / EDIT SERVICE */}
       {/* ---------------------------------------------------------------------- */}
       {editingService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto border-2 border-[#087A35]">
             <button
               onClick={() => {
@@ -3142,7 +3151,7 @@ export default function AdminPage() {
       {/* MODAL: ADD / EDIT TESTIMONIAL */}
       {/* ---------------------------------------------------------------------- */}
       {editingTestimonial && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto border-2 border-[#087A35]">
             <button
               onClick={() => {
