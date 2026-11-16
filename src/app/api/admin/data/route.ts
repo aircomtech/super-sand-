@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase, saveDatabase, logAdminActivity, defaultCMSData } from '@/lib/server-db';
+import { getDatabase, getDatabaseAsync, saveDatabase, logAdminActivity, defaultCMSData } from '@/lib/server-db';
 
 function checkAuth(req: NextRequest): boolean {
   const session = req.cookies.get('super_sand_admin_session');
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const db = getDatabase();
+  const db = await getDatabaseAsync();
   return NextResponse.json({ success: true, data: db });
 }
 

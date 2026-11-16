@@ -1,24 +1,60 @@
 import fs from 'fs';
 import path from 'path';
-import {
-  initialSiteInfo,
-  initialProducts,
-  initialServices,
-  initialProjects,
-  initialInfrastructureItems,
-  initialSustainabilityItems,
-  initialTestimonials,
-  initialGallery,
-  initialEnquiries
-} from './data';
 import { FullCMSData } from './types';
+import { defaultCMSData } from './default-cms-data';
+import { supabase } from './supabase';
+
+export { defaultCMSData };
 
 const DB_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'db.json');
 
-import { defaultCMSData } from './default-cms-data';
-export { defaultCMSData };
-
 let inMemoryCache: FullCMSData | null = null;
+
+// Synchronize from Supabase
+export async function syncFromSupabase(): Promise<FullCMSData | null> {
+  try {
+    const { data, error } = await supabase
+      .from('super_sand_cms')
+      .select('content')
+      .eq('id', 'main')
+      .maybeSingle();
+
+    if (!error && data?.content && Object.keys(data.content).length > 0) {
+      const merged: FullCMSData = {
+        ...defaultCMSData,
+        ...data.content,
+      };
+      inMemoryCache = merged;
+      return merged;
+    }
+  } catch (err: any) {
+    // Graceful fallback to local storage
+  }
+  return null;
+}
+
+// Synchronize to Supabase
+export async function syncToSupabase(dbData: FullCMSData): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('super_sand_cms')
+      .upsert(
+        {
+          id: 'main',
+          content: dbData,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'id' }
+      );
+
+    if (!error) {
+      return true;
+    }
+  } catch (err: any) {
+    // Graceful fallback
+  }
+  return false;
+}
 
 export function getDatabase(): FullCMSData {
   if (inMemoryCache) {
@@ -29,14 +65,13 @@ export function getDatabase(): FullCMSData {
     if (fs.existsSync(DB_FILE_PATH)) {
       const data = fs.readFileSync(DB_FILE_PATH, 'utf-8');
       const parsed = JSON.parse(data);
-      // Merge with default to guarantee all new sections exist
       const merged: FullCMSData = {
         ...defaultCMSData,
         ...parsed,
         siteInfo: { ...defaultCMSData.siteInfo, ...(parsed.siteInfo || {}) },
         contactSettings: { ...defaultCMSData.contactSettings, ...(parsed.contactSettings || {}) },
         teamCollective: { ...defaultCMSData.teamCollective, ...(parsed.teamCollective || {}) },
-        footerSettings: { ...defaultCMSData.footerSettings, ...(parsed.footerSettings || {}) }
+        footerSettings: { ...defaultCMSData.footerSettings, ...(parsed.footerSettings || {}) },
       };
       inMemoryCache = merged;
       return merged;
@@ -60,8 +95,21 @@ export function getDatabase(): FullCMSData {
   return defaultCMSData;
 }
 
+export async function getDatabaseAsync(): Promise<FullCMSData> {
+  const fromSupabase = await syncFromSupabase();
+  if (fromSupabase) {
+    return fromSupabase;
+  }
+  return getDatabase();
+}
+
 export function saveDatabase(data: FullCMSData): boolean {
   inMemoryCache = data;
+
+  // 1. Asynchronously sync to Supabase in background
+  syncToSupabase(data).catch(() => {});
+
+  // 2. Persist to local JSON file
   try {
     const dir = path.dirname(DB_FILE_PATH);
     if (!fs.existsSync(dir)) {
@@ -75,7 +123,12 @@ export function saveDatabase(data: FullCMSData): boolean {
   }
 }
 
-export function logAdminActivity(action: string, module: string, description: string, adminUser = 'Admin') {
+export function logAdminActivity(
+  action: string,
+  module: string,
+  description: string,
+  adminUser = 'Admin'
+) {
   try {
     const db = getDatabase();
     const newLog = {
@@ -84,7 +137,7 @@ export function logAdminActivity(action: string, module: string, description: st
       module,
       description,
       adminUser,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
     db.activityLogs = [newLog, ...(db.activityLogs || [])].slice(0, 100);
     saveDatabase(db);

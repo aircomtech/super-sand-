@@ -16,11 +16,50 @@ export async function uploadMediaAsset(
   filename: string,
   folder = 'super-sand'
 ): Promise<UploadResult> {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const cloudName =
+    process.env.CLOUDINARY_CLOUD_NAME ||
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+    'o32hkweq';
+  const uploadPreset =
+    process.env.CLOUDINARY_UPLOAD_PRESET ||
+    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ||
+    'ml_default';
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
-  // If Cloudinary credentials exist, upload to Cloudinary API
+  // 1. Try unsigned upload via upload_preset (ml_default)
+  if (cloudName && uploadPreset) {
+    try {
+      const formData = new FormData();
+      const blob = new Blob([new Uint8Array(fileBuffer)]);
+      formData.append('file', blob, filename);
+      formData.append('upload_preset', uploadPreset);
+      formData.append('folder', folder);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (res.ok && json.secure_url) {
+        return {
+          success: true,
+          publicId: json.public_id,
+          url: json.secure_url,
+          format: json.format,
+          width: json.width,
+          height: json.height,
+        };
+      } else {
+        console.warn('Cloudinary unsigned preset response:', json?.error?.message || json);
+      }
+    } catch (err: any) {
+      console.warn('Cloudinary unsigned upload error:', err.message);
+    }
+  }
+
+  // 2. Try signed upload if API Key and Secret are available
   if (cloudName && apiKey && apiSecret) {
     try {
       const timestamp = Math.round(new Date().getTime() / 1000);
@@ -38,7 +77,7 @@ export async function uploadMediaAsset(
 
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
       const json = await res.json();
@@ -49,15 +88,15 @@ export async function uploadMediaAsset(
           url: json.secure_url,
           format: json.format,
           width: json.width,
-          height: json.height
+          height: json.height,
         };
       }
     } catch (err: any) {
-      console.warn('Cloudinary upload error, falling back to local storage:', err);
+      console.warn('Cloudinary signed upload error:', err.message);
     }
   }
 
-  // Seamless fallback to local public/uploads directory
+  // 3. Seamless fallback to local public/uploads directory
   try {
     const uploadDir = path.join(process.cwd(), 'public', 'uploads');
     if (!fs.existsSync(uploadDir)) {
@@ -80,16 +119,16 @@ export async function uploadMediaAsset(
       url: publicUrl,
       format: ext.replace('.', ''),
       width: 1200,
-      height: 800
+      height: 800,
     };
   } catch (err: any) {
-    console.error('Local upload failed:', err);
+    console.error('Local upload fallback failed:', err);
     return {
       success: false,
       publicId: '',
       url: '',
       format: '',
-      error: err.message || 'Failed to save uploaded file'
+      error: err.message || 'Failed to save uploaded file',
     };
   }
 }

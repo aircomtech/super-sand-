@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/server-db';
+import { getDatabaseAsync } from '@/lib/server-db';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const db = getDatabase();
+    const db = await getDatabaseAsync();
     return NextResponse.json(
       {
         success: true,
