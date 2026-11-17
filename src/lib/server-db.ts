@@ -123,6 +123,21 @@ export function saveDatabase(data: FullCMSData): boolean {
   }
 }
 
+export async function saveDatabaseAsync(data: FullCMSData): Promise<boolean> {
+  inMemoryCache = data;
+  const synced = await syncToSupabase(data);
+  try {
+    const dir = path.dirname(DB_FILE_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(DB_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error saving DB file:', err);
+  }
+  return synced;
+}
+
 export function logAdminActivity(
   action: string,
   module: string,

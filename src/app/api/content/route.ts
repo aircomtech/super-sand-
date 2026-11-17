@@ -6,10 +6,13 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const db = await getDatabaseAsync();
+    // Strip sensitive fields like adminPassword
+    const { adminPassword, ...safeData } = db;
+
     return NextResponse.json(
       {
         success: true,
-        data: db
+        data: safeData
       },
       {
         headers: {

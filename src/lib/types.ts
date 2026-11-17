@@ -334,4 +334,5 @@ export interface FullCMSData {
   sectionSettings: SectionSetting[];
   mediaAssets: MediaAsset[];
   activityLogs: AdminActivityLog[];
+  adminPassword?: string;
 }
