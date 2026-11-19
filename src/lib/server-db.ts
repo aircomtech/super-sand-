@@ -47,13 +47,15 @@ export async function syncToSupabase(dbData: FullCMSData): Promise<boolean> {
         { onConflict: 'id' }
       );
 
-    if (!error) {
-      return true;
+    if (error) {
+      console.error('Supabase upsert error:', error.message || error);
+      return false;
     }
+    return true;
   } catch (err: any) {
-    // Graceful fallback
+    console.error('Supabase upsert exception:', err?.message || err);
+    return false;
   }
-  return false;
 }
 
 export function getDatabase(): FullCMSData {

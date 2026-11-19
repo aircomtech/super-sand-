@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadMediaAsset } from '@/lib/cloudinary';
-import { getDatabase, saveDatabase, logAdminActivity } from '@/lib/server-db';
+import { getDatabaseAsync, saveDatabaseAsync, logAdminActivity } from '@/lib/server-db';
 
 function checkAuth(req: NextRequest): boolean {
   const session = req.cookies.get('super_sand_admin_session');
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     if (result.success) {
       // Register asset in DB mediaAssets
-      const db = getDatabase();
+      const db = await getDatabaseAsync();
       const newAsset = {
         id: `med-${Date.now()}`,
         publicId: result.publicId,
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       };
 
       db.mediaAssets = [newAsset, ...(db.mediaAssets || [])];
-      saveDatabase(db);
+      await saveDatabaseAsync(db);
       logAdminActivity('MEDIA_UPLOAD', 'Media Manager', `Uploaded new image: ${file.name}`);
 
       return NextResponse.json({

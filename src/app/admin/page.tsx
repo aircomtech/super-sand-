@@ -361,17 +361,63 @@ export default function AdminPage() {
       setCmsData({ ...cmsData, heroSlides: updated });
       saveAction('update_hero_slides', updated, 'Hero mobile image updated');
     } else if (target === 'editing_product') {
-      if (editingProduct) setEditingProduct({ ...editingProduct, image: url });
+      if (editingProduct) {
+        const updatedItem = { ...editingProduct, image: url };
+        setEditingProduct(updatedItem);
+        if (!isNewProduct) {
+          const updated = cmsData.products.map((p) => (p.id === updatedItem.id ? updatedItem : p));
+          setCmsData({ ...cmsData, products: updated });
+          saveAction('update_products', updated, `Photo for "${updatedItem.name || 'product'}" updated & saved!`);
+        }
+      }
     } else if (target === 'editing_service') {
-      if (editingService) setEditingService({ ...editingService, mainImage: url });
+      if (editingService) {
+        const updatedItem = { ...editingService, mainImage: url };
+        setEditingService(updatedItem);
+        if (!isNewService) {
+          const updated = cmsData.services.map((s) => (s.id === updatedItem.id ? updatedItem : s));
+          setCmsData({ ...cmsData, services: updated });
+          saveAction('update_services', updated, `Photo for "${updatedItem.title || 'service'}" updated & saved!`);
+        }
+      }
     } else if (target === 'editing_project') {
-      if (editingProject) setEditingProject({ ...editingProject, image: url });
+      if (editingProject) {
+        const updatedItem = { ...editingProject, image: url };
+        setEditingProject(updatedItem);
+        if (!isNewProject) {
+          const updated = cmsData.projects.map((p) => (p.id === updatedItem.id ? updatedItem : p));
+          setCmsData({ ...cmsData, projects: updated });
+          saveAction('update_projects', updated, `Photo for "${updatedItem.title || 'project'}" updated & saved!`);
+        }
+      }
     } else if (target === 'editing_director') {
-      if (editingDirector) setEditingDirector({ ...editingDirector, image: url });
+      if (editingDirector) {
+        const updatedItem = { ...editingDirector, image: url };
+        setEditingDirector(updatedItem);
+        const updated = cmsData.directors.map((d) => (d.id === updatedItem.id ? updatedItem : d));
+        setCmsData({ ...cmsData, directors: updated });
+        saveAction('update_directors', updated, `Photo for "${updatedItem.name || 'director'}" updated & saved!`);
+      }
     } else if (target === 'editing_testimonial') {
-      if (editingTestimonial) setEditingTestimonial({ ...editingTestimonial, avatar: url });
+      if (editingTestimonial) {
+        const updatedItem = { ...editingTestimonial, avatar: url };
+        setEditingTestimonial(updatedItem);
+        if (!isNewTestimonial) {
+          const updated = cmsData.testimonials.map((t) => (t.id === updatedItem.id ? updatedItem : t));
+          setCmsData({ ...cmsData, testimonials: updated });
+          saveAction('update_testimonials', updated, `Photo for "${updatedItem.name || 'testimonial'}" updated & saved!`);
+        }
+      }
     } else if (target === 'editing_gallery') {
-      if (editingGalleryItem) setEditingGalleryItem({ ...editingGalleryItem, image: url });
+      if (editingGalleryItem) {
+        const updatedItem = { ...editingGalleryItem, image: url };
+        setEditingGalleryItem(updatedItem);
+        if (!isNewGalleryItem) {
+          const updated = cmsData.gallery.map((g) => (g.id === updatedItem.id ? updatedItem : g));
+          setCmsData({ ...cmsData, gallery: updated });
+          saveAction('update_gallery', updated, `Photo for "${updatedItem.title || 'gallery item'}" updated & saved!`);
+        }
+      }
     } else if (target === 'partner_master_banner') {
       setCmsData({ ...cmsData, partnerMasterBanner: url });
       saveAction('update_partner_master', { banner: url }, 'Partner master banner updated');

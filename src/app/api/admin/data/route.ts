@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase, getDatabaseAsync, saveDatabase, logAdminActivity, defaultCMSData } from '@/lib/server-db';
+import { getDatabaseAsync, saveDatabaseAsync, logAdminActivity, defaultCMSData } from '@/lib/server-db';
 
 function checkAuth(req: NextRequest): boolean {
   const session = req.cookies.get('super_sand_admin_session');
@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
 
   try {
     const { action, payload } = await req.json();
-    const db = getDatabase();
+    const db = await getDatabaseAsync();
 
     switch (action) {
       // 1. Site Info
@@ -238,7 +238,7 @@ export async function PUT(req: NextRequest) {
 
       // 22. Reset to Defaults
       case 'reset_to_defaults':
-        saveDatabase(defaultCMSData);
+        await saveDatabaseAsync(defaultCMSData);
         logAdminActivity('RESET_SYSTEM', 'System', 'Reset all content to factory production defaults');
         return NextResponse.json({ success: true, message: 'All data restored to factory defaults' });
 
@@ -246,7 +246,7 @@ export async function PUT(req: NextRequest) {
         return NextResponse.json({ error: `Unknown action: ${action}` }, { status: 400 });
     }
 
-    saveDatabase(db);
+    await saveDatabaseAsync(db);
     return NextResponse.json({ success: true, message: 'Changes saved successfully to database' });
   } catch (err: any) {
     console.error('API admin data update error:', err);

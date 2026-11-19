@@ -96,39 +96,58 @@ export async function uploadMediaAsset(
     }
   }
 
-  // 3. Seamless fallback to local public/uploads directory
-  try {
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+  // Determine file extension and MIME type
+  const ext = path.extname(filename).toLowerCase() || '.png';
+  const mimeMap: Record<string, string> = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.webp': 'image/webp',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+  };
+  const mimeType = mimeMap[ext] || 'image/jpeg';
+  const cleanBase = path.basename(filename, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
+
+  // 3. In local development environment, try writing to public/uploads
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+
+      const uniqueName = `${cleanBase}_${Date.now()}${ext}`;
+      const destinationPath = path.join(uploadDir, uniqueName);
+
+      fs.writeFileSync(destinationPath, fileBuffer);
+
+      return {
+        success: true,
+        publicId: `local_${cleanBase}_${Date.now()}`,
+        url: `/uploads/${uniqueName}`,
+        format: ext.replace('.', ''),
+        width: 1200,
+        height: 800,
+      };
+    } catch (err) {
+      // If local filesystem is read-only or throws ENOENT, gracefully fall through to data URI
+      console.warn('Local filesystem write not available, using Data URI fallback');
     }
-
-    const ext = path.extname(filename) || '.png';
-    const cleanBase = path.basename(filename, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
-    const uniqueName = `${cleanBase}_${Date.now()}${ext}`;
-    const destinationPath = path.join(uploadDir, uniqueName);
-
-    fs.writeFileSync(destinationPath, fileBuffer);
-
-    const publicUrl = `/uploads/${uniqueName}`;
-    const publicId = `local_${cleanBase}_${Date.now()}`;
-
-    return {
-      success: true,
-      publicId,
-      url: publicUrl,
-      format: ext.replace('.', ''),
-      width: 1200,
-      height: 800,
-    };
-  } catch (err: any) {
-    console.error('Local upload fallback failed:', err);
-    return {
-      success: false,
-      publicId: '',
-      url: '',
-      format: '',
-      error: err.message || 'Failed to save uploaded file',
-    };
   }
+
+  // 4. Serverless & Production Fallback: Self-Contained Base64 Data URI
+  // Eliminates 'ENOENT: mkdir /var/task/public/uploads' on Vercel read-only filesystem.
+  // Persisted directly into Supabase database and renders instantly across the live website!
+  const base64Data = fileBuffer.toString('base64');
+  const dataUrl = `data:${mimeType};base64,${base64Data}`;
+
+  return {
+    success: true,
+    publicId: `data_${cleanBase}_${Date.now()}`,
+    url: dataUrl,
+    format: ext.replace('.', ''),
+    width: 1200,
+    height: 800,
+  };
 }

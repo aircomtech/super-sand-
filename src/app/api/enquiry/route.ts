@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase, saveDatabase } from '@/lib/server-db';
+import { getDatabaseAsync, saveDatabaseAsync } from '@/lib/server-db';
 import { Enquiry } from '@/lib/types';
 
 export async function POST(req: NextRequest) {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Phone Number is required' }, { status: 400 });
     }
 
-    const db = getDatabase();
+    const db = await getDatabaseAsync();
 
     const newEnquiry: Enquiry = {
       id: `enq-${Date.now()}`,
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     // Prepend new enquiry
     db.enquiries.unshift(newEnquiry);
-    saveDatabase(db);
+    await saveDatabaseAsync(db);
 
     return NextResponse.json({
       success: true,
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    const db = getDatabase();
+    const db = await getDatabaseAsync();
     return NextResponse.json({
       success: true,
       enquiries: db.enquiries
