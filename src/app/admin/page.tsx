@@ -285,6 +285,13 @@ export default function AdminPage() {
         flashStatus(successMessage);
         loadAdminData();
 
+        // Update local client cache immediately so website renders zero-blink changes
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('super_sand_cms_data_cache', JSON.stringify(cmsData));
+          } catch (e) {}
+        }
+
         // Broadcast to live website tabs immediately
         if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
           try {
