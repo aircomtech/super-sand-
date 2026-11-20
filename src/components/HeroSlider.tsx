@@ -99,7 +99,13 @@ export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnqui
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const current = slides[currentSlide] || slides[0];
+  const current = slides[currentSlide] || slides[0] || defaultSlides[0];
+  const currentTag = current.tag || (current as any).categoryTag || 'SUPER SAND';
+  const currentTitleLine1 = current.titleLine1 || (current as any).headlineLine1 || '';
+  const currentTitleLine2 = current.titleLine2 || (current as any).headlineLine2 || '';
+  const currentSubtitle = current.subtitle || (current as any).description || '';
+  const currentCtaText = current.ctaText || 'Explore Our Products';
+  const currentCtaLink = current.ctaLink || '/products';
 
   return (
     <section
@@ -115,19 +121,23 @@ export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnqui
       <div className="absolute inset-0 z-0 overflow-hidden">
         {slides.map((s, index) => {
           const isActive = index === currentSlide;
+          const deskImg = s.desktopImage || (s as any).desktopImageUrl || s.mobileImage || (s as any).mobileImageUrl || '/images/hero/hero-desktop-1.png';
+          const mobImg = s.mobileImage || (s as any).mobileImageUrl || s.desktopImage || (s as any).desktopImageUrl || deskImg;
+          const title2 = s.titleLine2 || (s as any).headlineLine2 || 'Super Sand';
+
           return (
             <div
-              key={s.id}
+              key={s.id || index}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
                 isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
               } transition-transform duration-1000`}
             >
               {/* Responsive picture element: crystal clear & brightened on mobile */}
               <picture>
-                <source media="(max-width: 767px)" srcSet={s.mobileImage} />
+                <source media="(max-width: 767px)" srcSet={mobImg} />
                 <img
-                  src={s.desktopImage}
-                  alt={s.titleLine2}
+                  src={deskImg}
+                  alt={title2}
                   className="w-full h-full object-cover object-right lg:object-center brightness-[1.10] contrast-[1.06] saturate-[1.08]"
                 />
               </picture>
@@ -147,32 +157,32 @@ export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnqui
           {/* Green Category / Brand Tag */}
           <div className="inline-flex items-center gap-2">
             <span className="text-[#087A35] font-black text-xs sm:text-sm tracking-[0.25em] uppercase border-b-2 border-[#087A35] pb-0.5">
-              {current.tag}
+              {currentTag}
             </span>
           </div>
 
           {/* Main Headline */}
           <div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#17231D] tracking-tight leading-[1.12]">
-              {current.titleLine1}{' '}
+              {currentTitleLine1}{' '}
               <span className="text-[#087A35] block sm:inline">
-                {current.titleLine2}
+                {currentTitleLine2}
               </span>
             </h1>
           </div>
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg text-gray-800 font-medium leading-relaxed max-w-lg">
-            {current.subtitle}
+            {currentSubtitle}
           </p>
 
           {/* Call to Actions */}
           <div className="flex flex-wrap items-center gap-4 pt-1">
             <Link
-              href={current.ctaLink}
+              href={currentCtaLink}
               className="inline-flex items-center gap-2.5 bg-[#087A35] hover:bg-[#06632B] text-white px-7 py-3 rounded-full font-bold text-sm sm:text-base tracking-wide shadow-brand transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-0.5"
             >
-              <span>{current.ctaText}</span>
+              <span>{currentCtaText}</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </Link>
 

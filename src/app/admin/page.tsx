@@ -371,23 +371,24 @@ export default function AdminPage() {
   };
 
   const applyUploadedUrl = (target: string, url: string) => {
+    const versionedUrl = url.startsWith('data:') ? url : (url.includes('?') ? `${url}&v=${Date.now()}` : `${url}?v=${Date.now()}`);
     if (target.startsWith('hero_desktop_')) {
-      const id = parseInt(target.replace('hero_desktop_', ''), 10);
-      const updated = cmsData.heroSlides.map((s) => (s.id === id ? { ...s, desktopImage: url } : s));
+      const idStr = target.replace('hero_desktop_', '');
+      const updated = cmsData.heroSlides.map((s) => (String(s.id) === idStr ? { ...s, desktopImage: versionedUrl } : s));
       setCmsData({ ...cmsData, heroSlides: updated });
       saveAction('update_hero_slides', updated, 'Hero desktop image updated');
     } else if (target.startsWith('hero_mobile_')) {
-      const id = parseInt(target.replace('hero_mobile_', ''), 10);
-      const updated = cmsData.heroSlides.map((s) => (s.id === id ? { ...s, mobileImage: url } : s));
+      const idStr = target.replace('hero_mobile_', '');
+      const updated = cmsData.heroSlides.map((s) => (String(s.id) === idStr ? { ...s, mobileImage: versionedUrl } : s));
       setCmsData({ ...cmsData, heroSlides: updated });
       saveAction('update_hero_slides', updated, 'Hero mobile image updated');
     } else if (target === 'editing_hero_desktop') {
       if (editingHeroSlide) {
-        setEditingHeroSlide({ ...editingHeroSlide, desktopImage: url });
+        setEditingHeroSlide({ ...editingHeroSlide, desktopImage: versionedUrl });
       }
     } else if (target === 'editing_hero_mobile') {
       if (editingHeroSlide) {
-        setEditingHeroSlide({ ...editingHeroSlide, mobileImage: url });
+        setEditingHeroSlide({ ...editingHeroSlide, mobileImage: versionedUrl });
       }
     } else if (target === 'editing_product') {
       if (editingProduct) {
@@ -3029,7 +3030,7 @@ export default function AdminPage() {
                     if (isNewHeroSlide) {
                       updated = [...cmsData.heroSlides, editingHeroSlide];
                     } else {
-                      updated = cmsData.heroSlides.map((s) => (s.id === editingHeroSlide.id ? editingHeroSlide : s));
+                      updated = cmsData.heroSlides.map((s) => (String(s.id) === String(editingHeroSlide.id) ? editingHeroSlide : s));
                     }
                     setCmsData({ ...cmsData, heroSlides: updated });
                     saveAction('update_hero_slides', updated, isNewHeroSlide ? 'New hero slide added successfully!' : `Hero slide #${editingHeroSlide.id} updated successfully!`);

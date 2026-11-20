@@ -268,28 +268,36 @@ export default function Navbar({ onOpenEnquiry }: NavbarProps) {
 
               return (
                 <div key={link.name} className="border-b border-gray-100 last:border-none pb-1">
-                  <div className="flex items-center justify-between">
+                  {link.hasDropdown ? (
+                    <button
+                      type="button"
+                      onClick={() => setOpenDropdownName(isItemDropdownOpen ? null : link.name)}
+                      className={`w-full flex items-center justify-between py-2.5 px-3 rounded-xl text-[14px] font-bold text-left transition-colors ${
+                        isItemDropdownOpen || pathname.startsWith(link.href)
+                          ? 'text-[#087A35] bg-[#E8F5E9]/70'
+                          : 'text-[#17231D] hover:bg-gray-100/70'
+                      }`}
+                    >
+                      <span>{link.name}</span>
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isItemDropdownOpen ? 'rotate-180 text-[#087A35]' : 'text-gray-400'}`} />
+                    </button>
+                  ) : (
                     <Link
                       href={link.href}
-                      className={`flex-1 py-2 px-3 rounded-xl text-[14px] font-bold ${
-                        pathname === link.href ? 'text-[#087A35] bg-[#E8F5E9]' : 'text-[#17231D]'
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setOpenDropdownName(null);
+                      }}
+                      className={`block py-2.5 px-3 rounded-xl text-[14px] font-bold transition-colors ${
+                        pathname === link.href ? 'text-[#087A35] bg-[#E8F5E9]' : 'text-[#17231D] hover:bg-gray-100/70'
                       }`}
                     >
                       {link.name}
                     </Link>
-
-                    {link.hasDropdown && (
-                      <button
-                        onClick={() => setOpenDropdownName(isItemDropdownOpen ? null : link.name)}
-                        className="p-2 text-gray-500 hover:text-[#087A35]"
-                      >
-                        <ChevronDown className={`w-4 h-4 transition-transform ${isItemDropdownOpen ? 'rotate-180' : ''}`} />
-                      </button>
-                    )}
-                  </div>
+                  )}
 
                   {link.hasDropdown && isItemDropdownOpen && (
-                    <div className="pl-4 pr-2 py-1 space-y-1 bg-gray-50/70 rounded-xl my-1">
+                    <div className="pl-4 pr-2 py-1 space-y-1 bg-gray-50/70 rounded-xl my-1 animate-in fade-in duration-150">
                       {link.subItems?.map((sub) => (
                         <Link
                           key={sub.name}

@@ -133,7 +133,7 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
           </div>
 
           {/* Core Values 8 Items */}
-          <div id="values" className="rounded-[36px] bg-[#004B2D] text-white p-6 sm:p-10 shadow-2xl mb-16">
+          <div id="values" className="rounded-[36px] bg-[#004B2D] text-white p-6 sm:p-10 shadow-2xl mb-16 scroll-mt-24">
             <div className="text-center max-w-xl mx-auto mb-8">
               <span className="text-[#F4C928] font-bold text-xs uppercase tracking-widest block mb-1">
                 FOUNDATIONAL PILLARS
@@ -161,12 +161,12 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
           </div>
 
           {/* Section: Board of Directors / Leadership (image copy 48.png) */}
-          <div className="mb-16">
+          <div id="leadership" className="mb-16 scroll-mt-24">
             <LeadershipSection directors={directors} />
           </div>
 
           {/* Section: Who We Are - Management & Operations Team (image copy 45, 46, 47.png) */}
-          <div className="mb-16">
+          <div id="who-we-are" className="mb-16 scroll-mt-24">
             <WhoWeAreTeamSection />
           </div>
 
@@ -176,7 +176,7 @@ function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
           </div>
 
           {/* Client Testimonials Section within About Us */}
-          <section id="testimonials" className="mb-16">
+          <section id="testimonials" className="mb-16 scroll-mt-24">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-[#087A35] font-extrabold text-xs uppercase tracking-[0.25em] block mb-2">
                 CLIENT ENDORSEMENTS & TRUST

@@ -102,9 +102,12 @@ function ServiceDetailContent({ service, onOpenEnquiry, onOpenLightbox }: Servic
                 })}
               >
                 <img
-                  src={service.mainImage}
+                  src={service.mainImage || '/images/gallery/excavator-mining-face.png'}
                   alt={service.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/gallery/excavator-mining-face.png';
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-[#087A35] text-white text-xs font-black px-3 py-1 rounded-full shadow">
                   {service.category}
@@ -275,6 +278,9 @@ function ServiceDetailContent({ service, onOpenEnquiry, onOpenLightbox }: Servic
                   src={img}
                   alt=""
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/gallery/excavator-mining-face.png';
+                  }}
                 />
                 <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <ZoomIn className="w-5 h-5 text-white" />
