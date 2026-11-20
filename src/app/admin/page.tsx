@@ -116,6 +116,9 @@ export default function AdminPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Editing Modals / Selection States
+  const [editingHeroSlide, setEditingHeroSlide] = useState<HeroSlide | null>(null);
+  const [isNewHeroSlide, setIsNewHeroSlide] = useState(false);
+
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isNewProduct, setIsNewProduct] = useState(false);
 
@@ -288,7 +291,18 @@ export default function AdminPage() {
         // Update local client cache immediately so website renders zero-blink changes
         if (typeof window !== 'undefined') {
           try {
-            localStorage.setItem('super_sand_cms_data_cache', JSON.stringify(cmsData));
+            let nextData = { ...cmsData };
+            if (action === 'update_hero_slides') nextData.heroSlides = payload;
+            else if (action === 'update_products') nextData.products = payload;
+            else if (action === 'add_product') nextData.products = [payload, ...nextData.products];
+            else if (action === 'update_services') nextData.services = payload;
+            else if (action === 'add_service') nextData.services = [payload, ...nextData.services];
+            else if (action === 'update_projects') nextData.projects = payload;
+            else if (action === 'add_project') nextData.projects = [payload, ...nextData.projects];
+            else if (action === 'update_client_partners') nextData.clientPartners = payload;
+            else if (action === 'update_testimonials') nextData.testimonials = payload;
+            else if (action === 'update_site_info') nextData.siteInfo = { ...nextData.siteInfo, ...payload };
+            localStorage.setItem('super_sand_cms_data_cache', JSON.stringify(nextData));
           } catch (e) {}
         }
 
@@ -367,6 +381,14 @@ export default function AdminPage() {
       const updated = cmsData.heroSlides.map((s) => (s.id === id ? { ...s, mobileImage: url } : s));
       setCmsData({ ...cmsData, heroSlides: updated });
       saveAction('update_hero_slides', updated, 'Hero mobile image updated');
+    } else if (target === 'editing_hero_desktop') {
+      if (editingHeroSlide) {
+        setEditingHeroSlide({ ...editingHeroSlide, desktopImage: url });
+      }
+    } else if (target === 'editing_hero_mobile') {
+      if (editingHeroSlide) {
+        setEditingHeroSlide({ ...editingHeroSlide, mobileImage: url });
+      }
     } else if (target === 'editing_product') {
       if (editingProduct) {
         const updatedItem = { ...editingProduct, image: url };
@@ -970,26 +992,27 @@ export default function AdminPage() {
                   <p className="text-xs text-gray-500 font-medium">Hero carousel slides, quality highlights, and Why Choose Us pillars</p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => {
-                    const newId = Date.now();
-                    const newSlide: HeroSlide = {
-                      id: newId,
-                      tag: "NEW SLIDE",
-                      titleLine1: "Engineered",
-                      titleLine2: "Quality Minerals",
-                      subtitle: "High performance aggregates customized for heavy commercial builds.",
-                      desktopImage: "/images/hero/hero-desktop-1.png",
-                      mobileImage: "/images/hero/hero-mobile-1.png",
-                      ctaText: "Explore Products",
-                      ctaLink: "/products",
+                    const nextId = cmsData.heroSlides && cmsData.heroSlides.length > 0
+                      ? Math.max(...cmsData.heroSlides.map((s) => s.id || 0)) + 1
+                      : 1;
+                    setEditingHeroSlide({
+                      id: nextId,
+                      tag: 'SUPER SAND',
+                      titleLine1: 'Building a',
+                      titleLine2: 'Stronger Tomorrow',
+                      subtitle: 'High-Quality Construction Materials for a Sustainable Future.',
+                      desktopImage: '/images/hero/hero-desktop-1.png',
+                      mobileImage: '/images/hero/hero-mobile-1.png',
+                      ctaText: 'Explore Products',
+                      ctaLink: '/products',
                       isPublished: true,
-                      displayOrder: cmsData.heroSlides.length + 1
-                    };
-                    const updated = [...cmsData.heroSlides, newSlide];
-                    setCmsData({ ...cmsData, heroSlides: updated });
-                    saveAction('update_hero_slides', updated, 'Added new hero slide');
+                      displayOrder: (cmsData.heroSlides?.length || 0) + 1
+                    });
+                    setIsNewHeroSlide(true);
                   }}
-                  className="bg-[#087A35] hover:bg-[#06632B] text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-md"
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center gap-1.5 shadow-md transition-all hover:scale-105 active:scale-95"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Add Hero Slide</span>
@@ -1136,6 +1159,17 @@ export default function AdminPage() {
 
                     {/* Slide Actions */}
                     <div className="flex md:flex-col gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingHeroSlide(slide);
+                          setIsNewHeroSlide(false);
+                        }}
+                        className="bg-blue-50 hover:bg-blue-100 text-blue-700 p-2.5 rounded-xl shadow-sm transition-colors"
+                        title="Edit Full Slide in Modal"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => saveAction('update_hero_slides', cmsData.heroSlides, 'Hero slides saved')}
                         className="bg-[#087A35] hover:bg-[#06632B] text-white p-2.5 rounded-xl shadow-md"
@@ -2835,6 +2869,183 @@ export default function AdminPage() {
 
         </main>
       </div>
+
+      {/* ---------------------------------------------------------------------- */}
+      {/* MODAL: ADD / EDIT HERO SLIDE */}
+      {/* ---------------------------------------------------------------------- */}
+      {editingHeroSlide && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[92vh] overflow-y-auto border-2 border-[#087A35]">
+            <button
+              type="button"
+              onClick={() => {
+                setEditingHeroSlide(null);
+                setIsNewHeroSlide(false);
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-5">
+              <span className="bg-[#E8F5E9] text-[#087A35] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase">
+                {isNewHeroSlide ? 'New Hero Slide' : `Edit Slide #${editingHeroSlide.id}`}
+              </span>
+              <h3 className="text-xl font-black text-[#17231D]">
+                {isNewHeroSlide ? 'Create New Hero Carousel Slide' : `Edit: ${editingHeroSlide.tag || 'Hero Slide'}`}
+              </h3>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              {/* Dual Image Preview: Desktop & Mobile */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-200">
+                {/* Desktop Image */}
+                <div className="space-y-2">
+                  <div className="text-[11px] font-bold text-gray-700 flex items-center justify-between">
+                    <span>Desktop Image (16:9)</span>
+                    <span className="text-[10px] text-gray-400">1920×1080</span>
+                  </div>
+                  <div className="relative rounded-xl overflow-hidden h-36 bg-gray-900 border border-gray-300">
+                    <img src={editingHeroSlide.desktopImage} alt="Desktop Preview" className="w-full h-full object-cover" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => triggerImageUpload('editing_hero_desktop')}
+                    className="w-full bg-[#087A35] hover:bg-[#06632B] text-white text-[11px] font-bold py-2 rounded-xl shadow-sm flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Desktop Photo</span>
+                  </button>
+                </div>
+
+                {/* Mobile Image */}
+                <div className="space-y-2">
+                  <div className="text-[11px] font-bold text-gray-700 flex items-center justify-between">
+                    <span>Mobile Image (Portrait)</span>
+                    <span className="text-[10px] text-gray-400">800×1200</span>
+                  </div>
+                  <div className="relative rounded-xl overflow-hidden h-36 bg-gray-900 border border-gray-300">
+                    <img src={editingHeroSlide.mobileImage || editingHeroSlide.desktopImage} alt="Mobile Preview" className="w-full h-full object-cover object-top" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => triggerImageUpload('editing_hero_mobile')}
+                    className="w-full bg-[#087A35] hover:bg-[#06632B] text-white text-[11px] font-bold py-2 rounded-xl shadow-sm flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Mobile Photo</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Tag & CTA Text */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Category / Brand Tag</label>
+                  <input
+                    type="text"
+                    value={editingHeroSlide.tag}
+                    onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, tag: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                    placeholder="e.g. SUPER SAND"
+                  />
+                </div>
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">CTA Button Text</label>
+                  <input
+                    type="text"
+                    value={editingHeroSlide.ctaText}
+                    onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, ctaText: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                    placeholder="e.g. Explore Our Products"
+                  />
+                </div>
+              </div>
+
+              {/* Headlines */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Headline Line 1</label>
+                  <input
+                    type="text"
+                    value={editingHeroSlide.titleLine1}
+                    onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, titleLine1: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                    placeholder="e.g. Building a"
+                  />
+                </div>
+                <div>
+                  <label className="font-bold text-gray-700 block mb-1">Headline Line 2 (Green Highlight)</label>
+                  <input
+                    type="text"
+                    value={editingHeroSlide.titleLine2}
+                    onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, titleLine2: e.target.value })}
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                    placeholder="e.g. Stronger Tomorrow"
+                  />
+                </div>
+              </div>
+
+              {/* Destination URL */}
+              <div>
+                <label className="font-bold text-gray-700 block mb-1">CTA Destination URL</label>
+                <input
+                  type="text"
+                  value={editingHeroSlide.ctaLink}
+                  onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, ctaLink: e.target.value })}
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                  placeholder="e.g. /products or /contact"
+                />
+              </div>
+
+              {/* Subtitle Description */}
+              <div>
+                <label className="font-bold text-gray-700 block mb-1">Subtitle Description</label>
+                <textarea
+                  rows={2}
+                  value={editingHeroSlide.subtitle}
+                  onChange={(e) => setEditingHeroSlide({ ...editingHeroSlide, subtitle: e.target.value })}
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200"
+                  placeholder="e.g. High-Quality Construction Materials for a Sustainable Future."
+                />
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingHeroSlide(null);
+                    setIsNewHeroSlide(false);
+                  }}
+                  className="px-5 py-2.5 rounded-full font-bold text-gray-600 hover:bg-gray-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    let updated: HeroSlide[];
+                    if (isNewHeroSlide) {
+                      updated = [...cmsData.heroSlides, editingHeroSlide];
+                    } else {
+                      updated = cmsData.heroSlides.map((s) => (s.id === editingHeroSlide.id ? editingHeroSlide : s));
+                    }
+                    setCmsData({ ...cmsData, heroSlides: updated });
+                    saveAction('update_hero_slides', updated, isNewHeroSlide ? 'New hero slide added successfully!' : `Hero slide #${editingHeroSlide.id} updated successfully!`);
+                    setEditingHeroSlide(null);
+                    setIsNewHeroSlide(false);
+                  }}
+                  className="bg-[#087A35] hover:bg-[#06632B] text-white px-6 py-2.5 rounded-full font-bold shadow-md flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>{isNewHeroSlide ? 'Add Slide & Publish' : 'Save Changes'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ---------------------------------------------------------------------- */}
       {/* MODAL: EDIT PRODUCT */}
