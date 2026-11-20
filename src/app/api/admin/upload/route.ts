@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         associatedContent
       };
 
-      db.mediaAssets = [newAsset, ...(db.mediaAssets || [])];
+      db.mediaAssets = [newAsset, ...(db.mediaAssets || [])].slice(0, 30);
       await saveDatabaseAsync(db);
       logAdminActivity('MEDIA_UPLOAD', 'Media Manager', `Uploaded new image: ${file.name}`);
 

@@ -303,7 +303,7 @@ export default function AdminPage() {
             else if (action === 'update_testimonials') nextData.testimonials = payload;
             else if (action === 'update_site_info') nextData.siteInfo = { ...nextData.siteInfo, ...payload };
             localStorage.setItem('super_sand_cms_data_cache', JSON.stringify(nextData));
-          } catch (e) {}
+          } catch (e) { }
         }
 
         // Broadcast to live website tabs immediately
@@ -318,14 +318,73 @@ export default function AdminPage() {
         }
         return true;
       } else {
-        const json = await res.json();
-        alert(json.error || 'Failed to save changes');
+        let errorMsg = 'Failed to save changes';
+        try {
+          const json = await res.json();
+          errorMsg = json.error || errorMsg;
+        } catch (e) {
+          try {
+            const text = await res.text();
+            errorMsg = text || `Server error (${res.status}): ${res.statusText}`;
+          } catch (e2) {
+            errorMsg = `Server error (${res.status}): ${res.statusText}`;
+          }
+        }
+        alert(errorMsg);
         return false;
       }
-    } catch (err) {
-      alert('Network error while saving changes');
+    } catch (err: any) {
+      alert(`Network error while saving changes: ${err?.message || 'Check your connection'}`);
       return false;
     }
+  };
+
+  // Client-side image compression to prevent Vercel 413 Payload Too Large
+  const compressImageFile = (file: File, maxWidth = 1920, maxHeight = 1080, quality = 0.85): Promise<File> => {
+    return new Promise((resolve) => {
+      if (file.type === 'image/svg+xml' || file.type === 'image/gif') {
+        return resolve(file);
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > maxWidth || height > maxHeight) {
+            if (width / height > maxWidth / maxHeight) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            } else {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return resolve(file);
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (!blob || blob.size >= file.size) {
+                return resolve(file);
+              }
+              const cleanName = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+              const compressedFile = new File([blob], cleanName, { type: 'image/jpeg' });
+              resolve(compressedFile);
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = () => resolve(file);
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = () => resolve(file);
+      reader.readAsDataURL(file);
+    });
   };
 
   // Image Upload Trigger
@@ -338,15 +397,20 @@ export default function AdminPage() {
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !activeImageFieldTarget) return;
+    const rawFile = e.target.files?.[0];
+    if (!rawFile || !activeImageFieldTarget) return;
 
     setUploadingImage(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('associatedContent', activeImageFieldTarget);
-
     try {
+      const isMobileTarget = activeImageFieldTarget.includes('mobile');
+      const maxW = isMobileTarget ? 800 : 1920;
+      const maxH = isMobileTarget ? 1200 : 1080;
+      const file = await compressImageFile(rawFile, maxW, maxH, 0.85);
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('associatedContent', activeImageFieldTarget);
+
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData
@@ -551,7 +615,7 @@ export default function AdminPage() {
   // --------------------------------------------------------------------------
   return (
     <div className="min-h-screen bg-[#F5FAF6] flex flex-col antialiased">
-      
+
       {/* Hidden File Input for Real Cloudinary/Local Uploads */}
       <input
         ref={fileInputRef}
@@ -634,12 +698,11 @@ export default function AdminPage() {
 
       {/* Main Container: Sidebar + Content */}
       <div className="flex-1 flex overflow-hidden">
-        
+
         {/* Navigation Sidebar */}
         <aside
-          className={`fixed lg:static top-14 bottom-0 left-0 w-64 bg-white border-r border-gray-200/80 p-4 overflow-y-auto z-30 transition-transform duration-300 ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-          }`}
+          className={`fixed lg:static top-14 bottom-0 left-0 w-64 bg-white border-r border-gray-200/80 p-4 overflow-y-auto z-30 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+            }`}
         >
           <div className="text-[10px] font-black uppercase tracking-wider text-gray-400 px-3 mb-2">
             CMS MODULES
@@ -648,9 +711,8 @@ export default function AdminPage() {
           <nav className="space-y-1 text-xs font-bold">
             <button
               onClick={() => { setActiveTab('overview'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'overview' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'overview' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Layers className="w-4 h-4" />
@@ -660,9 +722,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('home'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'home' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'home' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4" />
@@ -673,9 +734,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('about'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'about' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'about' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Users className="w-4 h-4" />
@@ -686,9 +746,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('products'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'products' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'products' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Award className="w-4 h-4" />
@@ -699,9 +758,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('services'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'services' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'services' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Factory className="w-4 h-4" />
@@ -712,9 +770,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('gallery'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'gallery' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'gallery' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <ImageIcon className="w-4 h-4" />
@@ -725,9 +782,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('infrastructure'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'infrastructure' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'infrastructure' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-4 h-4" />
@@ -738,9 +794,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('sustainability'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'sustainability' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'sustainability' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Leaf className="w-4 h-4" />
@@ -751,9 +806,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('projects'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'projects' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'projects' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-4 h-4" />
@@ -764,9 +818,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('partners'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'partners' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'partners' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <ShieldCheck className="w-4 h-4" />
@@ -777,9 +830,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('testimonials'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'testimonials' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'testimonials' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <MessageSquare className="w-4 h-4" />
@@ -790,9 +842,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('careers'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'careers' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'careers' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Briefcase className="w-4 h-4" />
@@ -803,9 +854,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('contact'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'contact' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'contact' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4" />
@@ -816,9 +866,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('navigation'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'navigation' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'navigation' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Globe className="w-4 h-4" />
@@ -828,9 +877,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('sections'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'sections' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'sections' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Sliders className="w-4 h-4" />
@@ -840,9 +888,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('media'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'media' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'media' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Database className="w-4 h-4" />
@@ -859,9 +906,8 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setActiveTab('security'); setSidebarOpen(false); }}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
-                activeTab === 'security' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
-              }`}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${activeTab === 'security' ? 'bg-[#087A35] text-white shadow-md' : 'text-gray-700 hover:bg-[#E8F5E9]/60'
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Key className="w-4 h-4" />
@@ -874,7 +920,7 @@ export default function AdminPage() {
 
         {/* Main Content Area */}
         <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
-          
+
           {/* TAB 1: OVERVIEW */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
@@ -1039,7 +1085,7 @@ export default function AdminPage() {
                       </div>
 
                       <div className="grid grid-cols-12 gap-2.5 items-stretch">
-                        
+
                         {/* 1. Desktop Image Preview (Wide 16:9) */}
                         <div className="col-span-7 flex flex-col justify-between space-y-1.5">
                           <div className="relative rounded-xl overflow-hidden h-32 bg-gray-900 border border-gray-300 shadow-sm group">
@@ -2144,7 +2190,7 @@ export default function AdminPage() {
 
                     <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-xs font-bold text-[#F4C928]">★ {test.rating}/5 Stars</span>
-                      
+
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => {
@@ -2156,7 +2202,7 @@ export default function AdminPage() {
                           <Edit3 className="w-3.5 h-3.5" />
                           <span>Edit</span>
                         </button>
-                        
+
                         <button
                           onClick={() => {
                             if (confirm(`Delete testimonial from ${test.name}?`)) {

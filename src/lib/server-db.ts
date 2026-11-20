@@ -147,7 +147,7 @@ export function logAdminActivity(
   adminUser = 'Admin'
 ) {
   try {
-    const db = getDatabase();
+    const db = inMemoryCache || defaultCMSData;
     const newLog = {
       id: `log-${Date.now()}`,
       action,
@@ -157,7 +157,6 @@ export function logAdminActivity(
       timestamp: new Date().toISOString(),
     };
     db.activityLogs = [newLog, ...(db.activityLogs || [])].slice(0, 100);
-    saveDatabase(db);
   } catch (err) {
     console.error('Failed to log admin activity:', err);
   }
