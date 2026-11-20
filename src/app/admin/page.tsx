@@ -436,6 +436,11 @@ export default function AdminPage() {
       const updated = cmsData.teamCards.map((c) => (c.id === id ? { ...c, image: url } : c));
       setCmsData({ ...cmsData, teamCards: updated });
       saveAction('update_team_cards', updated, 'Team card photo updated');
+    } else if (target.startsWith('partner_logo_')) {
+      const id = target.replace('partner_logo_', '');
+      const updated = cmsData.clientPartners.map((p) => ((p.id === id || p.name === id) ? { ...p, logoUrl: url } : p));
+      setCmsData({ ...cmsData, clientPartners: updated });
+      saveAction('update_client_partners', updated, 'Client partner logo updated & saved!');
     }
   };
 
@@ -1976,6 +1981,7 @@ export default function AdminPage() {
                   <table className="w-full text-left text-xs">
                     <thead>
                       <tr className="border-b border-gray-200 text-gray-400 font-extrabold text-[10px] uppercase">
+                        <th className="pb-2">Partner Logo</th>
                         <th className="pb-2">Partner Name</th>
                         <th className="pb-2">Sector Category</th>
                         <th className="pb-2">Badge</th>
@@ -1985,7 +1991,22 @@ export default function AdminPage() {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {cmsData.clientPartners.map((partner) => (
-                        <tr key={partner.name} className="py-2 hover:bg-gray-50">
+                        <tr key={partner.id || partner.name} className="py-2 hover:bg-gray-50">
+                          <td className="py-2.5">
+                            <div className="flex items-center gap-2">
+                              {partner.logoUrl ? (
+                                <img src={partner.logoUrl} alt={partner.name} className="h-7 w-12 object-contain bg-gray-50 border rounded p-0.5" />
+                              ) : (
+                                <div className="h-7 w-12 bg-gray-100 border border-dashed rounded flex items-center justify-center text-[9px] text-gray-400">No Logo</div>
+                              )}
+                              <button
+                                onClick={() => triggerImageUpload(`partner_logo_${partner.id || partner.name}`)}
+                                className="text-[10px] font-bold text-[#087A35] hover:underline whitespace-nowrap bg-[#E8F5E9] px-2 py-1 rounded"
+                              >
+                                {partner.logoUrl ? 'Replace' : 'Upload'}
+                              </button>
+                            </div>
+                          </td>
                           <td className="py-2.5 font-bold text-[#17231D]">{partner.name}</td>
                           <td className="py-2.5 text-gray-600">
                             <input
@@ -2649,7 +2670,7 @@ export default function AdminPage() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-black text-[#17231D]">Media & Cloudinary Asset Library</h2>
+                  <h2 className="text-2xl font-black text-[#17231D]">Media Asset Library</h2>
                   <p className="text-xs text-gray-500 font-medium">Browse uploaded assets, copy public URLs, and manage media references</p>
                 </div>
                 <button

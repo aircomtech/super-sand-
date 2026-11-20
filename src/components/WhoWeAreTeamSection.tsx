@@ -3,8 +3,39 @@
 import React from 'react';
 import Link from 'next/link';
 import { Users, Award, ShieldCheck, Factory, CheckCircle2, ArrowRight } from 'lucide-react';
+import { useCMS } from '@/context/CMSContext';
 
 export default function WhoWeAreTeamSection() {
+  const { data } = useCMS();
+  const teamCards = data?.teamCards && data.teamCards.length >= 2 ? data.teamCards : null;
+
+  const card1 = teamCards ? teamCards[0] : null;
+  const card2 = teamCards ? teamCards[1] : null;
+
+  const card1Image = card1?.image || "/images/team/team-management-plant.png";
+  const card1Badge = card1?.badge || "Leadership & Operations";
+  const card1Title = card1?.title || "Executive Engineers & Plant Supervisors";
+  const card1Headline = card1?.headline || "Precision Engineering & Quality Governance";
+  const card1Desc = card1?.description || "Our on-site mechanical, geological, and civil engineering heads ensure each crushing cycle, screening deck, and classification unit functions with zero-defect accuracy to satisfy IS 383:2016 quality standards.";
+  const card1Stat1Val = card1?.stat1Value || "18+";
+  const card1Stat1Lbl = card1?.stat1Label || "Years Operational Track Record";
+  const card1Stat2Val = card1?.stat2Value || "100%";
+  const card1Stat2Lbl = card1?.stat2Label || "Laboratory Tested Batches";
+  const card1Footer = card1?.footerNote || "Managing 350+ TPH Crushing Lines";
+  const card1Link = card1?.ctaLink || "/about";
+
+  const card2Image = card2?.image || "/images/team/team-workforce-plant.png";
+  const card2Badge = card2?.badge || "Operational Backbone";
+  const card2Title = card2?.title || "Heavy Fleet Operators & Quarry Technicians";
+  const card2Headline = card2?.headline || "24/7 Mining, Processing & Dispatch Power";
+  const card2Desc = card2?.description || "Comprising certified hydraulic excavator drivers, computerized weighbridge technicians, VSI plant technicians, and commercial tipper operators working together safely to dispatch over 300+ loads daily.";
+  const card2Stat1Val = card2?.stat1Value || "150K+";
+  const card2Stat1Lbl = card2?.stat1Label || "Metric Tons Monthly Extraction";
+  const card2Stat2Val = card2?.stat2Value || "300+";
+  const card2Stat2Lbl = card2?.stat2Label || "Fleet Loads Dispatched Daily";
+  const card2Footer = card2?.footerNote || "Zero Lost Time Safety Protocol";
+  const card2Link = card2?.ctaLink || "/services";
+
   return (
     <section id="who-we-are" className="py-12 sm:py-20 bg-transparent relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,25 +59,25 @@ export default function WhoWeAreTeamSection() {
           </p>
         </div>
 
-        {/* Dual Team Showcase Grid with Ultra-HD Photos (image copy 68.png & 69.png) */}
+        {/* Dual Team Showcase Grid with Ultra-HD Photos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-12">
           
-          {/* Card 1: Management, Technical & Quality Engineering Team (image copy 68.png) */}
+          {/* Card 1: Management, Technical & Quality Engineering Team */}
           <div className="glass-card glass-card-hover rounded-[36px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/25 hover:border-[#087A35] transition-all duration-500 shadow-2xl">
             <div>
               <div className="relative w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 shadow-xl bg-gray-900 group border-2 border-[#087A35]/30">
                 <img
-                  src="/images/team/team-management-plant.png"
-                  alt="Super Sand Leadership & Operations - Executive Engineers & Plant Supervisors"
+                  src={card1Image}
+                  alt={`Super Sand ${card1Badge} - ${card1Title}`}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-[1.03] contrast-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white">
                   <span className="bg-[#087A35] text-white text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-md border border-white/20">
-                    Leadership & Operations
+                    {card1Badge}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-black drop-shadow-md">
-                    Executive Engineers & Plant Supervisors
+                    {card1Title}
                   </h3>
                 </div>
               </div>
@@ -54,50 +85,50 @@ export default function WhoWeAreTeamSection() {
               <div className="space-y-3.5">
                 <h4 className="text-xl font-bold text-[#17231D] flex items-center gap-2">
                   <Award className="w-5 h-5 text-[#087A35]" />
-                  Precision Engineering & Quality Governance
+                  {card1Headline}
                 </h4>
                 <p className="text-sm text-gray-700 leading-relaxed font-medium">
-                  Our on-site mechanical, geological, and civil engineering heads ensure each crushing cycle, screening deck, and classification unit functions with zero-defect accuracy to satisfy IS 383:2016 quality standards.
+                  {card1Desc}
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="bg-[#E8F5E9]/70 rounded-xl p-3 border border-[#087A35]/20">
-                    <div className="text-2xl font-black text-[#087A35]">18+</div>
-                    <div className="text-xs font-semibold text-[#17231D]">Years Operational Track Record</div>
+                    <div className="text-2xl font-black text-[#087A35]">{card1Stat1Val}</div>
+                    <div className="text-xs font-semibold text-[#17231D]">{card1Stat1Lbl}</div>
                   </div>
                   <div className="bg-[#E8F5E9]/70 rounded-xl p-3 border border-[#087A35]/20">
-                    <div className="text-2xl font-black text-[#087A35]">100%</div>
-                    <div className="text-xs font-semibold text-[#17231D]">Laboratory Tested Batches</div>
+                    <div className="text-2xl font-black text-[#087A35]">{card1Stat2Val}</div>
+                    <div className="text-xs font-semibold text-[#17231D]">{card1Stat2Lbl}</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="mt-6 pt-4 border-t border-gray-200/80 flex items-center justify-between">
-              <span className="text-xs font-bold text-gray-600">Managing 350+ TPH Crushing Lines</span>
-              <Link href="/about" className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1">
+              <span className="text-xs font-bold text-gray-600">{card1Footer}</span>
+              <Link href={card1Link} className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1">
                 <span>View Full Profile</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Card 2: Operations, Mining & Heavy Plant Workforce (image copy 69.png) */}
+          {/* Card 2: Operations, Mining & Heavy Plant Workforce */}
           <div className="glass-card glass-card-hover rounded-[36px] p-6 sm:p-8 flex flex-col justify-between border-2 border-[#087A35]/25 hover:border-[#087A35] transition-all duration-500 shadow-2xl">
             <div>
               <div className="relative w-full h-72 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 shadow-xl bg-gray-900 group border-2 border-[#087A35]/30">
                 <img
-                  src="/images/team/team-workforce-plant.png"
-                  alt="Super Sand Operational Backbone - Heavy Fleet Operators & Quarry Technicians"
+                  src={card2Image}
+                  alt={`Super Sand ${card2Badge} - ${card2Title}`}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-[1.03] contrast-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white">
                   <span className="bg-[#F4C928] text-[#17231D] text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-md">
-                    Operational Backbone
+                    {card2Badge}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-black drop-shadow-md">
-                    Heavy Fleet Operators & Quarry Technicians
+                    {card2Title}
                   </h3>
                 </div>
               </div>
@@ -105,28 +136,28 @@ export default function WhoWeAreTeamSection() {
               <div className="space-y-3.5">
                 <h4 className="text-xl font-bold text-[#17231D] flex items-center gap-2">
                   <Factory className="w-5 h-5 text-[#087A35]" />
-                  24/7 Mining, Processing & Dispatch Power
+                  {card2Headline}
                 </h4>
                 <p className="text-sm text-gray-700 leading-relaxed font-medium">
-                  Comprising certified hydraulic excavator drivers, computerized weighbridge technicians, VSI plant technicians, and commercial tipper operators working together safely to dispatch over 300+ loads daily.
+                  {card2Desc}
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="bg-[#E8F5E9]/70 rounded-xl p-3 border border-[#087A35]/20">
-                    <div className="text-2xl font-black text-[#087A35]">150K+</div>
-                    <div className="text-xs font-semibold text-[#17231D]">Metric Tons Monthly Extraction</div>
+                    <div className="text-2xl font-black text-[#087A35]">{card2Stat1Val}</div>
+                    <div className="text-xs font-semibold text-[#17231D]">{card2Stat1Lbl}</div>
                   </div>
                   <div className="bg-[#E8F5E9]/70 rounded-xl p-3 border border-[#087A35]/20">
-                    <div className="text-2xl font-black text-[#087A35]">300+</div>
-                    <div className="text-xs font-semibold text-[#17231D]">Fleet Loads Dispatched Daily</div>
+                    <div className="text-2xl font-black text-[#087A35]">{card2Stat2Val}</div>
+                    <div className="text-xs font-semibold text-[#17231D]">{card2Stat2Lbl}</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="mt-6 pt-4 border-t border-gray-200/80 flex items-center justify-between">
-              <span className="text-xs font-bold text-gray-600">Zero Lost Time Safety Protocol</span>
-              <Link href="/services" className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1">
+              <span className="text-xs font-bold text-gray-600">{card2Footer}</span>
+              <Link href={card2Link} className="text-xs font-bold text-[#087A35] hover:underline flex items-center gap-1">
                 <span>View Plant Infrastructure</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
