@@ -23,7 +23,7 @@ export default function AboutPage() {
 function AboutPageContent({ onOpenEnquiry, onOpenLightbox }: any) {
   const { data } = useCMS();
   const directors = data?.directors;
-  const testimonials = data?.testimonials && data.testimonials.length > 0 ? data.testimonials : initialTestimonials;
+  const testimonials = (data?.testimonials && data.testimonials.length > 0 ? data.testimonials : initialTestimonials).filter((t) => t.isPublished !== false);
   return (
     <div className="bg-transparent">
       

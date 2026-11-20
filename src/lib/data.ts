@@ -74,8 +74,8 @@ export const initialProducts: Product[] = [
     tagline: "Plastering Sand, Mortar Sand, and Brick Sand.",
     shortDesc: "Plastering Sand, Mortar Sand, and Brick Sand.",
     fullDesc: "Premium-quality fine aggregates, including Plastering Sand (P-Sand), Mortar Sand, and Brick Sand. Carefully processed through vertical shaft impactors (VSI) and air classifiers to ensure consistent particle size distribution, zero silt content, and superior hydration bonding. Designed as the ultimate eco-friendly and cost-effective replacement for diminishing natural river sand.",
-    image: "/images/products/fine-aggregates-hd.png",
-    heroImage: "/images/products/fine-aggregates-hd.png",
+    image: "/images/products/fine-aggregates-grey-hd.png",
+    heroImage: "/images/products/fine-aggregates-grey-hd.png",
     sizesOrTypes: [
       "Plastering Sand (P-Sand 0 - 2.36mm)",
       "Concrete M-Sand (Zone II 0 - 4.75mm)",
@@ -962,6 +962,33 @@ export const initialSustainabilityItems: SustainabilityItem[] = [
 export const initialTestimonials: Testimonial[] = [
   {
     id: "test-1",
+    name: "Srinivas Babu",
+    designation: "Senior Project Executive",
+    company: "Hyderabad Infrastructure Projects",
+    quote: "Super Sand's automated VSI processing and zero-silt M-Sand deliver consistent workability and high cube strength across all our major infrastructure pours.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-2",
+    name: "Sajeev",
+    designation: "Site Operations Lead",
+    company: "Southern RMC & Concrete Works",
+    quote: "The computerized weighbridge precision, continuous fleet dispatch, and strict IS 383:2016 conformity have made Super Sand our trusted supply partner for years.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-3",
+    name: "Shapoorji Pallonji QA Division",
+    designation: "Materials & Quality Assurance Lead",
+    company: "Shapoorji Pallonji Engineering & Construction",
+    quote: "We rely on Super Sand for high-performance engineered aggregates and manufactured sand across critical structural raft foundations and heavy bridge deck slabs.",
+    rating: 5,
+    avatar: "/images/testimonials/avatar-ramesh.jpg"
+  },
+  {
+    id: "test-4",
     name: "Ramesh Kumar",
     designation: "Project Manager",
     company: "Apex Infrastructure Ltd.",
@@ -970,16 +997,7 @@ export const initialTestimonials: Testimonial[] = [
     avatar: "/images/testimonials/avatar-ramesh.jpg"
   },
   {
-    id: "test-2",
-    name: "Srinivasa Rao",
-    designation: "Chief Concrete Technologist",
-    company: "Hyderabad RMC Solutions",
-    quote: "The cubic shape of Super Sand coarse aggregates and zero silt in their M-Sand gives our concrete mixes superior workability while significantly optimizing our cement usage.",
-    rating: 5,
-    avatar: "/images/testimonials/avatar-ramesh.jpg"
-  },
-  {
-    id: "test-3",
+    id: "test-5",
     name: "K. Venkat Reddy",
     designation: "Managing Director",
     company: "Bhavani Constructions",
@@ -988,29 +1006,11 @@ export const initialTestimonials: Testimonial[] = [
     avatar: "/images/testimonials/avatar-ramesh.jpg"
   },
   {
-    id: "test-4",
+    id: "test-6",
     name: "M. Anjaneyulu",
     designation: "Senior Highway Engineer",
     company: "Deccan Expressways",
     quote: "Their W.M.M and G.S.B road sub-base mixes achieve required compaction densities effortlessly with minimum rolling passes. Deliveries have never delayed our paving train.",
-    rating: 5,
-    avatar: "/images/testimonials/avatar-ramesh.jpg"
-  },
-  {
-    id: "test-5",
-    name: "Dr. P. Chandrasekhar",
-    designation: "Structural Consultant",
-    company: "Matrix Civil Consultants",
-    quote: "We routinely recommend Super Sand for high-rise commercial structures. Test reports for crushing, impact, and flakiness consistently surpass IS 383:2016 tolerances.",
-    rating: 5,
-    avatar: "/images/testimonials/avatar-ramesh.jpg"
-  },
-  {
-    id: "test-6",
-    name: "G. Sudhakar",
-    designation: "Procurement Head",
-    company: "Pride Urban Developers",
-    quote: "Switching completely to Super Sand Plastering Sand eliminated all map cracking on our apartment internal walls. Their quality is exemplary.",
     rating: 5,
     avatar: "/images/testimonials/avatar-ramesh.jpg"
   }
