@@ -3,8 +3,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Factory, Leaf } from 'lucide-react';
+import { useCMS } from '@/context/CMSContext';
 
 export default function DualFeatureSection() {
+  const { data } = useCMS();
+  const firstInfra = data?.infrastructureItems?.[0];
+  const firstSust = data?.sustainabilityItems?.[0];
+
+  const infraImg = firstInfra?.image || "/images/infra/infra-stockpiles-hd.png";
+  const infraDesc = firstInfra?.desc || "State-of-the-art manufacturing facilities with 3-stage advanced robotic crushing technology, captive mines, and 350+ TPH processing lines.";
+
+  const sustImg = firstSust?.image || "/images/sustainability/sustainability-banner-hd.png";
+  const sustDesc = firstSust?.desc || "Building a greener future with responsible, eco-friendly practices that protect river ecosystems, eliminate fugitive dust, and harvest rainwater.";
+
   return (
     <section className="py-10 sm:py-16 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +26,7 @@ export default function DualFeatureSection() {
             {/* HD Background Image with Smooth Ambient Animation */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
               <img
-                src="/images/infra/infra-stockpiles-hd.png"
+                src={infraImg}
                 alt="Super Sand Manufacturing Infrastructure"
                 className="w-full h-full object-cover object-center transform group-hover:scale-108 transition-transform duration-1000 ease-out"
               />
@@ -35,7 +46,7 @@ export default function DualFeatureSection() {
               </h3>
 
               <p className="text-xs sm:text-sm text-gray-100 font-medium leading-relaxed line-clamp-2 drop-shadow">
-                State-of-the-art manufacturing facilities with 3-stage advanced robotic crushing technology, captive mines, and 350+ TPH processing lines.
+                {infraDesc}
               </p>
 
               <div className="pt-2">
@@ -55,7 +66,7 @@ export default function DualFeatureSection() {
             {/* HD Background Image with Smooth Ambient Animation */}
             <div className="absolute inset-0 -z-10 overflow-hidden">
               <img
-                src="/images/sustainability/sustainability-banner-hd.png"
+                src={sustImg}
                 alt="Super Sand Commitment to Sustainability"
                 className="w-full h-full object-cover object-center transform group-hover:scale-108 transition-transform duration-1000 ease-out"
               />
@@ -75,7 +86,7 @@ export default function DualFeatureSection() {
               </h3>
 
               <p className="text-xs sm:text-sm text-gray-100 font-medium leading-relaxed line-clamp-2 drop-shadow">
-                Building a greener future with responsible, eco-friendly practices that protect river ecosystems, eliminate fugitive dust, and harvest rainwater.
+                {sustDesc}
               </p>
 
               <div className="pt-2">

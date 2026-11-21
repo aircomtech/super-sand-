@@ -109,8 +109,8 @@ export async function uploadMediaAsset(
   const mimeType = mimeMap[ext] || 'image/jpeg';
   const cleanBase = path.basename(filename, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
 
-  // 3. In local development environment, try writing to public/uploads
-  if (process.env.NODE_ENV !== 'production') {
+  // 3. In local development environment (non-Vercel, non-Serverless), try writing to public/uploads
+  if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
     try {
       const uploadDir = path.join(process.cwd(), 'public', 'uploads');
       if (!fs.existsSync(uploadDir)) {

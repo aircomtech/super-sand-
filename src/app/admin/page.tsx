@@ -1144,7 +1144,7 @@ export default function AdminPage() {
                           type="text"
                           value={slide.tag}
                           onChange={(e) => {
-                            const updated = cmsData.heroSlides.map((s) => (s.id === slide.id ? { ...s, tag: e.target.value } : s));
+                            const updated = cmsData.heroSlides.map((s) => (String(s.id) === String(slide.id) ? { ...s, tag: e.target.value } : s));
                             setCmsData({ ...cmsData, heroSlides: updated });
                           }}
                           className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 focus:outline-none focus:border-[#087A35]"
@@ -1157,7 +1157,7 @@ export default function AdminPage() {
                           type="text"
                           value={slide.ctaText}
                           onChange={(e) => {
-                            const updated = cmsData.heroSlides.map((s) => (s.id === slide.id ? { ...s, ctaText: e.target.value } : s));
+                            const updated = cmsData.heroSlides.map((s) => (String(s.id) === String(slide.id) ? { ...s, ctaText: e.target.value } : s));
                             setCmsData({ ...cmsData, heroSlides: updated });
                           }}
                           className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 focus:outline-none focus:border-[#087A35]"
@@ -1170,7 +1170,7 @@ export default function AdminPage() {
                           type="text"
                           value={slide.titleLine1}
                           onChange={(e) => {
-                            const updated = cmsData.heroSlides.map((s) => (s.id === slide.id ? { ...s, titleLine1: e.target.value } : s));
+                            const updated = cmsData.heroSlides.map((s) => (String(s.id) === String(slide.id) ? { ...s, titleLine1: e.target.value } : s));
                             setCmsData({ ...cmsData, heroSlides: updated });
                           }}
                           className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 focus:outline-none focus:border-[#087A35]"
@@ -1183,7 +1183,7 @@ export default function AdminPage() {
                           type="text"
                           value={slide.titleLine2}
                           onChange={(e) => {
-                            const updated = cmsData.heroSlides.map((s) => (s.id === slide.id ? { ...s, titleLine2: e.target.value } : s));
+                            const updated = cmsData.heroSlides.map((s) => (String(s.id) === String(slide.id) ? { ...s, titleLine2: e.target.value } : s));
                             setCmsData({ ...cmsData, heroSlides: updated });
                           }}
                           className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 focus:outline-none focus:border-[#087A35]"
@@ -1196,7 +1196,7 @@ export default function AdminPage() {
                           rows={2}
                           value={slide.subtitle}
                           onChange={(e) => {
-                            const updated = cmsData.heroSlides.map((s) => (s.id === slide.id ? { ...s, subtitle: e.target.value } : s));
+                            const updated = cmsData.heroSlides.map((s) => (String(s.id) === String(slide.id) ? { ...s, subtitle: e.target.value } : s));
                             setCmsData({ ...cmsData, heroSlides: updated });
                           }}
                           className="w-full px-3 py-1.5 text-xs rounded-lg border border-gray-200 focus:outline-none focus:border-[#087A35]"
@@ -1228,7 +1228,7 @@ export default function AdminPage() {
                         <button
                           onClick={() => {
                             if (confirm('Delete this hero slide?')) {
-                              const updated = cmsData.heroSlides.filter((s) => s.id !== slide.id);
+                              const updated = cmsData.heroSlides.filter((s) => String(s.id) !== String(slide.id));
                               setCmsData({ ...cmsData, heroSlides: updated });
                               saveAction('update_hero_slides', updated, 'Slide deleted');
                             }

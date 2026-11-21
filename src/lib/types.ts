@@ -288,6 +288,10 @@ export interface SiteInfo {
   legalName: string;
   establishedYear: number;
   productionOperationsYear: number;
+  commercialCommencedYear?: number;
+  aboutImage?: string;
+  companyStory?: string;
+  description?: string;
   primaryPhone: string;
   altPhone: string;
   primaryEmail: string;

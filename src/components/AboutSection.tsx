@@ -4,18 +4,27 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Calendar, MapPin, Eye, CheckCircle2, Factory, ShieldCheck, Truck, Scale } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
+import { useCMS } from '@/context/CMSContext';
 
 export default function AboutSection() {
+  const { data } = useCMS();
+  const siteInfo = data?.siteInfo;
+
+  const establishedYear = siteInfo?.establishedYear || 2006;
+  const commercialYear = siteInfo?.productionOperationsYear || 2008;
+  const currentYear = new Date().getFullYear();
+  const yearsExperience = currentYear - commercialYear;
+
   const highlights = [
     {
       icon: Calendar,
-      title: "Established in 2006",
+      title: `Established in ${establishedYear}`,
       desc: "Nearly two decades of unwavering corporate commitment to infrastructure excellence."
     },
     {
       icon: Factory,
-      title: "Commercial Production Commenced 2008",
-      desc: "18+ continuous years of large-scale automated quarrying and crushing operations."
+      title: `Commercial Production Commenced ${commercialYear}`,
+      desc: `${yearsExperience}+ continuous years of large-scale automated quarrying and crushing operations.`
     },
     {
       icon: ShieldCheck,
@@ -35,12 +44,12 @@ export default function AboutSection() {
     {
       icon: MapPin,
       title: "Our Corporate Address",
-      desc: "Lane No. 4, Opposite SBI, Nehru Nagar Colony, Secunderabad – 500026, Telangana, India."
+      desc: siteInfo?.address || "Lane No. 4, Opposite SBI, Nehru Nagar Colony, Secunderabad – 500026, Telangana, India."
     },
     {
       icon: Eye,
       title: "Our Sustainable Vision",
-      desc: "To be the foremost trusted supplier building eco-friendly foundations for a stronger tomorrow."
+      desc: siteInfo?.vision || "To be the foremost trusted supplier building eco-friendly foundations for a stronger tomorrow."
     }
   ];
 
@@ -56,7 +65,7 @@ export default function AboutSection() {
             
             <div className="relative rounded-[36px] rounded-tr-[100px] overflow-hidden border-4 border-[#087A35] shadow-2xl h-[380px] sm:h-[480px] bg-gray-900">
               <img
-                src="/images/about/about-crusher-grand.png"
+                src={siteInfo?.aboutImage || "/images/about/about-crusher-grand.png"}
                 alt="Super Sand Crushing Operations"
                 className="w-full h-full object-cover object-center transform group-hover:scale-108 transition-transform duration-1000 ease-out"
               />
@@ -65,11 +74,11 @@ export default function AboutSection() {
               {/* Floating Experience Badge with Animated Counter */}
               <div className="absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-white/60 flex items-center gap-4 transition-transform group-hover:-translate-y-1 duration-500">
                 <div className="w-14 h-14 rounded-xl bg-[#087A35] text-white flex items-center justify-center text-2xl font-black flex-shrink-0 shadow-md">
-                  <AnimatedCounter end={18} suffix="+" />
+                  <AnimatedCounter end={yearsExperience > 0 ? yearsExperience : 18} suffix="+" />
                 </div>
                 <div>
                   <div className="text-sm font-black text-[#17231D]">Years Production Experience</div>
-                  <div className="text-xs text-gray-500 font-medium">Since Commercial Production in 2008</div>
+                  <div className="text-xs text-gray-500 font-medium">Since Commercial Production in {commercialYear}</div>
                 </div>
               </div>
             </div>
@@ -85,11 +94,11 @@ export default function AboutSection() {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231D] tracking-tight leading-[1.15]">
-              Building Trust Since <span className="text-[#087A35]"><AnimatedCounter end={2006} duration={1200} /></span>
+              Building Trust Since <span className="text-[#087A35]"><AnimatedCounter end={establishedYear} duration={1200} /></span>
             </h2>
 
             <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed">
-              Super Sand (Sai Super Sand Minerals Pvt. Ltd.) was established in 2006, with commercial production operations commencing in 2008. With nearly 20 years of business history and 18 years of production experience, we stand as Telangana’s premier producer of engineered aggregates and eco-friendly manufactured sand.
+              {siteInfo?.companyStory || siteInfo?.description || `Super Sand (Sai Super Sand Minerals Pvt. Ltd.) was established in ${establishedYear}, with commercial production operations commencing in ${commercialYear}. With nearly 20 years of business history and ${yearsExperience} years of production experience, we stand as Telangana’s premier producer of engineered aggregates and eco-friendly manufactured sand.`}
             </p>
 
             {/* 7 Highlights Grid */}

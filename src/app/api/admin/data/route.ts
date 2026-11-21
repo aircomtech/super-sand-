@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDatabaseAsync, saveDatabaseAsync, logAdminActivity, defaultCMSData } from '@/lib/server-db';
 
 function checkAuth(req: NextRequest): boolean {
@@ -247,6 +248,23 @@ export async function PUT(req: NextRequest) {
     }
 
     await saveDatabaseAsync(db);
+
+    try {
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
+      revalidatePath('/about');
+      revalidatePath('/products');
+      revalidatePath('/services');
+      revalidatePath('/infrastructure');
+      revalidatePath('/sustainability');
+      revalidatePath('/projects');
+      revalidatePath('/careers');
+      revalidatePath('/contact');
+      revalidatePath('/testimonials');
+    } catch (e) {
+      // Ignore revalidation in environments where it's not applicable
+    }
+
     return NextResponse.json({ success: true, message: 'Changes saved successfully to database' });
   } catch (err: any) {
     console.error('API admin data update error:', err);

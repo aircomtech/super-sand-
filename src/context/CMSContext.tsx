@@ -41,7 +41,14 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
 
   const fetchContent = useCallback(async () => {
     try {
-      const res = await fetch('/api/content', { cache: 'no-store' });
+      const res = await fetch(`/api/content?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        }
+      });
       if (res.ok) {
         const json = await res.json();
         if (json.data) {
@@ -68,18 +75,29 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     fetchContent();
 
+    // Re-fetch automatically when window gains focus
+    const handleFocus = () => {
+      fetchContent();
+    };
+    window.addEventListener('focus', handleFocus);
+
     // Cross-tab real-time synchronization via BroadcastChannel
+    let channel: BroadcastChannel | null = null;
     if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-      const channel = new BroadcastChannel('super_sand_cms_sync');
+      channel = new BroadcastChannel('super_sand_cms_sync');
       channel.onmessage = (event) => {
         if (event.data?.type === 'CMS_UPDATED') {
           fetchContent();
         }
       };
-      return () => {
-        channel.close();
-      };
     }
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      if (channel) {
+        channel.close();
+      }
+    };
   }, [fetchContent]);
 
   // Sync state when another tab modifies localStorage

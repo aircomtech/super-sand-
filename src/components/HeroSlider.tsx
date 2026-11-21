@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Play, ChevronLeft, ChevronRight, Award, Truck, Leaf, ShieldCheck, ChevronDown } from 'lucide-react';
 import { HeroSlide } from '@/lib/types';
+import { useCMS } from '@/context/CMSContext';
 
 interface HeroSliderProps {
   slides?: HeroSlide[];
@@ -59,7 +60,10 @@ const defaultSlides = [
 ];
 
 export default function HeroSlider({ slides: cmsSlides, onOpenVideo, onOpenEnquiry }: HeroSliderProps) {
-  const slides = cmsSlides && cmsSlides.length > 0 ? cmsSlides : defaultSlides;
+  const { data } = useCMS();
+  const slides = (cmsSlides && cmsSlides.length > 0)
+    ? cmsSlides
+    : (data?.heroSlides && data.heroSlides.length > 0 ? data.heroSlides : defaultSlides);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStartX, setTouchStartX] = useState(0);
